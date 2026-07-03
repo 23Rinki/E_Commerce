@@ -1,0 +1,394 @@
+2026-06-14 21:58:12 | Sending email via Resend to nehilsinha@gmail.com
+2026-06-14 21:58:12 | Hosting failed to start
+System.IO.IOException: Failed to bind to address https://127.0.0.1:7147: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-14 21:58:12 | Failed to send email via Resend to nehilsinha@gmail.com
+System.ObjectDisposedException: Cannot access a disposed object.
+Object name: 'DefaultMeterFactory'.
+   at Microsoft.Extensions.Diagnostics.Metrics.DefaultMeterFactory.Create(MeterOptions options)
+   at System.Net.Http.Metrics.MetricsHandler..ctor(HttpMessageHandler innerHandler, IMeterFactory meterFactory, Meter& meter)
+   at System.Net.Http.SocketsHttpHandler.SetupHandlerChain()
+   at System.Net.Http.SocketsHttpHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<>n__0(HttpRequestMessage request, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<SendCoreAsync>g__Core|4_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingScopeHttpMessageHandler.<SendCoreAsync>g__Core|4_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at RNVS.ECommerce.Infrastructure.Email.ResendEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\ResendEmailService.cs:line 53
+2026-06-14 22:11:43 | Sending email via Resend to nehilsinha@gmail.com
+2026-06-14 22:11:45 | Resend email failed with status "Forbidden": {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (rinkeeverma23@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-06-14 22:11:58 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-14 23:29:34 | PRODUCT_VIEW | User: Guest | Product: 28 (LED Floor Lamp) | Session: 71c891da-da76-4a6a-a618-e555104db4c3 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-14 17:59:34
+2026-06-14 23:42:15 | PRODUCT_VIEW | User: Guest | Product: 28 (LED Floor Lamp) | Session: 71c891da-da76-4a6a-a618-e555104db4c3 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-14 18:12:15
+2026-06-14 23:42:32 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: ab747dac-7151-4e25-a779-acb694bf2033 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-14 18:12:32
+2026-06-15 12:22:38 | PRODUCT_VIEW | User: Guest | Product: 28 (LED Floor Lamp) | Session: 4477af4d-cc5d-41df-a9b4-4b475b5e5f3c | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-15 06:52:38
+2026-06-16 21:27:41 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-16 21:54:08 | PRODUCT_VIEW | User: Guest | Product: 10 (Vivo V29) | Session: 4579c928-33fb-46bb-a699-801ec230e9bb | IP: ::1 | Referrer: Direct | DateTime: 2026-06-16 16:24:08
+2026-06-17 13:34:04 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-17 18:30:39 | Hosting failed to start
+System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
+To generate a developer certificate run 'dotnet dev-certs https'. To trust the certificate (Windows and macOS only) run 'dotnet dev-certs https --trust'.
+For more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, Action`1 configureOptions)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-17 19:28:10 | Hosting failed to start
+System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
+To generate a developer certificate run 'dotnet dev-certs https'. To trust the certificate (Windows and macOS only) run 'dotnet dev-certs https --trust'.
+For more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, Action`1 configureOptions)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-17 19:48:23 | Hosting failed to start
+System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
+To generate a developer certificate run 'dotnet dev-certs https'. To trust the certificate (Windows and macOS only) run 'dotnet dev-certs https --trust'.
+For more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, Action`1 configureOptions)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-17 19:50:44 | Hosting failed to start
+System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
+To generate a developer certificate run 'dotnet dev-certs https'. To trust the certificate (Windows and macOS only) run 'dotnet dev-certs https --trust'.
+For more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, Action`1 configureOptions)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-17 20:58:00 | Hosting failed to start
+System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
+To generate a developer certificate run 'dotnet dev-certs https'. To trust the certificate (Windows and macOS only) run 'dotnet dev-certs https --trust'.
+For more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, Action`1 configureOptions)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-17 22:22:48 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-17 22:33:49 | PRODUCT_VIEW | User: Guest | Product: 8 (Realme 11 Pro+) | Session: b9f3c4a6-b0b0-4cdc-a067-3d5467d8f2ce | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-17 17:03:49
+2026-06-17 22:34:19 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 6f1560d4-80e2-43dc-8eb4-fac418dac81a | IP: ::1 | Referrer: Direct | DateTime: 2026-06-17 17:04:19
+2026-06-17 22:41:38 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 21f3b868-3068-4807-97e4-e8abc277e9ba | IP: ::1 | Referrer: Direct | DateTime: 2026-06-17 17:11:38
+2026-06-17 23:02:40 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 740bc32d-20b8-439c-a74a-74d462fed2f7 | IP: ::1 | Referrer: Direct | DateTime: 2026-06-17 17:32:40
+2026-06-17 23:05:29 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 05f06e08-ec61-4509-933b-3ffc0fd8d267 | IP: ::1 | Referrer: Direct | DateTime: 2026-06-17 17:35:29
+2026-06-17 23:32:29 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: ebadd0b4-2729-4fad-a2b2-6d67e432510e | IP: ::1 | Referrer: Direct | DateTime: 2026-06-17 18:02:29
+2026-06-18 18:28:00 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: e79f41b1-03e5-46e3-ab2f-6cd592d41e7b | IP: ::1 | Referrer: Direct | DateTime: 2026-06-18 12:58:00
+2026-06-18 20:07:53 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: d53de748-bc77-4deb-b5b7-3b452a1070b6 | IP: ::1 | Referrer: Direct | DateTime: 2026-06-18 14:37:53
+2026-06-18 20:19:43 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 25ebf337-4a23-422c-b5ec-4e60cb8988e2 | IP: ::1 | Referrer: Direct | DateTime: 2026-06-18 14:49:43
+2026-06-18 21:23:11 | PRODUCT_VIEW | User: Guest | Product: 28 (LED Floor Lamp) | Session: 2cba28db-012b-444e-ad49-f4b8b426a4b9 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-18 15:53:11
+2026-06-18 21:24:14 | PRODUCT_VIEW | User: Guest | Product: 21 (Kids Building Block Set) | Session: b5e9f535-fb2d-4736-a014-39d73d6212ed | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-18 15:54:14
+2026-06-18 21:28:36 | PRODUCT_VIEW | User: Guest | Product: 3 (Google Pixel 8) | Session: 2eb6192c-c129-4015-8497-e4371e845a3c | IP: ::1 | Referrer: Direct | DateTime: 2026-06-18 15:58:36
+2026-06-18 21:53:37 | PRODUCT_VIEW | User: Guest | Product: 3 (Google Pixel 8) | Session: 1d660ff9-f01b-47c2-80bd-9ec93c698a4e | IP: ::1 | Referrer: Direct | DateTime: 2026-06-18 16:23:37
+2026-06-18 21:54:16 | PRODUCT_VIEW | User: Guest | Product: 3 (Google Pixel 8) | Session: f1b8113c-3288-49d6-a0ae-40a9e52cf358 | IP: ::1 | Referrer: http://localhost:3000/?category=Bags%20%26%20Luggage | DateTime: 2026-06-18 16:24:16
+2026-06-18 21:56:36 | PRODUCT_VIEW | User: Guest | Product: 20 (Ceiling Fan with Remote) | Session: 0bf2bbdf-c2c9-480f-8dc0-2a80979cd5a2 | IP: ::1 | Referrer: http://localhost:3000/?category=Appliances | DateTime: 2026-06-18 16:26:36
+2026-06-18 21:56:49 | PRODUCT_VIEW | User: Guest | Product: 7 (Motorola Edge 40) | Session: 673adf19-bb48-4b6b-8a0e-84c48489059e | IP: ::1 | Referrer: http://localhost:3000/?search=pain | DateTime: 2026-06-18 16:26:49
+2026-06-18 21:57:31 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: b8f07bd9-cc39-4ace-aaa2-075554d8bdde | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-18 16:27:31
+2026-06-19 17:50:52 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-20 22:34:20 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-21 23:10:12 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-22 19:15:02 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-23 18:20:40 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-23 22:12:01 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
+2026-06-23 22:12:08 | JWT token generated for user: dd2e7252-016c-4dee-893e-107100e6e2a0
+2026-06-23 22:34:38 | Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5017: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-25 18:38:54 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-25 19:23:44 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-25 19:23:57 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-28 12:33:20 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: f2a82215-23d1-4643-8a6b-0cf9c865bae5 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 07:03:20
+2026-06-28 12:47:00 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: c18a01a2-dd4f-4d55-b672-5bb6683391d7 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 07:17:00
+2026-06-28 12:53:28 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: 15832280-8b55-43a2-9e89-40bffefc9c23 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 07:23:28
+2026-06-28 12:59:43 | Sending email via Resend to reema.sinha@yahoo.com
+2026-06-28 12:59:44 | Resend email failed with status "Forbidden": {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (rinkeeverma23@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-06-28 12:59:44 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 13:05:08 | PRODUCT_VIEW | User: Guest | Product: 27 (Wooden Coffee Table) | Session: 251671a1-c45b-4487-99fd-85b966ecc97a | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 07:35:08
+2026-06-28 13:16:02 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 19:13:07 | JWT token generated for user: dd2e7252-016c-4dee-893e-107100e6e2a0
+2026-06-28 19:14:13 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-29 19:39:56 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription reminder — Guru
+2026-06-29 19:39:56 | Failed to send email to rekhaharishverma@gmail.com
+System.ArgumentException: The value cannot be an empty string. (Parameter 'address')
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address, String displayName)
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 48
+2026-06-29 20:01:33 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-29 20:03:32 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription reminder — Guru
+2026-06-29 20:03:32 | Failed to send email to rekhaharishverma@gmail.com
+System.ArgumentException: The value cannot be an empty string. (Parameter 'address')
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address, String displayName)
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 48
+2026-06-29 22:15:49 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription reminder — Guru
+2026-06-29 22:15:49 | Failed to send email to rekhaharishverma@gmail.com
+System.ArgumentException: The value cannot be an empty string. (Parameter 'address')
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address, String displayName)
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 48
+2026-06-29 22:33:59 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription reminder — Guru
+2026-06-29 22:34:00 | Failed to send email to rekhaharishverma@gmail.com
+System.ArgumentException: The value cannot be an empty string. (Parameter 'address')
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address, String displayName)
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 48
+2026-06-29 22:35:53 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-29 23:04:55 | Failed to migrate vendor DB: All Store
+Npgsql.PostgresException (0x80004005): 42P07: relation "InvoiceTemplates" already exists
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<<MigrateAsync>b__22_1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 458
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 459
+  Exception data:
+    Severity: ERROR
+    SqlState: 42P07
+    MessageText: relation "InvoiceTemplates" already exists
+    File: heap.c
+    Line: 1179
+    Routine: heap_create_with_catalog
+2026-06-29 23:04:56 | Failed to migrate vendor DB: Pappu
+Npgsql.PostgresException (0x80004005): 42P07: relation "InvoiceTemplates" already exists
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<<MigrateAsync>b__22_1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 458
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 459
+  Exception data:
+    Severity: ERROR
+    SqlState: 42P07
+    MessageText: relation "InvoiceTemplates" already exists
+    File: heap.c
+    Line: 1179
+    Routine: heap_create_with_catalog
+2026-06-29 23:04:57 | Vendor DB migrated: Test Vendor
+2026-06-29 23:04:57 | Failed to migrate vendor DB: Guru
+Npgsql.PostgresException (0x80004005): 42P07: relation "InvoiceTemplates" already exists
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<<MigrateAsync>b__22_1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 458
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 459
+  Exception data:
+    Severity: ERROR
+    SqlState: 42P07
+    MessageText: relation "InvoiceTemplates" already exists
+    File: heap.c
+    Line: 1179
+    Routine: heap_create_with_catalog
+2026-06-29 23:04:58 | Failed to migrate vendor DB: RadheRadhe
+Npgsql.PostgresException (0x80004005): 42P07: relation "InvoiceTemplates" already exists
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<<MigrateAsync>b__22_1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 458
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 459
+  Exception data:
+    Severity: ERROR
+    SqlState: 42P07
+    MessageText: relation "InvoiceTemplates" already exists
+    File: heap.c
+    Line: 1179
+    Routine: heap_create_with_catalog
+2026-06-29 23:05:00 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription reminder — Guru
+2026-06-29 23:05:00 | Failed to send email to rekhaharishverma@gmail.com
+System.ArgumentException: The value cannot be an empty string. (Parameter 'address')
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address, String displayName)
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 48
+2026-06-30 13:09:34 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-30 13:11:20 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-06-30 13:13:07 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-30 13:18:20 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-07-01 18:41:22 | Failed to migrate vendor DB: All Store
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'VendorDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 465
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 466
+2026-07-01 18:41:23 | Failed to migrate vendor DB: Pappu
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'VendorDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 465
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 466
+2026-07-01 18:41:24 | Failed to migrate vendor DB: Test Vendor
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'VendorDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 465
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 466
+2026-07-01 18:41:25 | Failed to migrate vendor DB: RadheRadhe
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'VendorDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 465
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 466
+2026-07-01 18:41:26 | Failed to migrate vendor DB: Guru
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'VendorDbContext' has pending changes. Add a new migration before updating the database. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 465
+   at Program.<Main>$(String[] args) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Program.cs:line 466
+2026-07-01 18:45:22 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-07-01 20:48:49 | PRODUCT_VIEW | User: Guest | Product: 18 (Vacuum Cleaner) | Session: ce9b06c9-91bb-45cb-a1ed-2695ddcc2462 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-07-01 15:18:49
+2026-07-01 20:58:04 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-07-01 21:14:04 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04

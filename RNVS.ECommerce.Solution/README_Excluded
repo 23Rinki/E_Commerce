@@ -1,0 +1,761 @@
+# RNVS E-Commerce Platform
+
+A modern, scalable **multi-vendor e-commerce platform** built with **ASP.NET Core** backend and **Next.js** frontend, following **Clean Architecture** principles.
+
+[![.NET Version](https://img.shields.io/badge/.NET-9.0-purple)](https://dotnet.microsoft.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+---
+
+## ?? Features
+
+### **Multi-Vendor Marketplace**
+- ? Vendor registration and approval workflow
+- ? Custom branding per vendor (logo, colors, themes)
+- ? Vendor-specific product management
+- ? Commission-based revenue sharing
+- ? Independent vendor dashboards
+
+### **Product Management**
+- ? Comprehensive product catalog with categories
+- ? Multiple product images with image optimization
+- ? Inventory tracking and low-stock alerts
+- ? Product variants (size, color, etc.)
+- ? Product reviews and ratings
+- ? Advanced search and filtering
+
+### **Shopping Experience**
+- ? Intuitive shopping cart
+- ? Wishlist functionality
+- ? Guest and registered user checkout
+- ? Product recommendations powered by ML.NET
+- ? Real-time stock availability
+- ? Product comparison
+
+### **Payment & Checkout**
+- ? Multiple payment gateways (Stripe, PayPal)
+- ? Secure payment processing
+- ? Order tracking and history
+- ? Custom receipt generation (PDF)
+- ? Invoice generation with vendor branding
+- ? Refund management
+
+### **Security & Authentication**
+- ? JWT-based authentication
+- ? Two-factor authentication (TOTP)
+- ? Passkey/WebAuthn support
+- ? Role-based authorization (Admin, Vendor, Customer)
+- ? AES encryption for sensitive data
+- ? Secure password hashing (PBKDF2)
+
+### **Advanced Features**
+- ? ML-powered product recommendations
+- ? Full-text search with Elasticsearch
+- ? Redis caching for performance
+- ? Email notifications (SMTP, SendGrid)
+- ? File storage (Local, Azure Blob, AWS S3)
+- ? Shipping provider integrations (FedEx, UPS, BlueDart, Delhivery, DTDC)
+- ? Real-time analytics dashboard
+
+---
+
+## ??? Architecture
+
+This solution follows **Clean Architecture** with clear separation of concerns:
+```
+???????????????????????????????????????????????????????????????
+?                    Next.js Frontend (Port 3000)              ?
+?              (UI Components, Pages, Client Logic)            ?
+???????????????????????????????????????????????????????????????
+                       ? REST API (HTTPS)
+???????????????????????????????????????????????????????????????
+?              ASP.NET Core API (Port 7001/5001)               ?
+?                  (Controllers, Middleware)                   ?
+???????????????????????????????????????????????????????????????
+                       ?
+???????????????????????????????????????????????????????????????
+?                    Application Layer                         ?
+?        (Business Logic, DTOs, Services, Validators)         ?
+???????????????????????????????????????????????????????????????
+                       ?
+???????????????????????????????????????????????????????????????
+?                  Infrastructure Layer                        ?
+?   (Data Access, External Services, Caching, Storage, ML)   ?
+???????????????????????????????????????????????????????????????
+                       ?
+???????????????????????????????????????????????????????????????
+?                     Domain Layer                             ?
+?              (Entities, Value Objects, Enums)               ?
+???????????????????????????????????????????????????????????????
+```
+
+---
+
+## ?? Project Structure
+
+### **Backend (ASP.NET Core)**
+```
+?? backend/
+??? ?? RNVS.ECommerce.Domain/              # Core business entities
+?   ??? Entities/                          # Domain models
+?   ??? Enums/                             # Enumerations
+?   ??? ValueObjects/                      # Immutable value objects
+?   ??? Interfaces/                        # Domain contracts
+?
+??? ?? RNVS.ECommerce.Application/         # Business logic
+?   ??? Interfaces/                        # Service & repository interfaces
+?   ??? Services/                          # Business logic implementation
+?   ??? DTOs/                              # Data transfer objects
+?   ??? Validators/                        # FluentValidation validators
+?   ??? Mappings/                          # AutoMapper profiles
+?   ??? Commands/                          # CQRS commands
+?   ??? Queries/                           # CQRS queries
+?
+??? ?? RNVS.ECommerce.Infrastructure/      # External concerns
+?   ??? Data/                              # EF Core, repositories
+?   ??? Caching/                           # Redis, Memory cache
+?   ??? Storage/                           # File storage services
+?   ??? Email/                             # Email services
+?   ??? PDF/                               # PDF generation
+?   ??? ML/                                # Machine learning
+?   ??? Payment/                           # Payment gateways
+?   ??? Security/                          # JWT, encryption, 2FA
+?   ??? Search/                            # Elasticsearch
+?
+??? ?? RNVS.ECommerce.API/                 # API endpoints
+    ??? Controllers/                       # REST API controllers
+    ??? Middleware/                        # Custom middleware
+    ??? Filters/                           # Action filters
+    ??? Program.cs                         # App entry point
+    ??? appsettings.json                   # Configuration
+```
+
+### **Frontend (Next.js)**
+```
+?? frontend/
+??? ?? app/                                # Next.js 13+ app directory
+?   ??? (auth)/                            # Auth pages
+?   ?   ??? login/
+?   ?   ??? register/
+?   ?   ??? forgot-password/
+?   ??? (shop)/                            # Public shop pages
+?   ?   ??? products/[id]/                 # Product details (SSG)
+?   ?   ??? categories/[slug]/             # Category pages (ISR)
+?   ?   ??? cart/                          # Shopping cart
+?   ?   ??? checkout/                      # Checkout flow
+?   ??? (vendor)/                          # Vendor dashboard
+?   ?   ??? dashboard/
+?   ?   ??? products/
+?   ?   ??? orders/
+?   ?   ??? settings/
+?   ??? (admin)/                           # Admin panel
+?       ??? dashboard/
+?       ??? vendors/
+?       ??? analytics/
+?
+??? ?? components/                         # Reusable components
+?   ??? ui/                                # UI components (shadcn/ui)
+?   ??? layout/                            # Layout components
+?   ??? product/                           # Product components
+?   ??? cart/                              # Cart components
+?
+??? ?? lib/                                # Utilities
+?   ??? api/                               # API client functions
+?   ??? hooks/                             # Custom React hooks
+?   ??? utils/                             # Helper functions
+?   ??? validators/                        # Form validators
+?
+??? ?? types/                              # TypeScript types
+??? ?? public/                             # Static assets
+```
+
+---
+
+## ??? Technology Stack
+
+### **Backend**
+| Technology | Purpose |
+|------------|---------|
+| **ASP.NET Core 9.0** | Web API framework |
+| **Entity Framework Core** | ORM for database access |
+| **SQL Server** | Relational database |
+| **Redis** | Distributed caching |
+| **FluentValidation** | Input validation |
+| **AutoMapper** | Object mapping |
+| **JWT** | Authentication |
+| **ML.NET** | Machine learning |
+| **QuestPDF** | PDF generation |
+| **Elasticsearch** | Full-text search |
+| **Stripe/PayPal** | Payment processing |
+
+### **Frontend**
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 15** | React framework |
+| **TypeScript** | Type safety |
+| **Tailwind CSS** | Styling |
+| **Shadcn/ui** | UI components |
+| **Tanstack Query** | Data fetching |
+| **Zustand** | State management |
+| **React Hook Form** | Form handling |
+| **Zod** | Schema validation |
+
+### **Infrastructure**
+| Service | Purpose |
+|---------|---------|
+| **Azure/AWS** | Cloud hosting |
+| **Docker** | Containerization |
+| **Nginx** | Reverse proxy |
+| **GitHub Actions** | CI/CD |
+
+---
+
+## ?? Prerequisites
+
+Before you begin, ensure you have installed:
+
+- **[.NET 9 SDK](https://dotnet.microsoft.com/download)** - Backend framework
+- **[Node.js 20+](https://nodejs.org/)** - Frontend runtime
+- **[SQL Server](https://www.microsoft.com/sql-server)** - Database
+- **[Redis](https://redis.io/)** (Optional) - Caching
+- **[Elasticsearch](https://www.elastic.co/)** (Optional) - Advanced search
+- **[Git](https://git-scm.com/)** - Version control
+
+**Development Tools:**
+- **[Visual Studio 2022](https://visualstudio.microsoft.com/)** or **[Rider](https://www.jetbrains.com/rider/)**
+- **[VS Code](https://code.visualstudio.com/)** - Frontend development
+- **[Postman](https://www.postman.com/)** - API testing
+
+---
+
+## ?? Getting Started
+
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/yourusername/rnvs-ecommerce.git
+cd rnvs-ecommerce
+```
+
+### **2. Backend Setup**
+
+#### **2.1. Navigate to Backend Directory**
+```bash
+cd backend
+```
+
+#### **2.2. Restore NuGet Packages**
+```bash
+dotnet restore
+```
+
+#### **2.3. Update Configuration**
+
+Edit `RNVS.ECommerce.API/appsettings.json`:
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=RNVSECommerce;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+  "JwtSettings": {
+    "Secret": "your-super-secret-key-min-32-chars",
+    "Issuer": "RNVS.ECommerce.API",
+    "Audience": "RNVS.ECommerce.Client",
+    "ExpiryMinutes": 60
+  },
+  "Storage": {
+    "Provider": "Local",
+    "LocalPath": "wwwroot/uploads"
+  },
+  "Redis": {
+    "Enabled": false,
+    "ConnectionString": "localhost:6379"
+  },
+  "Elasticsearch": {
+    "Enabled": false,
+    "Url": "http://localhost:9200"
+  },
+  "Email": {
+    "Provider": "SMTP",
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SmtpUsername": "your-email@gmail.com",
+    "SmtpPassword": "your-app-password"
+  },
+  "Stripe": {
+    "PublishableKey": "pk_test_...",
+    "SecretKey": "sk_test_..."
+  }
+}
+```
+
+#### **2.4. Apply Database Migrations**
+```bash
+# From backend directory
+dotnet ef database update --project RNVS.ECommerce.Infrastructure --startup-project RNVS.ECommerce.API
+```
+
+#### **2.5. Run the API**
+```bash
+cd RNVS.ECommerce.API
+dotnet run
+```
+
+API will be available at:
+- **HTTPS:** `https://localhost:7001`
+- **HTTP:** `http://localhost:5001`
+- **Swagger:** `https://localhost:7001/swagger`
+
+### **3. Frontend Setup**
+
+#### **3.1. Navigate to Frontend Directory**
+```bash
+cd ../frontend
+```
+
+#### **3.2. Install Dependencies**
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+#### **3.3. Configure Environment Variables**
+
+Create `.env.local` file:
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:7001/api
+NEXT_PUBLIC_API_TIMEOUT=30000
+
+# Authentication
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-key
+
+# Payment (Stripe)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+
+# Analytics (Optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+#### **3.4. Run the Frontend**
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Frontend will be available at:
+- **Local:** `http://localhost:3000`
+
+### **4. Access the Application**
+
+- **Frontend:** http://localhost:3000
+- **API:** https://localhost:7001
+- **Swagger Documentation:** https://localhost:7001/swagger
+
+---
+
+## ?? Default Credentials
+
+After database seeding, use these credentials:
+
+### **Admin Account**
+```
+Email: admin@rnvs.com
+Password: Admin@123
+```
+
+### **Vendor Account**
+```
+Email: vendor@rnvs.com
+Password: Vendor@123
+```
+
+### **Customer Account**
+```
+Email: customer@rnvs.com
+Password: Customer@123
+```
+
+?? **Important:** Change these passwords in production!
+
+---
+
+## ?? API Documentation
+
+### **Swagger UI**
+Access interactive API documentation at: `https://localhost:7001/swagger`
+
+### **Key Endpoints**
+
+#### **Authentication**
+```
+POST   /api/auth/register          # Register new user
+POST   /api/auth/login             # Login
+POST   /api/auth/refresh-token     # Refresh JWT token
+POST   /api/auth/logout            # Logout
+POST   /api/auth/forgot-password   # Password reset request
+```
+
+#### **Products**
+```
+GET    /api/products               # Get all products (paginated)
+GET    /api/products/{id}          # Get product by ID
+POST   /api/products               # Create product (Vendor)
+PUT    /api/products/{id}          # Update product (Vendor)
+DELETE /api/products/{id}          # Delete product (Vendor/Admin)
+GET    /api/products/search        # Search products
+```
+
+#### **Cart**
+```
+GET    /api/cart                   # Get user's cart
+POST   /api/cart/items             # Add item to cart
+PUT    /api/cart/items/{id}        # Update cart item quantity
+DELETE /api/cart/items/{id}        # Remove item from cart
+DELETE /api/cart                   # Clear cart
+```
+
+#### **Orders**
+```
+GET    /api/orders                 # Get user's orders
+GET    /api/orders/{id}            # Get order details
+POST   /api/orders                 # Create order (checkout)
+PUT    /api/orders/{id}/status     # Update order status (Vendor)
+GET    /api/orders/{id}/track      # Track order
+```
+
+#### **Payments**
+```
+POST   /api/payments/create-intent # Create payment intent (Stripe)
+POST   /api/payments/confirm       # Confirm payment
+POST   /api/payments/refund        # Request refund
+```
+
+---
+
+## ?? Testing
+
+### **Backend Tests**
+```bash
+cd backend
+
+# Run all tests
+dotnet test
+
+# Run with coverage
+dotnet test /p:CollectCoverage=true /p:CoverageReportFormat=opencover
+
+# Run specific project tests
+dotnet test RNVS.ECommerce.Application.Tests
+```
+
+### **Frontend Tests**
+```bash
+cd frontend
+
+# Run unit tests
+npm run test
+
+# Run E2E tests
+npm run test:e2e
+
+# Run with coverage
+npm run test:coverage
+```
+
+---
+
+## ?? Deployment
+
+### **Backend Deployment (Azure)**
+
+#### **1. Publish the API**
+```bash
+cd backend/RNVS.ECommerce.API
+dotnet publish -c Release -o ./publish
+```
+
+#### **2. Deploy to Azure App Service**
+```bash
+az webapp up --name rnvs-api --resource-group rnvs-rg --runtime "DOTNET|9.0"
+```
+
+#### **3. Configure Connection String**
+```bash
+az webapp config connection-string set \
+  --name rnvs-api \
+  --resource-group rnvs-rg \
+  --connection-string-type SQLServer \
+  --settings DefaultConnection="Server=tcp:your-server.database.windows.net..."
+```
+
+### **Frontend Deployment (Vercel)**
+
+#### **1. Install Vercel CLI**
+```bash
+npm install -g vercel
+```
+
+#### **2. Deploy**
+```bash
+cd frontend
+vercel --prod
+```
+
+#### **3. Configure Environment Variables**
+Add environment variables in Vercel Dashboard:
+- `NEXT_PUBLIC_API_URL`
+- `NEXTAUTH_SECRET`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+
+### **Docker Deployment**
+
+#### **Build and Run with Docker Compose**
+```bash
+# Build and start all services
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+```
+
+**docker-compose.yml:**
+```yaml
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "7001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db;Database=RNVSECommerce;User=sa;Password=YourStrong@Passw0rd
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:80/api
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  sqldata:
+```
+
+---
+
+## ?? Configuration
+
+### **Storage Configuration**
+
+Switch between storage providers in `appsettings.json`:
+```json
+{
+  "Storage": {
+    "Provider": "Local",  // Options: Local, Azure, S3, Cloudflare
+    "LocalPath": "wwwroot/uploads",
+    
+    // Azure Blob Storage
+    "AzureConnectionString": "DefaultEndpointsProtocol=https;AccountName=...",
+    "AzureContainerName": "uploads",
+    
+    // AWS S3
+    "AwsAccessKey": "YOUR_ACCESS_KEY",
+    "AwsSecretKey": "YOUR_SECRET_KEY",
+    "AwsBucketName": "rnvs-uploads",
+    "AwsRegion": "ap-south-1"
+  }
+}
+```
+
+### **Caching Configuration**
+```json
+{
+  "Redis": {
+    "Enabled": true,
+    "ConnectionString": "localhost:6379",
+    "InstanceName": "RNVSECommerce:",
+    "DefaultExpirationMinutes": 60
+  }
+}
+```
+
+### **Email Configuration**
+```json
+{
+  "Email": {
+    "Provider": "SMTP",  // Options: SMTP, SendGrid
+    "FromEmail": "noreply@rnvs.com",
+    "FromName": "RNVS E-Commerce",
+    
+    // SMTP Settings
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SmtpUsername": "your-email@gmail.com",
+    "SmtpPassword": "your-app-password",
+    
+    // SendGrid Settings
+    "SendGridApiKey": "SG.xxxxx"
+  }
+}
+```
+
+---
+
+## ?? Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+### **Code Standards**
+
+- Follow **Clean Code** principles
+- Write **unit tests** for new features
+- Update **documentation** as needed
+- Follow **C# coding conventions** (.NET)
+- Follow **Airbnb JavaScript Style Guide** (Frontend)
+
+---
+
+## ?? License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## ?? Known Issues
+
+- [ ] Elasticsearch integration requires manual index creation
+- [ ] PayPal integration needs webhook configuration
+- [ ] Email templates need localization support
+
+---
+
+## ??? Roadmap
+
+### **Version 1.0** (Current)
+- [x] Multi-vendor marketplace
+- [x] Product management
+- [x] Shopping cart & checkout
+- [x] Payment integration (Stripe, PayPal)
+- [x] Order management
+- [x] ML recommendations
+
+### **Version 1.1** (Planned)
+- [ ] Mobile app (React Native)
+- [ ] Social login (Google, Facebook)
+- [ ] Live chat support
+- [ ] Multi-language support
+- [ ] Advanced analytics dashboard
+- [ ] Subscription products
+
+### **Version 2.0** (Future)
+- [ ] GraphQL API
+- [ ] Microservices architecture
+- [ ] Real-time notifications (SignalR)
+- [ ] Advanced ML features (price optimization)
+- [ ] B2B marketplace features
+- [ ] Blockchain payment integration
+
+---
+
+## ?? Support
+
+For support and queries:
+
+- **Email:** support@rnvsecommerce.com
+- **Documentation:** [https://docs.rnvs.com](https://docs.rnvs.com)
+- **Issues:** [GitHub Issues](https://github.com/yourusername/rnvs-ecommerce/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/yourusername/rnvs-ecommerce/discussions)
+
+---
+
+## ?? Team
+
+- **Lead Developer:** [Your Name](https://github.com/yourusername)
+- **Backend Developer:** TBD
+- **Frontend Developer:** TBD
+- **UI/UX Designer:** TBD
+
+---
+
+## ?? Acknowledgments
+
+- [ASP.NET Core](https://dotnet.microsoft.com/apps/aspnet) - Backend framework
+- [Next.js](https://nextjs.org/) - Frontend framework
+- [Shadcn/ui](https://ui.shadcn.com/) - UI components
+- [Clean Architecture](https://blog.cleancoder.com/) - Architecture pattern
+- All open-source contributors
+
+---
+
+## ?? Project Statistics
+
+![GitHub Stars](https://img.shields.io/github/stars/yourusername/rnvs-ecommerce?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/yourusername/rnvs-ecommerce?style=social)
+![GitHub Issues](https://img.shields.io/github/issues/yourusername/rnvs-ecommerce)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yourusername/rnvs-ecommerce)
+
+---
+
+**Built with ?? using Clean Architecture**
+
+**Made in India ???? | Bengaluru, Karnataka**
+
+---
+
+## ?? Screenshots
+
+### **Homepage**
+![Homepage](docs/screenshots/homepage.png)
+
+### **Product Details**
+![Product Details](docs/screenshots/product-details.png)
+
+### **Vendor Dashboard**
+![Vendor Dashboard](docs/screenshots/vendor-dashboard.png)
+
+### **Admin Panel**
+![Admin Panel](docs/screenshots/admin-panel.png)
+
+---
+
+*Last Updated: January 2025*

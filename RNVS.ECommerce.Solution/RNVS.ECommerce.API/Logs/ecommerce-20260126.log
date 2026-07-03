@@ -1,0 +1,4 @@
+2026-01-26 20:01:27 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-26 20:02:09 | Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-26 20:02:10 | Product 1 added to cart for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-26 20:03:36 | Order ORD-20260126143335-626F created successfully for user 0ae29e73-4000-44fb-a094-c47142529bcf

@@ -1,0 +1,94 @@
+2026-06-28 13:16:03 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 27 (Wooden Coffee Table) | Session: 251671a1-c45b-4487-99fd-85b966ecc97a | IP: ::1 | Referrer: http://localhost:3000/products/27?v=decd5425-e0af-4459-85e9-e4d535d17504 | DateTime: 2026-06-28 07:46:03
+2026-06-28 13:16:03 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 27 (Wooden Coffee Table) | Session: 251671a1-c45b-4487-99fd-85b966ecc97a | IP: ::1 | Referrer: http://localhost:3000/products/27?v=decd5425-e0af-4459-85e9-e4d535d17504 | DateTime: 2026-06-28 07:46:03
+2026-06-28 13:16:07 | Product 27 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 13:17:40 | Address created for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 13:17:40 | Payment method added for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 13:22:27 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 27 (Wooden Coffee Table) | Session: 251671a1-c45b-4487-99fd-85b966ecc97a | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 07:52:27
+2026-06-28 13:22:30 | Product 27 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 13:34:17 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 27 (Wooden Coffee Table) | Session: 5aaf9473-40ad-4d89-ae8f-720fd706093d | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 08:04:17
+2026-06-28 13:34:18 | Product 27 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 18:27:58 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 27 (Wooden Coffee Table) | Session: 77198664-4e30-435b-8335-00d03d2f5b00 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-06-28 12:57:58
+2026-06-28 18:28:00 | Product 27 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 18:29:10 | Order ORD-20260628125910-3301 created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 18:29:11 | Sending email via Resend to reema.sinha@yahoo.com
+2026-06-28 18:29:11 | Failed to send email via Resend to reema.sinha@yahoo.com
+System.ObjectDisposedException: Cannot access a disposed object.
+Object name: 'System.Net.Http.HttpClient'.
+   at System.Net.Http.HttpClient.CheckRequestBeforeSend(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at RNVS.ECommerce.Infrastructure.Email.ResendEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\ResendEmailService.cs:line 53
+2026-06-28 18:48:48 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 24 (Classic Analog Watch) | Session: 7e30e2ec-d06c-408e-a59f-3bf9412c2971 | IP: ::1 | Referrer: Direct | DateTime: 2026-06-28 13:18:48
+2026-06-28 18:48:51 | Product 24 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 18:58:45 | Address 1 deleted for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 19:00:03 | Address created for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 19:00:13 | Payment method added for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 19:00:13 | Order ORD-20260628133013-D5A9 created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-28 19:00:13 | An exception occurred while iterating over the results of a query for context type 'RNVS.ECommerce.Infrastructure.Data.ApplicationDbContext'.
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_DbContextDependencies()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Internal.IDbContextDependencies.get_StateManager()
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_DbContextDependencies()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Internal.IDbContextDependencies.get_StateManager()
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-06-28 19:00:14 | Failed to send order confirmation email for order ORD-20260628133013-D5A9
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_DbContextDependencies()
+   at Microsoft.EntityFrameworkCore.DbContext.Microsoft.EntityFrameworkCore.Internal.IDbContextDependencies.get_StateManager()
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at RNVS.ECommerce.API.Controllers.OrdersController.<>c__DisplayClass9_1.<<CreateOrder>b__1>d.MoveNext() in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Controllers\OrdersController.cs:line 281
+2026-06-30 13:10:30 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 7 (Motorola Edge 40) | Session: 9628d49b-25b8-42c8-8f2b-44f0402adc62 | IP: ::1 | Referrer: http://localhost:3000/?search=pain | DateTime: 2026-06-30 07:40:30
+2026-06-30 13:15:39 | Invoice generated for order 2
+2026-06-30 13:17:08 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 7 (Motorola Edge 40) | Session: 520839f2-a1ab-48ab-83de-7de9ff74351d | IP: ::1 | Referrer: http://localhost:3000/?search=pain | DateTime: 2026-06-30 07:47:08
+2026-06-30 13:17:10 | Product 7 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-30 13:17:21 | Order ORD-20260630074721-CD0B created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-06-30 13:17:22 | Failed to send order confirmation email for order ORD-20260630074721-CD0B
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking[TEntity](IQueryable`1 source)
+   at RNVS.ECommerce.API.Controllers.OrdersController.<>c__DisplayClass9_1.<<CreateOrder>b__1>d.MoveNext() in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Controllers\OrdersController.cs:line 286
+2026-07-01 20:58:06 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 18 (Vacuum Cleaner) | Session: ce9b06c9-91bb-45cb-a1ed-2695ddcc2462 | IP: ::1 | Referrer: http://localhost:3000/products/18?v=dd2e7252-016c-4dee-893e-107100e6e2a0 | DateTime: 2026-07-01 15:28:06
+2026-07-01 20:58:06 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 18 (Vacuum Cleaner) | Session: ce9b06c9-91bb-45cb-a1ed-2695ddcc2462 | IP: ::1 | Referrer: http://localhost:3000/products/18?v=dd2e7252-016c-4dee-893e-107100e6e2a0 | DateTime: 2026-07-01 15:28:06
+2026-07-01 20:58:12 | Product 18 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-07-01 20:59:16 | Order ORD-20260701152916-C117 created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-07-01 20:59:17 | Failed to send order confirmation email for order ORD-20260701152916-C117
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_Model()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTracking[TEntity](IQueryable`1 source)
+   at RNVS.ECommerce.API.Controllers.OrdersController.<>c__DisplayClass9_1.<<CreateOrder>b__1>d.MoveNext() in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Controllers\OrdersController.cs:line 286
+2026-07-01 21:02:06 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 25 (Stainless Steel Knife Set) | Session: ce9b06c9-91bb-45cb-a1ed-2695ddcc2462 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-07-01 15:32:06
+2026-07-01 21:02:39 | PRODUCT_VIEW | User: ee39fee8-36aa-4adf-9155-507fe3e43699 | Product: 25 (Stainless Steel Knife Set) | Session: ce9b06c9-91bb-45cb-a1ed-2695ddcc2462 | IP: ::1 | Referrer: http://localhost:3000/ | DateTime: 2026-07-01 15:32:39
+2026-07-01 21:02:43 | Product 25 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-07-01 21:05:21 | Order ORD-20260701153521-65AB created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-07-01 21:05:24 | Failed to send order confirmation email for order ORD-20260701153521-65AB
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_ChangeTracker()
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal.NpgsqlCompiledQueryCacheKeyGenerator.GenerateCacheKey(Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at RNVS.ECommerce.API.Controllers.OrdersController.<>c__DisplayClass9_1.<<CreateOrder>b__1>d.MoveNext() in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Controllers\OrdersController.cs:line 286

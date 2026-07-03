@@ -1,0 +1,9 @@
+2026-01-12 11:48:06 | JWT token generated for user: 415fd86c-44fd-4d62-b05c-01c15758dc6d
+2026-01-12 12:16:44 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-12 12:27:16 | Category created: 6 by user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-12 12:28:45 | Product created: 11 by user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-12 12:29:49 | Product updated: 11 by user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-12 12:33:50 | Image uploaded and optimized: 2016-05-07-18-08-43-067 (2).jpg to wwwroot/uploads\products\f04945a5-d047-4e53-85ff-a4ba39464f4d.jpg
+2026-01-12 12:33:50 | Image uploaded for product 11: 3
+2026-01-12 12:40:23 | Order 1 status updated from "Pending" to "Processing" by 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-12 20:09:40 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf

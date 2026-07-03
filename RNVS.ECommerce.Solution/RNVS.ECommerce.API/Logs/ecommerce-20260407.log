@@ -1,0 +1,17 @@
+2026-04-07 00:01:26 | JWT token generated for user: faaed9cd-e3c5-4c8e-885b-b96a584c101f
+2026-04-07 01:20:12 | JWT token generated for user: faaed9cd-e3c5-4c8e-885b-b96a584c101f
+2026-04-07 18:36:25 | Sending email via Resend to vendor1@test.com
+2026-04-07 18:36:26 | Resend email failed with status "Forbidden": {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (rinkeeverma23@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-04-07 18:36:26 | JWT token generated for user: 86833bc0-de18-4f61-a2b8-013218154c0e
+2026-04-07 20:44:19 | TenantRegistration created for vendor vendor1@test.com
+2026-04-07 20:44:19 | Sending email via Resend to vendor1@test.com
+2026-04-07 20:44:20 | Resend email failed with status "Forbidden": {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (rinkeeverma23@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
+2026-04-07 20:44:20 | JWT token generated for user: dd2e7252-016c-4dee-893e-107100e6e2a0
+2026-04-07 21:30:41 | JWT token generated for user: faaed9cd-e3c5-4c8e-885b-b96a584c101f
+2026-04-07 21:34:07 | Migrations applied to vendor 1 database
+2026-04-07 21:34:07 | Dedicated DB configured for tenant 1
+2026-04-07 21:34:11 | Migrations applied to vendor 1 database
+2026-04-07 21:34:11 | Dedicated DB configured for tenant 1
+2026-04-07 23:08:04 | JWT token generated for user: faaed9cd-e3c5-4c8e-885b-b96a584c101f
+2026-04-07 23:10:38 | Tenant 1 status → Active
+2026-04-07 23:11:45 | JWT token generated for user: dd2e7252-016c-4dee-893e-107100e6e2a0

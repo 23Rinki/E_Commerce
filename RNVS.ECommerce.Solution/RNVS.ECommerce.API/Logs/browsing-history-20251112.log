@@ -1,0 +1,4 @@
+2025-11-12 16:16:12.686 | User:  | Action:  | ProductId:  | IP:  | Session:  | An error occurred while seeding the database.
+2025-11-12 16:32:01.454 | User: Guest | Action:  | ProductId: 1 | IP: ::1 | Session: test-session-abc | PRODUCT_VIEW | User: "Guest" | Product: 1 ("iPhone 15 Pro") | Session: "test-session-abc" | IP: "::1" | Referrer: "https://google.com" | DateTime: "2025-11-12 11:02:01"
+2025-11-12 16:50:05.278 | User: Guest | Action:  | ProductId: 1 | IP: ::1 | Session: test-session-abc | PRODUCT_VIEW | User: "Guest" | Product: 1 ("iPhone 15 Pro") | Session: "test-session-abc" | IP: "::1" | Referrer: "https://google.com" | DateTime: "2025-11-12 11:20:05"
+2025-11-12 16:52:22.122 | User:  | Action:  | ProductId:  | IP:  | Session: test-session-abc | RECENT_VIEWS_REQUESTED | Session: "test-session-abc" | Limit: 10 | TotalFound: 2 | DateTime: "2025-11-12 11:22:22"

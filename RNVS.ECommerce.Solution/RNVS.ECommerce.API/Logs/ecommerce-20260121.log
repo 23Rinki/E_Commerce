@@ -1,0 +1,8 @@
+2026-01-21 12:04:25 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-21 12:08:47 | Product 1 added to cart for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-21 12:12:13 | The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2026-01-21 19:25:37 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-21 20:12:42 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-21 20:14:09 | Invoice template created: 1
+2026-01-21 20:21:43 | Invoice template updated: 1
+2026-01-21 20:22:54 | Invoice template set as default: 1

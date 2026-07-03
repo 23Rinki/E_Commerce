@@ -1,0 +1,10 @@
+2026-01-20 14:08:08 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:03:06 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:03:12 | JWT token generated for user: 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:04:00 | Address created for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:16:41 | Address 2 updated for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:17:40 | Address 2 set as default for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:18:44 | Address 2 deleted for user 0ae29e73-4000-44fb-a094-c47142529bcf
+2026-01-20 19:34:04 | The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2026-01-20 19:39:37 | Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-20 19:41:22 | Product 1 added to cart for user 0ae29e73-4000-44fb-a094-c47142529bcf

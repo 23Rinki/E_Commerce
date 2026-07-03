@@ -1,0 +1,41 @@
+2026-04-03 12:29:53 | JWT token generated for user: 88ca4598-2e80-4412-8019-edbcee8d6e19
+2026-04-03 12:52:21 | JWT token generated for user: 4c29178e-4a8d-4292-81c7-42c23205ce78
+2026-04-03 12:59:34 | JWT token generated for user: affe070e-14ab-417a-a301-3d3d7dee584d
+2026-04-03 16:34:53 | Sending email to rinkee_verma@yahoo.co.in with subject Welcome to RNVS CommerceX! 🎉
+2026-04-03 16:34:53 | JWT token generated for user: 31014ee1-31b7-4abe-b6b5-16e840849099
+2026-04-03 16:34:55 | Failed to send email to rinkee_verma@yahoo.co.in
+System.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.EndSend(IAsyncResult result)
+   at System.Net.Mail.SendMailAsyncResult.SendMailFromCompleted(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SendMailAsyncResult.End(IAsyncResult result)
+   at System.Net.Mail.SmtpClient.SendMailCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 65
+2026-04-03 18:08:15 | Sending email via SendGrid to rinkee_verma@yahoo.co.in
+2026-04-03 18:08:15 | JWT token generated for user: 0445c891-3ed8-4887-adc3-2ac61b4a75cb
+2026-04-03 18:08:16 | Failed to send email via SendGrid
+System.ObjectDisposedException: The CancellationTokenSource has been disposed.
+   at System.Threading.CancellationTokenSource.get_Token()
+   at System.Net.Http.HttpClient.PrepareCancellationTokenSource(CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at RNVS.ECommerce.Infrastructure.Email.SendGridEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SendGridEmailService.cs:line 58
+2026-04-03 18:13:43 | Sending email via SendGrid to rinkee_verma@yahoo.co.in
+2026-04-03 18:13:43 | SendGrid email failed with status "Unauthorized"
+2026-04-03 18:13:44 | JWT token generated for user: 2f7df371-cbb2-4adb-a646-c341bdfbad19
+2026-04-03 18:27:21 | Sending email via SendGrid to rinkee_verma@yahoo.co.in
+2026-04-03 18:27:23 | SendGrid email failed with status "Unauthorized"
+2026-04-03 18:27:23 | JWT token generated for user: 70a5abbd-459c-4ba9-9fdb-5878a39a271a
+2026-04-03 19:36:20 | Sending email to rinkee_verma@yahoo.co.in with subject Welcome to RNVS CommerceX! 🎉
+2026-04-03 19:36:23 | Failed to send email to rinkee_verma@yahoo.co.in
+System.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.EndSend(IAsyncResult result)
+   at System.Net.Mail.SendMailAsyncResult.SendMailFromCompleted(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SendMailAsyncResult.End(IAsyncResult result)
+   at System.Net.Mail.SmtpClient.SendMailCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at RNVS.ECommerce.Infrastructure.Email.SmtpEmailService.SendEmailAsync(String to, String subject, String body, List`1 attachments) in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Infrastructure\Email\SmtpEmailService.cs:line 65
+2026-04-03 19:36:24 | JWT token generated for user: ae2f069e-30db-43c1-9596-f28f81e7bd40
