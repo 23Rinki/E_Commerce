@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .order-details {
+            background: white;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order Confirmation</h1>
+        </div>
+
+        <div class="content">
+            <p>Dear {{CustomerName}},</p>
+
+            <p>Thank you for your order! We're excited to confirm that we've received your order and it's being processed.</p>
+
+            <div class="order-details">
+                <h3>Order Details</h3>
+                <table>
+                    <tr>
+                        <td><strong>Order Number:</strong></td>
+                        <td>{{OrderNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Order Date:</strong></td>
+                        <td>{{OrderDate}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Amount:</strong></td>
+                        <td><strong>₹{{TotalAmount}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payment Status:</strong></td>
+                        <td>{{PaymentStatus}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Shipping Address</h3>
+            <p>
+                {{ShippingAddress}}<br>
+                {{ShippingCity}}, {{ShippingState}} {{ShippingPostalCode}}
+            </p>
+
+            <p style="text-align: center;">
+                <a href="{{TrackOrderUrl}}" class="button">Track Your Order</a>
+            </p>
+
+            <p>If you have any questions about your order, please don't hesitate to contact us.</p>
+
+            <p>Best regards,<br>{{VendorName}} Team</p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 RNVS CommerceX. All rights reserved.</p>
+            <p>This is an automated email. Please do not reply to this message.</p>
+        </div>
+    </div>
+</body>
+</html>

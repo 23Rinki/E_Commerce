@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ordersApi } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
 import { Order, ORDER_STATUS } from '@/types';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getImageUrl } from '@/lib/utils';
 import Image from 'next/image';
 import { Package, ChevronRight, ArrowLeft } from 'lucide-react';
 
@@ -61,14 +61,14 @@ export default function OrdersPage() {
           {orders.map((order) => {
             const statusLabel = getStatusLabel(order.status);
             return (
-              <Link key={order.orderNumber || `${order.id}-${order.createdAt}`} href={`/account/orders/${order.id}`}>
+              <Link key={`${order.vendorId}-${order.id}`} href={`/account/orders/${order.id}`}>
                 <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md hover:border-orange-200 transition-all cursor-pointer">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 border border-gray-100">
                         {order.items?.[0]?.productImageUrl ? (
                           <Image
-                            src={`${process.env.NEXT_PUBLIC_API_URL}${order.items[0].productImageUrl}`}
+                            src={getImageUrl(order.items[0].productImageUrl)}
                             alt={order.items[0].productName || 'Product'}
                             width={56} height={56}
                             className="w-full h-full object-cover"

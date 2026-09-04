@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { margin: 0; color: #fecaca; font-size: 14px; }
+    .badge { display: inline-block; background: #fecaca; color: #7f1d1d; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-top: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .content { padding: 32px 30px; }
+    .greeting { font-size: 16px; margin-bottom: 20px; }
+    .status-card { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 12px; padding: 20px 24px; margin: 16px 0; text-align: center; }
+    .status-card .label { font-size: 12px; color: #718096; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .status-card .date { font-size: 20px; font-weight: 900; color: #7f1d1d; }
+    .status-card .sub { font-size: 13px; color: #4a5568; margin-top: 4px; }
+    .note { background: #fff8f0; border-left: 4px solid #f6ad55; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13px; color: #744210; margin: 16px 0; }
+    .cta { text-align: center; margin: 30px 0; }
+    .btn { display: inline-block; padding: 14px 36px; background: #991b1b; color: white; text-decoration: none; border-radius: 8px; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    .footer { background: #f7fafc; padding: 24px 30px; text-align: center; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
+    .footer a { color: #718096; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>RNVS CommerceX</h1>
+      <p>Account suspended for {{StoreName}}</p>
+      <div class="badge">Payment Overdue</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Hi <strong>{{VendorName}}</strong>,</p>
+      <p style="font-size:14px; color:#4a5568;">
+        Your subscription payment for <strong>{{StoreName}}</strong> was due on <strong>{{DueDate}}</strong> and
+        remains unpaid after a 7-day grace period. Your seller account has now been <strong>suspended</strong> —
+        your store is hidden from customers and your dashboard access is paused.
+      </p>
+
+      <div class="status-card">
+        <div class="label">Payment Was Due</div>
+        <div class="date">{{DueDate}}</div>
+        <div class="sub">Account suspended on {{SuspendedDate}}</div>
+      </div>
+
+      <div class="note">
+        <strong>How to reactivate:</strong> Complete your payment and your store will be automatically
+        reactivated — your products, orders, and dashboard access will be restored immediately.
+      </div>
+
+      <div class="cta">
+        <a href="{{PaymentUrl}}" class="btn">Pay Now to Reactivate →</a>
+      </div>
+
+      <p style="font-size:13px; color:#718096; text-align:center;">
+        Questions? Contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#991b1b;">{{SupportEmail}}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>RNVS CommerceX</strong> · Seller Platform</p>
+      <p>This email was sent to {{VendorEmail}} regarding your subscription status.</p>
+      <p>&copy; 2026 RNVS CommerceX. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>

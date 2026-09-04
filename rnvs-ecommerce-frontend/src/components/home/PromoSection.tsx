@@ -1,153 +1,43 @@
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 export default function PromoSection() {
   return (
-    <section className="bg-white py-12">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-
-          {/* Card 1 — Flash Sale (orange) */}
-          <div className="md:col-span-1">
-            <div
-              className="rounded-2xl p-8 min-h-[220px] flex flex-col justify-between relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)' }}
-            >
-              {/* Decorative circles */}
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 160,
-                  height: 160,
-                  top: -40,
-                  right: -40,
-                  background: 'rgba(255,255,255,0.12)',
-                }}
-              />
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 100,
-                  height: 100,
-                  bottom: -30,
-                  left: -20,
-                  background: 'rgba(255,255,255,0.08)',
-                }}
-              />
-
-              <div className="relative">
-                <p className="text-white/80 text-xs font-bold tracking-widest uppercase mb-2">
-                  Limited Time
-                </p>
-                <h3 className="text-white text-2xl font-black">Flash Sale</h3>
-                <p className="text-white/80 text-sm mt-2">
-                  Up to 70% off on Electronics &amp; Fashion
-                </p>
-              </div>
-
-              <Link
-                href="/products"
-                className="mt-6 inline-flex items-center gap-1 bg-white text-orange-600 font-bold text-xs px-5 py-2.5 rounded-full hover:bg-orange-50 transition-colors self-start relative"
-              >
-                Shop Deals →
-              </Link>
+    <section className="py-14 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-6">
+        <Link href="/products" className="relative rounded-3xl overflow-hidden min-h-[320px] group bg-neutral-100">
+          <img
+            src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg"
+            alt="Flash sale"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/15 to-transparent" />
+          <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end text-white">
+            <div className="text-[11px] uppercase tracking-[0.3em] opacity-80">Limited Time</div>
+            <h3 className="font-display text-3xl lg:text-4xl mt-3">Flash Sale</h3>
+            <p className="mt-2 max-w-md text-white/90 text-sm">Up to 70% off across Electronics &amp; Fashion.</p>
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium">
+              Shop deals <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
+        </Link>
 
-          {/* Card 2 — New Arrivals (indigo) */}
-          <div className="md:col-span-1">
-            <div
-              className="rounded-2xl p-8 min-h-[220px] flex flex-col justify-between relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #3730a3 100%)' }}
-            >
-              {/* Decorative circles */}
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 140,
-                  height: 140,
-                  top: -30,
-                  right: -30,
-                  background: 'rgba(255,255,255,0.10)',
-                }}
-              />
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 90,
-                  height: 90,
-                  bottom: -20,
-                  left: -15,
-                  background: 'rgba(255,255,255,0.06)',
-                }}
-              />
-
-              <div className="relative">
-                <p className="text-indigo-200 text-xs font-bold tracking-widest uppercase mb-2">
-                  Just Landed
-                </p>
-                <h3 className="text-white text-2xl font-black">New Arrivals</h3>
-                <p className="text-indigo-200 text-sm mt-2">
-                  Fresh drops every week from top brands
-                </p>
-              </div>
-
-              <Link
-                href="/products"
-                className="mt-6 inline-flex items-center gap-1 bg-white text-indigo-600 font-bold text-xs px-5 py-2.5 rounded-full hover:bg-indigo-50 transition-colors self-start relative"
-              >
-                Explore Now →
-              </Link>
+        <Link href="/sell" className="relative rounded-3xl overflow-hidden min-h-[320px] group bg-neutral-900">
+          <img
+            src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg"
+            alt="Sell with us"
+            className="absolute inset-0 h-full w-full object-cover opacity-85 transition-transform duration-[1200ms] group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/25 to-transparent" />
+          <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end text-white">
+            <div className="text-[11px] uppercase tracking-[0.3em] opacity-80">For Sellers</div>
+            <h3 className="font-display text-3xl lg:text-4xl mt-3">Grow your business</h3>
+            <p className="mt-2 max-w-md text-white/90 text-sm">Join our verified sellers on the platform — free to start.</p>
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium">
+              Start selling <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
-
-          {/* Card 3 — Sell with Us (dark) */}
-          <div className="md:col-span-1">
-            <div
-              className="rounded-2xl p-8 min-h-[220px] flex flex-col justify-between relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}
-            >
-              {/* Decorative circles */}
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 150,
-                  height: 150,
-                  top: -40,
-                  right: -40,
-                  background: 'rgba(255,255,255,0.05)',
-                }}
-              />
-              <div
-                className="absolute rounded-full"
-                style={{
-                  width: 80,
-                  height: 80,
-                  bottom: -20,
-                  left: -10,
-                  background: 'rgba(249,115,22,0.15)',
-                }}
-              />
-
-              <div className="relative">
-                <p className="text-orange-400 text-xs font-bold tracking-widest uppercase mb-2">
-                  For Sellers
-                </p>
-                <h3 className="text-white text-2xl font-black">Grow Your Business</h3>
-                <p className="text-slate-400 text-sm mt-2">
-                  Join 500+ verified sellers on our platform
-                </p>
-              </div>
-
-              <Link
-                href="/auth/register"
-                className="mt-6 inline-flex items-center gap-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-full transition-colors self-start relative"
-              >
-                Start Selling →
-              </Link>
-            </div>
-          </div>
-
-        </div>
+        </Link>
       </div>
     </section>
   );

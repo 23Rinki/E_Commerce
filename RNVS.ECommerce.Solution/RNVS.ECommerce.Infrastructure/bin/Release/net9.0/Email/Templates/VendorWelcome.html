@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { margin: 0; color: #a0aec0; font-size: 14px; }
+    .badge { display: inline-block; background: #f6ad55; color: #1a1a2e; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-top: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .content { padding: 32px 30px; }
+    .greeting { font-size: 16px; margin-bottom: 20px; }
+    .section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; margin: 28px 0 12px 0; }
+    .pricing-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin: 16px 0; }
+    .pricing-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0; }
+    .pricing-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .pricing-label { font-size: 14px; color: #4a5568; }
+    .pricing-label small { display: block; font-size: 11px; color: #a0aec0; margin-top: 2px; }
+    .pricing-amount { font-size: 16px; font-weight: 800; color: #1a1a2e; }
+    .pricing-amount.highlight { color: #e07b39; }
+    .commission-example { background: #fff8f0; border-left: 4px solid #f6ad55; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; color: #744210; }
+    .commission-example strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .steps { counter-reset: steps; list-style: none; padding: 0; margin: 0; }
+    .steps li { counter-increment: steps; display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; color: #4a5568; }
+    .steps li:last-child { border-bottom: none; }
+    .steps li::before { content: counter(steps); background: #1a1a2e; color: white; font-size: 11px; font-weight: 800; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #718096; font-weight: 600; }
+    .info-value { color: #1a1a2e; font-weight: 700; text-align: right; word-break: break-all; }
+    .cta { text-align: center; margin: 30px 0; }
+    .btn { display: inline-block; padding: 14px 36px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 8px; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    .btn-orange { background: #e07b39; }
+    .note { background: #ebf8ff; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #2c5282; margin: 16px 0; }
+    .footer { background: #f7fafc; padding: 24px 30px; text-align: center; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
+    .footer a { color: #718096; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>RNVS CommerceX</h1>
+      <p>Your store is ready. Let's start selling.</p>
+      <div class="badge">Seller Account Activated</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Hi <strong>{{VendorName}}</strong>,</p>
+      <p style="font-size:14px; color:#4a5568;">
+        Welcome to RNVS CommerceX. Your seller account for <strong>{{StoreName}}</strong> has been created.
+        Here's everything you need to know before you start.
+      </p>
+
+      <!-- Pricing -->
+      <div class="section-title">Your Plan & Pricing</div>
+      <div class="pricing-box">
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Subscription — First 3 months
+            <small>Introductory offer</small>
+          </div>
+          <div class="pricing-amount highlight">₹2,999 / month</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Subscription — After 3 months
+            <small>Regular price, cancel anytime</small>
+          </div>
+          <div class="pricing-amount">₹4,999 / month</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Platform Commission
+            <small>Charged on every sale you make</small>
+          </div>
+          <div class="pricing-amount highlight">5% per sale</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">Registration fee</div>
+          <div class="pricing-amount" style="color:#38a169;">FREE</div>
+        </div>
+      </div>
+
+      <!-- Commission example -->
+      <div class="commission-example">
+        <strong>How commission works — simple example:</strong>
+        You sell products worth ₹10,000 → Platform commission = ₹500 (5%) → You keep ₹9,500.
+        <br />No hidden charges. No surprise deductions.
+      </div>
+
+      <!-- Account details -->
+      <div class="section-title">Your Account Details</div>
+      <div class="pricing-box">
+        <div class="info-row">
+          <span class="info-label">Store Name</span>
+          <span class="info-value">{{StoreName}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Login Email</span>
+          <span class="info-value">{{VendorEmail}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Account Type</span>
+          <span class="info-value">Seller</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Joined On</span>
+          <span class="info-value">{{RegistrationDate}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Dedicated Database</span>
+          <span class="info-value" style="color:#38a169;">✓ Yes — your data is fully private</span>
+        </div>
+      </div>
+
+      <!-- What you get -->
+      <div class="note">
+        <strong>What's included in your plan:</strong><br />
+        Dedicated database · Full seller dashboard · Product &amp; inventory management ·
+        Order tracking · Custom receipts &amp; invoices · Employee accounts · Branding tools
+      </div>
+
+      <!-- Next steps -->
+      <div class="section-title">Get Started — 4 Quick Steps</div>
+      <ol class="steps">
+        <li>Log in to your seller dashboard at the link below</li>
+        <li>Upload your store logo and set your branding colours</li>
+        <li>Add your first products with photos and pricing</li>
+        <li>Share your store link with customers and start selling</li>
+      </ol>
+
+      <div class="cta">
+        <a href="{{DashboardUrl}}" class="btn btn-orange">Go to Seller Dashboard →</a>
+      </div>
+
+      <p style="font-size:13px; color:#718096; text-align:center;">
+        Questions? Reply to this email or contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#e07b39;">{{SupportEmail}}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>RNVS CommerceX</strong> · Seller Platform</p>
+      <p>This email was sent to {{VendorEmail}} because you registered as a seller.</p>
+      <p>&copy; 2026 RNVS CommerceX. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>

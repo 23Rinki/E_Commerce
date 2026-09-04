@@ -1,37 +1,43 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { X } from 'lucide-react';
+import { X, Heart, Plus, Star, Eye, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import HeroBanner      from '@/components/home/HeroBanner';
-import TrustSection    from '@/components/home/TrustSection';
-import CategorySidebar from '@/components/shared/CategorySidebar';
+import HeroBanner       from '@/components/home/HeroBanner';
+import TrustSection     from '@/components/home/TrustSection';
+import CategoryCarousel from '@/components/home/CategoryCarousel';
 import { loadCategories, getCachedCategories } from '@/lib/categoriesCache';
-import { productsApi } from '@/lib/api';
+import { productsApi, cartApi, wishlistApi } from '@/lib/api';
 import { useUIStore } from '@/store/uiStore';
 import { useAuthStore } from '@/store/authStore';
+import { useCartStore } from '@/store/cartStore';
 import { clearCategories } from '@/lib/categoriesCache';
 import { Category, Product } from '@/types';
 import { getImageUrl, formatPrice } from '@/lib/utils';
-import { Eye } from 'lucide-react';
 import ProductQuickView from '@/components/product/ProductQuickView';
 import dynamic from 'next/dynamic';
 
 const PromoSection      = dynamic(() => import('@/components/home/PromoSection'));
+const Testimonials      = dynamic(() => import('@/components/home/Testimonials'));
 const NewsletterSection = dynamic(() => import('@/components/home/NewsletterSection'));
 
-// ── Compact product card for the home page grid ─────────────────────────────
+// ── Product card for the home page grid ─────────────────────────────────────
 
 function HomeProductCard({ product }: { product: Product }) {
-  const router = useRouter();
-  const [showQV, setShowQV] = useState(false);
+  const { incrementCount } = useCartStore();
+  const [showQV, setShowQV]                   = useState(false);
+  const [adding, setAdding]                   = useState(false);
+  const [wishlisted, setWishlisted]           = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const wishlistItemId = useRef<number | null>(null);
 
   const img     = (product as any).primaryImageUrl ?? product.images?.[0]?.imageUrl ?? null;
   const selling = product.discountPrice ?? product.price;
   const hasDisc = product.discountPrice && product.discountPrice < product.price;
   const discPct = hasDisc ? Math.round((1 - selling / product.price) * 100) : 0;
+  const href = `/products/${product.id}${(product as any).vendorId ? `?v=${encodeURIComponent((product as any).vendorId)}` : ''}`;
 
   const qvProduct = {
     id: Number(product.id),
@@ -47,54 +53,115 @@ function HomeProductCard({ product }: { product: Product }) {
     vendorId: (product as any).vendorId,
   };
 
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAdding(true);
+    incrementCount();
+    try {
+      await cartApi.add({ productId: Number(product.id), quantity: 1, vendorId: (product as any).vendorId });
+    } catch {
+      incrementCount(-1);
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleWishlist = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (wishlistLoading) return;
+    setWishlistLoading(true);
+    try {
+      if (!wishlisted) {
+        const res = await wishlistApi.add(Number(product.id));
+        const added = res.data?.data || res.data;
+        if (added?.id) wishlistItemId.current = added.id;
+        setWishlisted(true);
+      } else {
+        let itemId = wishlistItemId.current;
+        if (!itemId) {
+          const res = await wishlistApi.get();
+          const items: Array<{ id: number; productId: number }> = res.data?.data || res.data || [];
+          itemId = items.find((i) => i.productId === Number(product.id))?.id ?? null;
+        }
+        if (itemId) {
+          await wishlistApi.remove(itemId);
+          wishlistItemId.current = null;
+          setWishlisted(false);
+        }
+      }
+    } catch {
+    } finally {
+      setWishlistLoading(false);
+    }
+  };
+
   return (
-    <>
+    <article className="group relative">
       {showQV && <ProductQuickView product={qvProduct} onClose={() => setShowQV(false)} />}
 
-      <div className="group relative bg-white border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all duration-200 rounded-xl overflow-hidden h-full flex flex-col cursor-pointer">
-        {/* Image area — click opens product detail in new tab */}
-        <div
-          className="relative bg-white flex items-center justify-center overflow-hidden"
-          style={{ paddingTop: '100%' }}
-          onClick={() => window.open(`/products/${product.id}${(product as any).vendorId ? `?v=${encodeURIComponent((product as any).vendorId)}` : ''}`, '_blank')}
-        >
+      <Link href={href} target="_blank" rel="noopener noreferrer">
+        <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-50 border border-neutral-100">
           <Image
             src={getImageUrl(img)}
             alt={product.name}
             fill
             unoptimized
-            className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
             onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }}
           />
-          {hasDisc && discPct > 0 && (
-            <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm leading-none z-10">
-              -{discPct}%
-            </span>
-          )}
-          {/* Quick View hover overlay */}
-          <div className="absolute inset-x-0 bottom-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {hasDisc && discPct > 0 && (
+              <span className="text-[11px] font-semibold tracking-wide px-2.5 py-1 rounded-full bg-red-600 text-white">−{discPct}%</span>
+            )}
+          </div>
+
+          <button
+            onClick={handleWishlist}
+            disabled={wishlistLoading}
+            className={`absolute top-3 right-3 h-9 w-9 grid place-items-center rounded-full backdrop-blur bg-white/85 border border-neutral-100 transition-all duration-300 disabled:opacity-60 ${wishlisted ? 'text-red-500' : 'text-neutral-700 hover:text-red-500'} opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0`}
+            aria-label="Add to wishlist"
+          >
+            <Heart className={`h-4 w-4 ${wishlisted ? 'fill-current' : ''}`} />
+          </button>
+
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowQV(true); }}
+            className="absolute inset-x-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-1.5 bg-slate-900/85 hover:bg-slate-900 text-white text-[11px] font-semibold py-2"
+          >
+            <Eye size={12} /> Quick View
+          </button>
+
+          <div className="absolute inset-x-3 bottom-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
             <button
-              onClick={(e) => { e.stopPropagation(); setShowQV(true); }}
-              className="w-full flex items-center justify-center gap-1.5 bg-slate-900/85 hover:bg-slate-900 text-white text-[11px] font-semibold py-2 transition-colors"
+              onClick={handleAddToCart}
+              disabled={adding}
+              className="w-full h-11 rounded-full bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 disabled:opacity-60 transition inline-flex items-center justify-center gap-2"
             >
-              <Eye size={12} />
-              Quick View
+              <Plus className="h-4 w-4" /> {adding ? 'Adding…' : 'Add to Bag'}
             </button>
           </div>
         </div>
 
-        {/* Text — click navigates to full detail */}
-        <Link href={`/products/${product.id}${(product as any).vendorId ? `?v=${encodeURIComponent((product as any).vendorId)}` : ''}`} target="_blank" rel="noopener noreferrer" className="px-3 pt-2 pb-3 flex flex-col flex-1">
-          <p className="text-[13px] text-slate-800 line-clamp-2 leading-snug mb-auto">{product.name}</p>
-          <div className="mt-2">
-            <span className="text-base font-bold text-slate-900">{formatPrice(selling)}</span>
-            {hasDisc && (
-              <span className="text-xs text-gray-400 line-through ml-1.5">{formatPrice(product.price)}</span>
-            )}
+        <div className="pt-4 px-1">
+          {product.averageRating !== undefined && product.averageRating > 0 && (
+            <div className="flex items-center gap-1 mb-1">
+              <Star className="h-3.5 w-3.5 fill-neutral-900 text-neutral-900" />
+              <span className="text-xs font-medium text-neutral-700">{product.averageRating.toFixed(1)}</span>
+              <span className="text-xs text-neutral-400">({product.reviewCount ?? 0})</span>
+            </div>
+          )}
+          <h3 className="text-[15px] font-medium text-neutral-900 leading-snug line-clamp-2">{product.name}</h3>
+          <div className="mt-2 flex items-baseline gap-2">
+            <span className="text-base font-semibold text-neutral-900">{formatPrice(selling)}</span>
+            {hasDisc && <span className="text-sm text-neutral-400 line-through">{formatPrice(product.price)}</span>}
           </div>
-        </Link>
-      </div>
-    </>
+        </div>
+      </Link>
+    </article>
   );
 }
 
@@ -102,12 +169,12 @@ function HomeProductCard({ product }: { product: Product }) {
 
 function ProductSkeleton() {
   return (
-    <div className="bg-white border border-gray-100 rounded-xl overflow-hidden animate-pulse">
-      <div className="bg-gray-100" style={{ paddingTop: '100%' }} />
+    <div className="bg-white border border-neutral-100 rounded-2xl overflow-hidden animate-pulse">
+      <div className="bg-neutral-100 aspect-[4/5]" />
       <div className="p-3 space-y-2">
-        <div className="h-3 bg-gray-100 rounded w-full" />
-        <div className="h-3 bg-gray-100 rounded w-3/4" />
-        <div className="h-4 bg-gray-100 rounded w-1/2 mt-1" />
+        <div className="h-3 bg-neutral-100 rounded w-full" />
+        <div className="h-3 bg-neutral-100 rounded w-3/4" />
+        <div className="h-4 bg-neutral-100 rounded w-1/2 mt-1" />
       </div>
     </div>
   );
@@ -205,7 +272,7 @@ export default function HomePage() {
   const selectedCatName = selectedCategory;
 
   return (
-    <div className="bg-[#f1f3f6] min-h-screen">
+    <div className="bg-white min-h-screen">
       <HeroBanner />
 
       {searchNoResultsFor && (
@@ -229,49 +296,57 @@ export default function HomePage() {
 
       <TrustSection />
 
-      {/* ── Main content: sidebar + products ─────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6 items-start">
+      <CategoryCarousel categories={categories} onSelect={selectCategory} />
 
-          {/* Sidebar (desktop) / chips (mobile) */}
-          <CategorySidebar
-            categories={categories}
-            selectedId={selectedCategory}
-            onSelect={selectCategory}
-          />
-
-          {/* Products area */}
-          <div className="flex-1 min-w-0">
-            {/* Section heading */}
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-slate-900">
+      {/* ── Featured products ─────────────────────────────────────────────── */}
+      <section className="py-12 lg:py-16 bg-neutral-50/60">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">The Edit</div>
+              <h2 className="font-display text-3xl lg:text-4xl mt-2 tracking-tight text-neutral-900">
                 {searchQuery
                   ? `Results for "${searchQuery}"`
                   : (selectedCatName || 'Featured Products')}
               </h2>
-              {searchQuery && (
-                <span className="text-sm text-gray-500">{totalCount} products</span>
+              {(searchQuery || selectedCatName) && (
+                <Link href="/" className="inline-flex items-center gap-1 text-sm text-neutral-700 hover:text-neutral-900 mt-2 transition-colors">
+                  ← Back to all products
+                </Link>
               )}
             </div>
-
-            {loading ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
-                {Array.from({ length: 10 }).map((_, i) => <ProductSkeleton key={i} />)}
-              </div>
-            ) : products.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
-                {products.map((p) => <HomeProductCard key={p.id} product={p} />)}
-              </div>
-            ) : (
-              <div className="text-center py-16 bg-white rounded-2xl border border-gray-100">
-                <p className="text-gray-500 text-sm">No products in this category yet.</p>
-              </div>
-            )}
+            {searchQuery && <span className="text-sm text-neutral-500">{totalCount} products</span>}
           </div>
+
+          {loading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+              {Array.from({ length: 10 }).map((_, i) => <ProductSkeleton key={i} />)}
+            </div>
+          ) : products.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+              {products.map((p) => <HomeProductCard key={p.id} product={p} />)}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-white rounded-3xl border border-neutral-100">
+              <p className="text-neutral-500 text-sm">No products in this category yet.</p>
+            </div>
+          )}
+
+          {!searchQuery && !selectedCatName && products.length > 0 && (
+            <div className="mt-10 flex justify-center">
+              <Link
+                href="/products"
+                className="inline-flex items-center rounded-full h-12 px-8 border border-neutral-300 text-sm font-medium hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-colors"
+              >
+                View all products <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </div>
+          )}
         </div>
-      </div>
+      </section>
 
       <PromoSection />
+      <Testimonials />
       <NewsletterSection />
     </div>
   );

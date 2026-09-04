@@ -1,4 +1,0 @@
-2026-06-14 21:12:52 | Sending email via Resend to nehilsinha@gmail.com
-2026-06-14 21:12:53 | Resend email failed with status "Forbidden": {"statusCode":403,"name":"validation_error","message":"You can only send testing emails to your own email address (rinkeeverma23@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."}
-2026-06-14 21:29:27 | JWT token generated for user: 25184435-f8c1-4b07-a950-1667038d293f
-2026-06-14 21:29:38 | Reindex completed: 48 products pushed to Meilisearch from all vendor DBs

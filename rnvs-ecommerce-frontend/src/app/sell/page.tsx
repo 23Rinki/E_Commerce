@@ -28,7 +28,7 @@ function loadRazorpayScript(): Promise<boolean> {
 // Step 0 = Account, 1 = Store, 2 = Terms, 3 = Business Details, 4 = Payment, 5 = Done
 const STEPS = ['Acct', 'Store', 'Terms', 'Biz', 'Pay'];
 
-const inp = 'w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-100 transition-colors';
+const inp = 'w-full px-4 py-3 rounded-full border border-white/25 bg-white/15 text-white placeholder:text-white/65 text-sm outline-none focus:bg-white/25 focus:ring-2 focus:ring-white/40 transition-colors';
 
 export default function BecomeSellerPage() {
   const router = useRouter();
@@ -290,9 +290,9 @@ export default function BecomeSellerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen flex">
 
-      {/* Left panel */}
+      {/* Left panel — unchanged */}
       <div
         className="hidden lg:flex flex-col justify-between w-[400px] flex-shrink-0 p-10 text-white"
         style={{ background: 'linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}
@@ -333,29 +333,37 @@ export default function BecomeSellerPage() {
         </p>
       </div>
 
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
+      {/* Right panel — restyled to MAISON dark glass */}
+      <div className="relative flex-1 flex items-center justify-center p-6 overflow-hidden bg-stone-800">
+        <img
+          src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-stone-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-stone-900/50 via-stone-800/40 to-stone-700/30" />
+
+        <div className="relative z-10 w-full max-w-md rounded-[2rem] p-8 border border-white/20 bg-stone-700/40 backdrop-blur-2xl text-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]">
 
           {step < 4 && (
-            <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-6">
+            <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors mb-6">
               <ChevronLeft size={15} /> Back to Home
             </Link>
           )}
 
           {/* Step indicator — shown for steps 0–4 */}
           {step < 5 && (
-            <div className="flex items-center gap-1 mb-8">
+            <div className="flex items-center gap-1 mb-8 flex-wrap">
               {STEPS.map((label, i) => (
                 <div key={label} className="flex items-center gap-1 flex-shrink-0">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors
-                    ${i < step ? 'bg-green-500 text-white' : i === step ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-400'}`}>
+                    ${i < step ? 'bg-emerald-400 text-neutral-900' : i === step ? 'bg-white text-neutral-900' : 'bg-white/15 text-white/50'}`}>
                     {i < step ? <CheckCircle2 size={13} /> : i + 1}
                   </div>
-                  <span className={`text-xs font-medium whitespace-nowrap ${i === step ? 'text-slate-800' : 'text-gray-400'}`}>
+                  <span className={`text-xs font-medium whitespace-nowrap ${i === step ? 'text-white' : 'text-white/50'}`}>
                     {label}
                   </span>
-                  {i < STEPS.length - 1 && <ChevronRight size={12} className="text-gray-300 mx-1" />}
+                  {i < STEPS.length - 1 && <ChevronRight size={12} className="text-white/30 mx-1" />}
                 </div>
               ))}
             </div>
@@ -363,7 +371,7 @@ export default function BecomeSellerPage() {
 
           {/* Error banner */}
           {error && step < 4 && (
-            <div className="bg-amber-50 border border-amber-300 text-amber-900 text-sm px-4 py-3 rounded-xl mb-4">
+            <div className="bg-amber-400/20 border border-amber-300/40 text-amber-100 text-sm px-4 py-3 rounded-xl mb-4">
               {error}
             </div>
           )}
@@ -372,55 +380,55 @@ export default function BecomeSellerPage() {
           {step === 0 && (
             <div>
               <div className="mb-6">
-                <h2 className="text-2xl font-black text-slate-900">Create your account</h2>
-                <p className="text-sm text-gray-500 mt-1">You&apos;ll use this to log in to your seller dashboard.</p>
+                <h2 className="font-display text-3xl text-white">Create your account</h2>
+                <p className="text-sm text-white/75 mt-1">You&apos;ll use this to log in to your seller dashboard.</p>
               </div>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1.5">First name</label>
+                    <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">First name</label>
                     <input type="text" value={form.firstName} onChange={(e) => set('firstName', e.target.value)}
                       className={inp} placeholder="John" />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-600 mb-1.5">Last name</label>
+                    <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">Last name</label>
                     <input type="text" value={form.lastName} onChange={(e) => set('lastName', e.target.value)}
                       className={inp} placeholder="Doe" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">Email address</label>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">Email address</label>
                   <input type="email" value={form.email} onChange={(e) => set('email', e.target.value)}
                     className={inp} placeholder="you@business.com" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                    Mobile <span className="text-gray-400 font-normal">(optional)</span>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">
+                    Mobile <span className="text-white/50 font-normal normal-case">(optional)</span>
                   </label>
                   <input type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)}
                     className={inp} placeholder="+91 98765 43210" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">Password</label>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">Password</label>
                   <div className="relative">
                     <input type={showPass ? 'text' : 'password'} value={form.password}
                       onChange={(e) => set('password', e.target.value)}
                       className={`${inp} pr-10`} placeholder="Min. 8 characters" />
                     <button type="button" onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white">
                       {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">Confirm password</label>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">Confirm password</label>
                   <input type="password" value={form.confirmPassword}
                     onChange={(e) => set('confirmPassword', e.target.value)}
-                    className={`${inp} ${form.confirmPassword && form.password !== form.confirmPassword ? 'border-amber-400' : form.confirmPassword && form.password === form.confirmPassword ? 'border-green-400' : ''}`}
+                    className={`${inp} ${form.confirmPassword && form.password !== form.confirmPassword ? 'border-amber-300' : form.confirmPassword && form.password === form.confirmPassword ? 'border-emerald-300' : ''}`}
                     placeholder="Re-enter password" />
                 </div>
                 <button onClick={handleNext}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 mt-2">
+                  className="w-full h-12 rounded-full bg-white text-neutral-900 hover:bg-white/95 font-semibold transition-colors flex items-center justify-center gap-2 mt-2">
                   Continue <ChevronRight size={16} />
                 </button>
               </div>
@@ -431,23 +439,23 @@ export default function BecomeSellerPage() {
           {step === 1 && (
             <div>
               <div className="mb-6">
-                <h2 className="text-2xl font-black text-slate-900">Set up your store</h2>
-                <p className="text-sm text-gray-500 mt-1">This is what buyers will see when they visit your store.</p>
+                <h2 className="font-display text-3xl text-white">Set up your store</h2>
+                <p className="text-sm text-white/75 mt-1">This is what buyers will see when they visit your store.</p>
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">Store name</label>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">Store name</label>
                   <input type="text" value={form.storeName} onChange={(e) => set('storeName', e.target.value)}
                     className={inp} placeholder="e.g. Tech Gadgets India" />
-                  <p className="text-xs text-gray-400 mt-1">Choose a name that reflects your brand.</p>
+                  <p className="text-xs text-white/50 mt-1">Choose a name that reflects your brand.</p>
                 </div>
                 <div className="flex gap-3 mt-2">
                   <button onClick={() => setStep(0)}
-                    className="flex items-center gap-1.5 px-5 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
+                    className="flex items-center gap-1.5 px-5 h-12 rounded-full border border-white/25 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                     <ChevronLeft size={15} /> Back
                   </button>
                   <button onClick={handleNext}
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                    className="flex-1 h-12 rounded-full bg-white text-neutral-900 hover:bg-white/95 font-semibold transition-colors flex items-center justify-center gap-2">
                     Continue <ChevronRight size={16} />
                   </button>
                 </div>
@@ -460,102 +468,102 @@ export default function BecomeSellerPage() {
             <div>
               <div className="mb-5">
                 <div className="flex items-center gap-2 mb-1">
-                  <FileText size={20} className="text-orange-500" />
-                  <h2 className="text-2xl font-black text-slate-900">Terms &amp; Policy</h2>
+                  <FileText size={20} className="text-white/85" />
+                  <h2 className="font-display text-3xl text-white">Terms &amp; Policy</h2>
                 </div>
-                <p className="text-sm text-gray-500">Please read and accept before continuing.</p>
+                <p className="text-sm text-white/75">Please read and accept before continuing.</p>
               </div>
 
               {/* Scrollable terms + policy content */}
-              <div className="bg-white border border-gray-200 rounded-xl p-5 max-h-72 overflow-y-auto text-xs text-gray-600 leading-relaxed space-y-4 mb-4">
+              <div className="bg-white/10 border border-white/20 rounded-2xl p-5 max-h-72 overflow-y-auto text-xs text-white/80 leading-relaxed space-y-4 mb-4">
 
                 <div>
-                  <p className="font-bold text-slate-800 mb-1">Terms and Conditions</p>
-                  <p className="font-semibold text-slate-700 mt-2">1. Who We Are</p>
+                  <p className="font-bold text-white mb-1">Terms and Conditions</p>
+                  <p className="font-semibold text-white/90 mt-2">1. Who We Are</p>
                   <p>RNVS Inovative AI LLP (&quot;we&quot;, &quot;us&quot;, &quot;the platform&quot;) operates CommerceX — a software platform that allows sellers (&quot;vendors&quot;) to run their own online store.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">2. What You Get as a Vendor</p>
+                  <p className="font-semibold text-white/90 mt-3">2. What You Get as a Vendor</p>
                   <p>Your own dedicated online store, a private database, tools to manage products, orders, employees, inventory and receipts, and customer support.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">3. Pricing and Payments</p>
+                  <p className="font-semibold text-white/90 mt-3">3. Pricing and Payments</p>
                   <p>There is no joining fee. We charge a monthly hosting and website maintenance fee, billed in advance (you pay at the start of each month, before that month begins). Cancel anytime.</p>
                   <p className="mt-1"><strong>Commission: none for now.</strong> You keep 100% of what you sell. This may change in the future as the platform grows, with at least 15 days&apos; notice before it takes effect.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">4. Our Access to Your Sales Data</p>
+                  <p className="font-semibold text-white/90 mt-3">4. Our Access to Your Sales Data</p>
                   <p>By registering, you agree that RNVS Inovative AI LLP can view your store&apos;s sales figures, order counts, and revenue data — only for monitoring platform health and complying with Indian tax laws. We do not sell your data or share it with other vendors.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">5. GST TCS</p>
+                  <p className="font-semibold text-white/90 mt-3">5. GST TCS</p>
                   <p>As required under Section 52 of the CGST Act 2017, we collect <strong>1% TCS</strong> on your sales and deposit it with the government on your behalf.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">6. Your Responsibilities</p>
+                  <p className="font-semibold text-white/90 mt-3">6. Your Responsibilities</p>
                   <p>Sell only legal products. Provide accurate descriptions and pricing. Fulfil orders promptly. Keep your login secure. Do not misuse the platform.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">7. Termination</p>
+                  <p className="font-semibold text-white/90 mt-3">7. Termination</p>
                   <p>We can suspend your store if you violate these terms, sell prohibited products, or fail to pay for more than 30 days. You can close your store anytime — your data will be deleted within 30 days.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">8. Disputes</p>
+                  <p className="font-semibold text-white/90 mt-3">8. Disputes</p>
                   <p>Disputes are governed by Indian law. Jurisdiction: Bangalore, Karnataka.</p>
                 </div>
 
-                <div className="border-t border-gray-100 pt-4">
-                  <p className="font-bold text-slate-800 mb-1">Privacy Policy</p>
-                  <p className="font-semibold text-slate-700 mt-2">1. What Information We Collect</p>
+                <div className="border-t border-white/15 pt-4">
+                  <p className="font-bold text-white mb-1">Privacy Policy</p>
+                  <p className="font-semibold text-white/90 mt-2">1. What Information We Collect</p>
                   <p>Your full name, email, phone number, business details (store name, GST, PAN, Udyam number), bank account details, sales data, and login activity.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">2. Why We Collect This</p>
+                  <p className="font-semibold text-white/90 mt-3">2. Why We Collect This</p>
                   <p>To create and manage your store, process payouts, comply with Indian tax laws (GST TCS under Section 52 of CGST Act 2017), and provide customer support.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">3. Who We Share Your Data With</p>
+                  <p className="font-semibold text-white/90 mt-3">3. Who We Share Your Data With</p>
                   <p>We do not sell your data. We may share it only with government authorities if required by Indian law, our payment partner, and trusted technology partners who help run the platform.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">4. Your Sales Data</p>
+                  <p className="font-semibold text-white/90 mt-3">4. Your Sales Data</p>
                   <p>Your store data is in your own private database — no other vendor can see it.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">5. How Long We Keep Your Data</p>
+                  <p className="font-semibold text-white/90 mt-3">5. How Long We Keep Your Data</p>
                   <p>While your store is active all data is kept. After closure it is deleted within 30 days. GST and financial records are kept for 7 years as required by Indian law.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">6. Data Security</p>
+                  <p className="font-semibold text-white/90 mt-3">6. Data Security</p>
                   <p>Encrypted database connections, secure login with session expiry, and a fully isolated store database per vendor.</p>
 
-                  <p className="font-semibold text-slate-700 mt-3">7. Changes</p>
+                  <p className="font-semibold text-white/90 mt-3">7. Changes</p>
                   <p>We will notify you by email at least 15 days before any changes take effect.</p>
                 </div>
 
-                <p className="text-gray-400 pt-2 border-t border-gray-100">
+                <p className="text-white/50 pt-2 border-t border-white/15">
                   Contact: contact@rnvsai.com &middot; RNVS Inovative AI LLP &middot; UDYAM-KR-03-0611765
                 </p>
               </div>
 
               <div className="flex gap-2 text-xs mb-4">
                 <a href="/terms" target="_blank" rel="noopener noreferrer"
-                  className="text-orange-500 font-semibold hover:text-orange-600 underline underline-offset-2">
+                  className="text-white font-semibold hover:underline underline-offset-2">
                   Full Terms &rarr;
                 </a>
-                <span className="text-gray-300">|</span>
+                <span className="text-white/30">|</span>
                 <a href="/privacy" target="_blank" rel="noopener noreferrer"
-                  className="text-orange-500 font-semibold hover:text-orange-600 underline underline-offset-2">
+                  className="text-white font-semibold hover:underline underline-offset-2">
                   Full Privacy Policy &rarr;
                 </a>
               </div>
 
               {/* Agreement checkbox */}
-              <div className="flex items-start gap-3 bg-orange-50 border border-orange-200 rounded-xl p-4 mb-5">
+              <div className="flex items-start gap-3 bg-white/10 border border-white/20 rounded-2xl p-4 mb-5">
                 <input
                   id="terms-check"
                   type="checkbox"
                   checked={termsAccepted}
                   onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 accent-orange-500 cursor-pointer flex-shrink-0"
+                  className="mt-0.5 w-4 h-4 accent-white cursor-pointer flex-shrink-0"
                 />
-                <label htmlFor="terms-check" className="text-xs text-gray-700 leading-relaxed cursor-pointer">
+                <label htmlFor="terms-check" className="text-xs text-white/85 leading-relaxed cursor-pointer">
                   I have read and agree to the{' '}
                   <a href="/terms" target="_blank" rel="noopener noreferrer"
-                    className="text-orange-500 font-semibold underline underline-offset-2 hover:text-orange-600">
+                    className="text-white font-semibold underline underline-offset-2">
                     Terms and Conditions
                   </a>
                   {' '}and{' '}
                   <a href="/privacy" target="_blank" rel="noopener noreferrer"
-                    className="text-orange-500 font-semibold underline underline-offset-2 hover:text-orange-600">
+                    className="text-white font-semibold underline underline-offset-2">
                     Privacy Policy
                   </a>
                   {' '}of RNVS CommerceX. I understand that there is no commission on my sales at this time (commission: none for now — this may change in future with 15 days&apos; notice), and that <strong>1% GST TCS</strong> will be collected by the platform on my behalf.
@@ -564,13 +572,13 @@ export default function BecomeSellerPage() {
 
               <div className="flex gap-3">
                 <button onClick={() => setStep(1)}
-                  className="flex items-center gap-1.5 px-5 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
+                  className="flex items-center gap-1.5 px-5 h-12 rounded-full border border-white/25 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                   <ChevronLeft size={15} /> Back
                 </button>
                 <button
                   onClick={() => { setError(''); setStep(3); }}
                   disabled={!termsAccepted}
-                  className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                  className="flex-1 h-12 rounded-full bg-white text-neutral-900 hover:bg-white/95 disabled:opacity-40 disabled:cursor-not-allowed font-semibold transition-colors flex items-center justify-center gap-2">
                   Continue <ChevronRight size={16} />
                 </button>
               </div>
@@ -582,17 +590,17 @@ export default function BecomeSellerPage() {
             <div>
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <FileText size={20} className="text-orange-500" />
-                  <h2 className="text-2xl font-black text-slate-900">Business Details</h2>
+                  <FileText size={20} className="text-white/85" />
+                  <h2 className="font-display text-3xl text-white">Business Details</h2>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-white/75">
                   PAN Card Number is required. Udyam Certificate and GST are optional.
                 </p>
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                    Udyam Certificate Number <span className="text-gray-400 font-normal">(optional)</span>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">
+                    Udyam Certificate Number <span className="text-white/50 font-normal normal-case">(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -602,11 +610,11 @@ export default function BecomeSellerPage() {
                     placeholder="UDYAM-MH-02-0012345"
                     maxLength={19}
                   />
-                  <p className="text-xs text-gray-400 mt-1">Format: UDYAM-XX-00-0000000</p>
+                  <p className="text-xs text-white/50 mt-1">Format: UDYAM-XX-00-0000000</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">
                     Company / Proprietor PAN Card Number
                   </label>
                   <input
@@ -617,12 +625,12 @@ export default function BecomeSellerPage() {
                     placeholder="ABCDE1234F"
                     maxLength={10}
                   />
-                  <p className="text-xs text-gray-400 mt-1">10-character alphanumeric PAN number</p>
+                  <p className="text-xs text-white/50 mt-1">10-character alphanumeric PAN number</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                    GST Number <span className="text-gray-400 font-normal">(optional)</span>
+                  <label className="block text-[11px] font-semibold text-white/85 uppercase tracking-widest mb-1.5">
+                    GST Number <span className="text-white/50 font-normal normal-case">(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -632,23 +640,23 @@ export default function BecomeSellerPage() {
                     placeholder="27ABCDE1234F1Z5"
                     maxLength={15}
                   />
-                  <p className="text-xs text-gray-400 mt-1">15-character GSTIN — leave blank if not registered</p>
+                  <p className="text-xs text-white/50 mt-1">15-character GSTIN — leave blank if not registered</p>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
-                  <p className="text-xs font-semibold text-blue-700 mb-1">Why we ask this</p>
-                  <p className="text-xs text-blue-600 leading-relaxed">
+                <div className="bg-white/10 border border-white/20 rounded-2xl p-4">
+                  <p className="text-xs font-semibold text-white mb-1">Why we ask this</p>
+                  <p className="text-xs text-white/75 leading-relaxed">
                     These details are used for seller verification and GST-compliant invoicing. They are stored securely and not shown to buyers.
                   </p>
                 </div>
 
                 <div className="flex gap-3 mt-2">
                   <button onClick={() => setStep(2)}
-                    className="flex items-center gap-1.5 px-5 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
+                    className="flex items-center gap-1.5 px-5 h-12 rounded-full border border-white/25 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                     <ChevronLeft size={15} /> Back
                   </button>
                   <button onClick={handleRegisterAndProceed} disabled={loading}
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                    className="flex-1 h-12 rounded-full bg-white text-neutral-900 hover:bg-white/95 disabled:opacity-60 disabled:cursor-not-allowed font-semibold transition-colors flex items-center justify-center gap-2">
                     {loading ? 'Creating account...' : 'Continue to Payment →'}
                   </button>
                 </div>
@@ -660,17 +668,17 @@ export default function BecomeSellerPage() {
           {step === 4 && (
             <div>
               <div className="mb-6">
-                <h2 className="text-2xl font-black text-slate-900">Activate Your Store</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="font-display text-3xl text-white">Activate Your Store</h2>
+                <p className="text-sm text-white/75 mt-1">
                   Choose your plan. A payment link was also sent to{' '}
-                  <span className="font-semibold text-slate-700">{form.email}</span>.
+                  <span className="font-semibold text-white">{form.email}</span>.
                 </p>
               </div>
 
               {payError && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 flex items-start gap-3">
-                  <AlertTriangle size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-red-700">{payError}</p>
+                <div className="bg-red-500/20 border border-red-400/40 rounded-2xl p-4 mb-4 flex items-start gap-3">
+                  <AlertTriangle size={16} className="text-red-200 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-100">{payError}</p>
                 </div>
               )}
 
@@ -684,16 +692,16 @@ export default function BecomeSellerPage() {
                     key={opt.id}
                     type="button"
                     onClick={() => set('plan', opt.id)}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${
+                    className={`p-4 rounded-2xl border text-left transition-all ${
                       form.plan === opt.id
-                        ? 'border-orange-500 bg-orange-50'
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        ? 'border-white bg-white/20'
+                        : 'border-white/20 bg-white/5 hover:border-white/40'
                     }`}
                   >
-                    <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wide">{opt.label}</p>
-                    <p className="text-xl font-black text-slate-900 mt-1">{opt.price}</p>
-                    <p className="text-xs text-gray-500">{opt.sub}</p>
-                    <p className={`text-xs font-semibold mt-1 ${form.plan === opt.id ? 'text-orange-500' : 'text-gray-400'}`}>
+                    <p className="text-[11px] font-bold text-white/70 uppercase tracking-wide">{opt.label}</p>
+                    <p className="text-xl font-black text-white mt-1">{opt.price}</p>
+                    <p className="text-xs text-white/70">{opt.sub}</p>
+                    <p className={`text-xs font-semibold mt-1 ${form.plan === opt.id ? 'text-white' : 'text-white/50'}`}>
                       {opt.tag}
                     </p>
                   </button>
@@ -702,7 +710,7 @@ export default function BecomeSellerPage() {
 
               {/* Selected plan card */}
               {form.plan === 'monthly' ? (
-                <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white text-center mb-4">
+                <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white text-center mb-4">
                   <span className="inline-block bg-white/20 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
                     Introductory Offer
                   </span>
@@ -714,7 +722,7 @@ export default function BecomeSellerPage() {
                   <p className="text-sm opacity-70 mt-0.5">Then &#8377;4,999/month &middot; cancel anytime</p>
                 </div>
               ) : (
-                <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 text-white text-center mb-4">
+                <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-6 text-white text-center mb-4">
                   <span className="inline-block bg-green-400/20 text-green-300 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
                     Best Value &mdash; 2 Months Free
                   </span>
@@ -727,8 +735,8 @@ export default function BecomeSellerPage() {
                 </div>
               )}
 
-              <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">What&apos;s included</p>
+              <div className="bg-white/10 border border-white/20 rounded-2xl p-5 mb-4">
+                <p className="text-xs font-semibold text-white/70 uppercase tracking-wide mb-3">What&apos;s included</p>
                 <ul className="space-y-2">
                   {[
                     'Dedicated store database — fully isolated',
@@ -737,8 +745,8 @@ export default function BecomeSellerPage() {
                     'Custom branding & employee management',
                     'Ongoing priority support',
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-gray-700">
-                      <CheckCircle2 size={14} className="text-green-500 flex-shrink-0 mt-0.5" />
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-white/85">
+                      <CheckCircle2 size={14} className="text-emerald-300 flex-shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}
@@ -748,7 +756,7 @@ export default function BecomeSellerPage() {
               <button
                 onClick={handlePay}
                 disabled={payLoading}
-                className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-4 rounded-xl transition-colors text-base flex items-center justify-center gap-2 mb-3"
+                className="w-full h-14 rounded-full bg-white text-neutral-900 hover:bg-white/95 disabled:opacity-60 font-semibold transition-colors text-base flex items-center justify-center gap-2 mb-3"
               >
                 {payLoading
                   ? 'Preparing payment...'
@@ -758,25 +766,25 @@ export default function BecomeSellerPage() {
               </button>
 
               <div className="flex items-center justify-center gap-2">
-                <Shield size={13} className="text-gray-400" />
-                <p className="text-xs text-gray-400">Secured by Razorpay &middot; UPI, Cards, Net Banking, Wallets</p>
+                <Shield size={13} className="text-white/50" />
+                <p className="text-xs text-white/50">Secured by Razorpay &middot; UPI, Cards, Net Banking, Wallets</p>
               </div>
 
               {form.plan === 'monthly' && (
-                <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mt-3 text-xs text-blue-700 leading-relaxed">
+                <div className="bg-white/10 border border-white/20 rounded-2xl p-3 mt-3 text-xs text-white/80 leading-relaxed">
                   This is your <strong>first month&apos;s payment</strong>. Months 2 and 3 will be invoiced separately at &#8377;2,999/month. After 3 months the regular rate of &#8377;4,999/month applies.
                 </div>
               )}
 
-              <p className="text-center text-xs text-gray-400 mt-3">
+              <p className="text-center text-xs text-white/50 mt-3">
                 You can also pay later from the link sent to your email.
               </p>
 
               {/* Testing bypass */}
-              <div className="mt-5 pt-4 border-t border-dashed border-gray-300 text-center">
+              <div className="mt-5 pt-4 border-t border-dashed border-white/20 text-center">
                 <button
                   onClick={handleSkipPayment}
-                  className="px-4 py-2 bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-colors"
+                  className="px-4 py-2 bg-black/30 border border-white/20 hover:bg-black/50 text-white text-xs font-bold rounded-full transition-colors"
                 >
                   Testing only
                 </button>
@@ -787,24 +795,24 @@ export default function BecomeSellerPage() {
           {/* ── Step 5: Done ── */}
           {step === 5 && (
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 size={32} className="text-green-500" />
+              <div className="w-16 h-16 bg-emerald-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 size={32} className="text-emerald-300" />
               </div>
-              <h2 className="text-2xl font-black text-slate-900 mb-2">You&apos;re all set!</h2>
-              <p className="text-gray-500 text-sm mb-1">
-                <span className="font-semibold text-slate-700">{form.storeName}</span> is now active.
+              <h2 className="font-display text-3xl text-white mb-2">You&apos;re all set!</h2>
+              <p className="text-white/75 text-sm mb-1">
+                <span className="font-semibold text-white">{form.storeName}</span> is now active.
               </p>
-              <p className="text-gray-400 text-xs mb-8">
+              <p className="text-white/50 text-xs mb-8">
                 Payment confirmed. A receipt has been sent to {form.email}.
               </p>
               <div className="space-y-3">
                 <button
                   onClick={() => { window.location.href = '/vendor/dashboard'; }}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                  className="w-full h-12 rounded-full bg-white text-neutral-900 hover:bg-white/95 font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <Store size={16} /> Go to Seller Dashboard
                 </button>
-                <Link href="/" className="block text-sm text-gray-400 hover:text-gray-600 transition-colors">
+                <Link href="/" className="block text-sm text-white/70 hover:text-white transition-colors">
                   Back to Homepage
                 </Link>
               </div>

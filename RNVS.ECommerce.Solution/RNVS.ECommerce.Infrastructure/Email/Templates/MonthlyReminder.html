@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { margin: 0; color: #a0aec0; font-size: 14px; }
+    .badge { display: inline-block; background: #68d391; color: #1a1a2e; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-top: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .content { padding: 32px 30px; }
+    .greeting { font-size: 16px; margin-bottom: 20px; }
+    .section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; margin: 28px 0 12px 0; }
+    .status-card { background: #f0fff4; border: 2px solid #68d391; border-radius: 12px; padding: 20px 24px; margin: 16px 0; text-align: center; }
+    .status-card .label { font-size: 12px; color: #718096; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .status-card .date { font-size: 22px; font-weight: 900; color: #1a1a2e; }
+    .status-card .sub { font-size: 13px; color: #4a5568; margin-top: 4px; }
+    .pricing-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin: 16px 0; }
+    .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #718096; font-weight: 600; }
+    .info-value { color: #1a1a2e; font-weight: 700; text-align: right; }
+    .note { background: #ebf8ff; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #2c5282; margin: 16px 0; }
+    .tip-box { background: #fff8f0; border-left: 4px solid #f6ad55; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; color: #744210; }
+    .cta { text-align: center; margin: 30px 0; }
+    .btn { display: inline-block; padding: 14px 36px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 8px; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    .btn-orange { background: #e07b39; }
+    .footer { background: #f7fafc; padding: 24px 30px; text-align: center; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
+    .footer a { color: #718096; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>RNVS CommerceX</h1>
+      <p>Subscription reminder for {{StoreName}}</p>
+      <div class="badge">{{ReminderType}}</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Hi <strong>{{VendorName}}</strong>,</p>
+      <p style="font-size:14px; color:#4a5568;">
+        Here's your regular subscription reminder for <strong>{{StoreName}}</strong>.
+        {{StatusMessage}}
+      </p>
+
+      <!-- Key date -->
+      <div class="status-card">
+        <div class="label">Key Date</div>
+        <div class="date">{{NextDate}}</div>
+        <div class="sub">Mark this date in your calendar</div>
+      </div>
+
+      <!-- Account summary -->
+      <div class="section-title">Your Subscription Summary</div>
+      <div class="pricing-box">
+        <div class="info-row">
+          <span class="info-label">Store</span>
+          <span class="info-value">{{StoreName}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Plan</span>
+          <span class="info-value">{{ReminderType}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Platform commission</span>
+          <span class="info-value">5% per sale</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Dedicated database</span>
+          <span class="info-value" style="color:#38a169;">✓ Active</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>Reminder: How commission works</strong>
+        You sell ₹10,000 worth of products → Platform takes ₹500 (5%) → You keep ₹9,500.
+        No hidden charges. No surprise deductions.
+      </div>
+
+      <!-- Helpful links -->
+      <div class="note">
+        <strong>Manage your store:</strong> Log in to add products, process orders, update inventory,
+        and generate invoices — all from your seller dashboard.
+      </div>
+
+      <div class="cta">
+        <a href="{{DashboardUrl}}" class="btn btn-orange">Go to Seller Dashboard →</a>
+      </div>
+
+      <p style="font-size:13px; color:#718096; text-align:center;">
+        Questions about your subscription? Contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#e07b39;">{{SupportEmail}}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>RNVS CommerceX</strong> · Seller Platform</p>
+      <p>This email was sent to {{VendorEmail}} as your subscription reminder.</p>
+      <p>&copy; 2026 RNVS CommerceX. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>

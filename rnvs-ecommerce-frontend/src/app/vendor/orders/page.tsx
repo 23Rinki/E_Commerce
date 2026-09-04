@@ -7,7 +7,7 @@ import { useVendorAccess } from '@/hooks/useVendorAccess';
 import { formatPrice } from '@/lib/utils';
 import {
   ShoppingBag, ChevronDown, ChevronUp, Search,
-  Loader2, AlertCircle, RefreshCw, FileText,
+  Loader2, AlertCircle, RefreshCw, FileText, Download, X,
 } from 'lucide-react';
 import api from '@/lib/api';
 
@@ -26,6 +26,7 @@ interface VendorOrder {
   id: number;
   orderNumber: string;
   userId: string;
+  vendorId?: string;
   customerEmail?: string;
   customerPhone?: string;
   subTotal: number;
@@ -88,6 +89,29 @@ export default function VendorOrdersPage() {
   const [updating, setUpdating]       = useState<number | null>(null);
   const [updateError, setUpdateError] = useState<Record<number, string>>({});
   const [invoiceLoading, setInvoiceLoading] = useState<number | null>(null);
+  const [pdfLoading, setPdfLoading] = useState<number | null>(null);
+  const [previewHtml, setPreviewHtml] = useState<string | null>(null);
+
+  const handleDownloadPdf = async (orderId: number, orderNumber: string) => {
+    setPdfLoading(orderId);
+    try {
+      const res = await api.get(`/api/invoices/download/${orderId}`, {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Invoice-${orderNumber}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      alert('Failed to download PDF. Please try again.');
+    } finally {
+      setPdfLoading(null);
+    }
+  };
 
   const handleDownloadInvoice = async (orderId: number) => {
     setInvoiceLoading(orderId);
@@ -96,11 +120,7 @@ export default function VendorOrdersPage() {
         responseType: 'text',
         headers: { Accept: 'text/html' },
       });
-      const win = window.open('', '_blank');
-      if (win) {
-        win.document.write(res.data as string);
-        win.document.close();
-      }
+      setPreviewHtml(res.data as string);
     } catch {
       alert('Failed to generate invoice. Make sure a template is set at Vendor → Invoices.');
     } finally {
@@ -124,11 +144,11 @@ export default function VendorOrdersPage() {
 
   useEffect(() => { load(); }, []);
 
-  const handleStatusUpdate = async (orderId: number, newStatus: number) => {
+  const handleStatusUpdate = async (orderId: number, newStatus: number, vendorId?: string) => {
     setUpdating(orderId);
     setUpdateError((prev) => ({ ...prev, [orderId]: '' }));
     try {
-      await vendorOrdersApi.updateStatus(orderId, newStatus);
+      await vendorOrdersApi.updateStatus(orderId, newStatus, undefined, vendorId);
       setOrders((prev) =>
         prev.map((o) => o.id === orderId ? { ...o, status: newStatus } : o)
       );
@@ -154,19 +174,34 @@ export default function VendorOrdersPage() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="p-6 max-w-5xl">
+    <div className="p-6 max-w-5xl bg-slate-200/60 rounded-3xl min-h-[calc(100vh-3rem)]">
+
+      {/* Invoice preview modal — stays on this page, no new tab */}
+      {previewHtml && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-6">
+          <div className="relative bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl" style={{ height: '85vh' }}>
+            <button
+              onClick={() => setPreviewHtml(null)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center hover:bg-gray-100 transition-colors"
+            >
+              <X size={15} className="text-slate-600" />
+            </button>
+            <iframe srcDoc={previewHtml} className="w-full h-full border-0" sandbox="allow-same-origin" title="Invoice Preview" />
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Orders</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-3xl font-bold text-slate-900">Orders</h1>
+          <p className="text-sm text-slate-600 mt-0.5">
             Manage and update your customer orders
           </p>
         </div>
         <button
           onClick={load}
-          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-slate-800 transition-colors"
+          className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
         >
           <RefreshCw size={14} /> Refresh
         </button>
@@ -182,13 +217,13 @@ export default function VendorOrdersPage() {
             <button
               key={String(tab.value)}
               onClick={() => setActiveTab(tab.value)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all shadow-sm flex items-center gap-2
                 ${activeTab === tab.value
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-slate-700'}`}
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-white text-slate-600 hover:text-slate-900'}`}
             >
               {tab.label}
-              <span className={`ml-1.5 ${activeTab === tab.value ? 'text-slate-300' : 'text-gray-400'}`}>
+              <span className={`px-1.5 rounded text-xs ${activeTab === tab.value ? 'bg-slate-700 text-white' : 'text-slate-400'}`}>
                 {count}
               </span>
             </button>
@@ -198,13 +233,13 @@ export default function VendorOrdersPage() {
 
       {/* Search */}
       <div className="relative mb-5">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="text"
           placeholder="Search by order number..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-8 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-slate-200"
+          className="w-full pl-11 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-500 rounded-full bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-100"
         />
       </div>
 
@@ -223,9 +258,11 @@ export default function VendorOrdersPage() {
 
       {!loading && !error && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <ShoppingBag size={36} className="text-gray-200 mb-3" />
-          <p className="text-sm font-medium text-gray-400">No orders found</p>
-          <p className="text-xs text-gray-300 mt-1">
+          <div className="h-16 w-16 rounded-2xl bg-green-50 flex items-center justify-center mb-3">
+            <ShoppingBag size={30} className="text-green-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-600">No orders found</p>
+          <p className="text-xs text-slate-500 mt-1">
             {search ? 'Try a different order number' : 'Orders will appear here once customers place them'}
           </p>
         </div>
@@ -241,10 +278,15 @@ export default function VendorOrdersPage() {
             return (
               <div
                 key={order.id}
-                className="bg-white border border-gray-100 rounded-2xl overflow-hidden"
+                className="bg-white rounded-2xl shadow-md overflow-hidden"
               >
                 {/* Order row */}
                 <div className="flex items-center gap-4 px-5 py-4">
+
+                  {/* Icon */}
+                  <div className="w-12 h-12 rounded-lg bg-emerald-50 flex-shrink-0 flex items-center justify-center">
+                    <ShoppingBag size={22} className="text-emerald-500" />
+                  </div>
 
                   {/* Order info */}
                   <div className="flex-1 min-w-0">
@@ -254,7 +296,7 @@ export default function VendorOrdersPage() {
                         {status.label}
                       </span>
                     </div>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                    <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
                       <span>{new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                       <span>·</span>
                       <span>{order.items.length} item{order.items.length !== 1 ? 's' : ''}</span>
@@ -270,8 +312,8 @@ export default function VendorOrdersPage() {
                     ) : (
                       <select
                         value={order.status}
-                        onChange={(e) => handleStatusUpdate(order.id, Number(e.target.value))}
-                        className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 cursor-pointer"
+                        onChange={(e) => handleStatusUpdate(order.id, Number(e.target.value), order.vendorId)}
+                        className="text-xs border border-gray-200 rounded-full px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 cursor-pointer"
                       >
                         {UPDATABLE_STATUSES.map((s) => (
                           <option key={s.value} value={s.value}>{s.label}</option>
@@ -283,17 +325,28 @@ export default function VendorOrdersPage() {
                     <button
                       onClick={() => handleDownloadInvoice(order.id)}
                       disabled={invoiceLoading === order.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-700 disabled:bg-slate-400 text-white text-xs font-bold rounded-lg transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white text-xs font-bold rounded-full transition-colors"
                     >
                       {invoiceLoading === order.id
                         ? <><Loader2 size={12} className="animate-spin" /> Generating…</>
                         : <><FileText size={12} /> Invoice</>}
                     </button>
 
+                    {/* Download PDF */}
+                    <button
+                      onClick={() => handleDownloadPdf(order.id, order.orderNumber)}
+                      disabled={pdfLoading === order.id}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-300 text-white text-xs font-bold rounded-full transition-colors"
+                    >
+                      {pdfLoading === order.id
+                        ? <><Loader2 size={12} className="animate-spin" /> Downloading…</>
+                        : <><Download size={12} /> Download</>}
+                    </button>
+
                     {/* Expand toggle */}
                     <button
                       onClick={() => setExpanded(isExpanded ? null : order.id)}
-                      className="p-1.5 rounded-lg text-gray-400 hover:text-slate-700 hover:bg-gray-50 transition-colors"
+                      className="p-2 rounded-full text-indigo-500 hover:text-indigo-700 hover:bg-indigo-50 transition-colors"
                     >
                       {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </button>
@@ -310,19 +363,19 @@ export default function VendorOrdersPage() {
                   <div className="border-t border-gray-50 px-5 py-4 bg-gray-50">
                     {(order.customerEmail || order.customerPhone) && (
                       <div className="mb-4 pb-3 border-b border-gray-200">
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Customer Contact</p>
+                        <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Customer Contact</p>
                         <div className="flex flex-wrap gap-4 text-sm text-slate-700">
                           {order.customerEmail && <span>{order.customerEmail}</span>}
                           {order.customerPhone && <span>{order.customerPhone}</span>}
                         </div>
                       </div>
                     )}
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Items</p>
+                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3">Items</p>
                     <div className="space-y-2">
                       {order.items.map((item) => (
                         <div key={item.id} className="flex items-center justify-between text-sm">
                           <span className="text-slate-700 font-medium">{item.productName}</span>
-                          <div className="flex items-center gap-4 text-gray-500 text-xs">
+                          <div className="flex items-center gap-4 text-slate-600 text-xs">
                             <span>Qty: {item.quantity}</span>
                             <span>@ {formatPrice(item.unitPrice)}</span>
                             <span className="font-semibold text-slate-700">{formatPrice(item.totalPrice)}</span>
@@ -332,7 +385,7 @@ export default function VendorOrdersPage() {
                     </div>
 
                     {/* Price breakdown */}
-                    <div className="mt-4 pt-3 border-t border-gray-200 space-y-1 text-xs text-gray-500">
+                    <div className="mt-4 pt-3 border-t border-gray-200 space-y-1 text-xs text-slate-600">
                       <div className="flex justify-between">
                         <span>Subtotal</span>
                         <span>{formatPrice(order.subTotal)}</span>
@@ -360,8 +413,8 @@ export default function VendorOrdersPage() {
 
       {/* Summary */}
       {!loading && !error && orders.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-100 rounded-2xl px-5 py-4 flex items-center justify-between">
-          <span className="text-sm text-gray-500">
+        <div className="mt-6 bg-white shadow-md rounded-2xl px-5 py-4 flex items-center justify-between">
+          <span className="text-sm text-slate-600">
             Showing {filtered.length} of {orders.length} orders
           </span>
           <span className="text-sm font-bold text-slate-900">

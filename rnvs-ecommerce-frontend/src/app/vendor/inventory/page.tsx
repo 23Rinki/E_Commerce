@@ -7,7 +7,7 @@ import { useVendorAccess } from '@/hooks/useVendorAccess';
 import { formatPrice } from '@/lib/utils';
 import {
   BarChart2, Search, RefreshCw, Loader2, AlertCircle,
-  PackageX, Edit2, Check, X, AlertTriangle,
+  PackageX, Edit2, Check, X, AlertTriangle, Boxes,
 } from 'lucide-react';
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -194,16 +194,16 @@ export default function VendorInventoryPage() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="p-6 max-w-5xl">
+    <div className="p-6 max-w-5xl bg-slate-200/60 rounded-3xl min-h-[calc(100vh-3rem)]">
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Inventory</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Track and manage stock levels across your products</p>
+          <h1 className="text-3xl font-bold text-slate-900">Inventory</h1>
+          <p className="text-sm text-slate-600 mt-0.5">Track and manage stock levels across your products</p>
         </div>
         <button onClick={load}
-          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-slate-800 transition-colors">
+          className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors">
           <RefreshCw size={14} /> Refresh
         </button>
       </div>
@@ -212,13 +212,16 @@ export default function VendorInventoryPage() {
       {!loading && !error && (
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { label: 'Total Products', value: totalProducts, color: 'bg-slate-100 text-slate-700' },
-            { label: 'Low Stock',      value: lowStock,      color: 'bg-yellow-100 text-yellow-700' },
-            { label: 'Out of Stock',   value: outOfStock,    color: 'bg-red-100 text-red-700' },
-          ].map(({ label, value, color }) => (
-            <div key={label} className="bg-white border border-gray-100 rounded-2xl p-5">
-              <p className={`text-2xl font-black ${color.split(' ')[1]}`}>{value}</p>
-              <p className="text-sm text-gray-500 mt-0.5">{label}</p>
+            { label: 'Total Products', value: totalProducts, icon: Boxes,         box: 'bg-blue-50 text-blue-600',   text: 'text-slate-900' },
+            { label: 'Low Stock',      value: lowStock,      icon: AlertTriangle, box: 'bg-amber-50 text-amber-600', text: 'text-amber-600' },
+            { label: 'Out of Stock',   value: outOfStock,    icon: PackageX,      box: 'bg-red-50 text-red-600',     text: 'text-red-600' },
+          ].map(({ label, value, icon: Icon, box, text }) => (
+            <div key={label} className="bg-white rounded-xl p-5 shadow-sm">
+              <div className={`h-10 w-10 rounded-lg flex items-center justify-center mb-3 ${box}`}>
+                <Icon size={18} />
+              </div>
+              <p className={`text-3xl font-bold ${text}`}>{value}</p>
+              <p className="text-slate-500 mt-1">{label}</p>
             </div>
           ))}
         </div>
@@ -226,7 +229,7 @@ export default function VendorInventoryPage() {
 
       {/* Low stock alert banner */}
       {!loading && lowStock > 0 && (
-        <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 mb-5 text-sm text-yellow-800">
+        <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-2xl px-4 py-3 mb-5 text-sm text-yellow-800">
           <AlertTriangle size={15} className="flex-shrink-0" />
           <span><strong>{lowStock} product{lowStock > 1 ? 's are' : ' is'} running low on stock.</strong> Update quantities before they run out.</span>
         </div>
@@ -241,12 +244,12 @@ export default function VendorInventoryPage() {
         ].map((tab) => (
           <button key={tab.key}
             onClick={() => setActiveTab(tab.key as any)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all shadow-sm flex items-center gap-2
               ${activeTab === tab.key
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-slate-700'}`}>
+                ? 'bg-slate-900 text-white'
+                : 'bg-white text-slate-600 hover:text-slate-900'}`}>
             {tab.label}
-            <span className={`ml-1.5 ${activeTab === tab.key ? 'text-slate-300' : 'text-gray-400'}`}>
+            <span className={`px-1.5 rounded text-xs ${activeTab === tab.key ? 'bg-slate-700 text-white' : 'text-slate-400'}`}>
               {tab.count}
             </span>
           </button>
@@ -255,10 +258,10 @@ export default function VendorInventoryPage() {
 
       {/* Search */}
       <div className="relative mb-5">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <input type="text" placeholder="Search by product name..."
           value={search} onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-8 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-slate-200" />
+          className="w-full pl-11 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-500 rounded-full bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-100" />
       </div>
 
       {/* States */}
@@ -276,9 +279,11 @@ export default function VendorInventoryPage() {
 
       {!loading && !error && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <PackageX size={36} className="text-gray-200 mb-3" />
-          <p className="text-sm font-medium text-gray-400">No products found</p>
-          <p className="text-xs text-gray-300 mt-1">
+          <div className="h-16 w-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-3">
+            <PackageX size={30} className="text-blue-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-600">No products found</p>
+          <p className="text-xs text-slate-500 mt-1">
             {search ? 'Try a different name' : 'Add products first to manage inventory'}
           </p>
         </div>
@@ -286,7 +291,7 @@ export default function VendorInventoryPage() {
 
       {/* Inventory list */}
       {!loading && !error && filtered.length > 0 && (
-        <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+        <div className="bg-white shadow-md rounded-2xl overflow-hidden">
           {/* Column headers */}
           <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto_auto_auto] gap-4 px-5 py-2.5 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gray-50 border-b border-gray-100">
             <span>Product</span>
@@ -312,7 +317,7 @@ export default function VendorInventoryPage() {
                   {/* Product info */}
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-slate-800 truncate">{row.product.name}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{formatPrice(row.product.price)}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{formatPrice(row.product.price)}</p>
                   </div>
 
                   {/* Current stock */}
@@ -323,7 +328,7 @@ export default function VendorInventoryPage() {
                         onChange={(e) => setEditForm((f) => ({ ...f, currentQuantity: e.target.value }))}
                         className="w-20 text-center text-sm border border-orange-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-100" />
                     ) : (
-                      <span className={`text-sm font-bold ${qty === 0 ? 'text-red-600' : qty <= minThreshold ? 'text-yellow-600' : 'text-slate-700'}`}>
+                      <span className={`text-sm font-bold ${qty === 0 ? 'text-red-600' : qty <= minThreshold ? 'text-amber-600' : 'text-slate-900'}`}>
                         {qty}
                       </span>
                     )}
@@ -331,7 +336,7 @@ export default function VendorInventoryPage() {
 
                   {/* Reserved */}
                   <div className="w-24 text-center">
-                    <span className="text-sm text-gray-500">{reserved}</span>
+                    <span className="text-sm text-slate-600">{reserved}</span>
                   </div>
 
                   {/* Min threshold */}
@@ -342,7 +347,7 @@ export default function VendorInventoryPage() {
                         onChange={(e) => setEditForm((f) => ({ ...f, minimumThreshold: e.target.value }))}
                         className="w-20 text-center text-sm border border-orange-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-100" />
                     ) : (
-                      <span className="text-sm text-gray-500">{minThreshold}</span>
+                      <span className="text-sm text-slate-600">{minThreshold}</span>
                     )}
                   </div>
 
@@ -360,13 +365,13 @@ export default function VendorInventoryPage() {
                           {saving ? <Loader2 size={13} className="animate-spin" /> : <Check size={13} />}
                         </button>
                         <button onClick={cancelEdit}
-                          className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors">
+                          className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 transition-colors">
                           <X size={13} />
                         </button>
                       </>
                     ) : (
                       <button onClick={() => startEdit(row)}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-slate-700 hover:bg-gray-100 transition-colors">
+                        className="p-1.5 rounded-lg text-indigo-500 hover:text-indigo-700 hover:bg-indigo-50 transition-colors">
                         <Edit2 size={14} />
                       </button>
                     )}

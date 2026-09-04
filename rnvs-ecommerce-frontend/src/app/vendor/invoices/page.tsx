@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { invoiceTemplatesApi } from '@/lib/api';
 import { useVendorStore } from '@/store/vendorStore';
 import { useVendorAccess } from '@/hooks/useVendorAccess';
-import { CheckCircle2, Eye, X, Loader2 } from 'lucide-react';
+import { CheckCircle2, Eye, Download, X, Loader2 } from 'lucide-react';
 
 // ── Pre-built templates ──────────────────────────────────────────────────────
 
@@ -42,11 +42,11 @@ td{padding:10px 12px;font-size:12px;color:#333;border-bottom:1px solid #e8ecff}
 .grand-total{display:flex;justify-content:space-between;font-size:19px;font-weight:900;color:#ffd700;border-top:1px solid rgba(255,215,0,0.3);padding-top:12px;margin-top:8px}
 .footer{background:#f0f4ff;text-align:center;padding:20px;font-size:11px;color:#6666aa;border-top:3px solid #ffd700}
 .footer strong{color:#1a1a6e}
-</style></head><body>
+</style>{{StyleOverride}}</head><body>
 <div class="page">
   <div class="header">
     <div>
-      <div class="store-name">{{StoreName}}</div>
+      {{Logo}}<div class="store-name">{{StoreName}}</div>
       <div class="store-address">{{StoreAddress}}</div>
       <div class="store-gstin">GSTIN: {{VendorGSTIN}}</div>
     </div>
@@ -63,7 +63,7 @@ td{padding:10px 12px;font-size:12px;color:#333;border-bottom:1px solid #e8ecff}
     <div class="bill-section">
       <div class="bill-box">
         <div class="bill-label">Bill To</div>
-        <div class="bill-value">{{CustomerName}}<br/>{{CustomerEmail}}<br/>{{ShippingAddress}}</div>
+        <div class="bill-value">{{CustomerName}}<br/>{{CustomerPhone}}<br/>{{ShippingAddress}}</div>
         <div class="bill-gstin">GSTIN: {{CustomerGSTIN}}</div>
       </div>
       <div class="bill-box">
@@ -71,7 +71,7 @@ td{padding:10px 12px;font-size:12px;color:#333;border-bottom:1px solid #e8ecff}
         <div class="bill-value">Invoice #{{InvoiceNumber}}<br/>Date: {{OrderDate}}</div>
       </div>
     </div>
-    <table>
+    {{ExtraFields}}<table>
       <thead><tr><th>Item Description</th><th>HSN</th><th>Qty</th><th>Unit Price</th><th>Taxable</th><th>Total</th></tr></thead>
       <tbody>{{Items}}</tbody>
     </table>
@@ -128,10 +128,10 @@ td{padding:11px 12px;font-size:12px;color:#444;border-bottom:1px solid #eee}
 .grand-value{font-size:22px;font-weight:900;color:#fff}
 .footer{background:linear-gradient(135deg,#f8f9ff,#eef0ff);padding:18px 50px;text-align:center;font-size:11px;color:#888}
 .footer strong{background:linear-gradient(135deg,#667eea,#f64f59);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
-</style></head><body>
+</style>{{StyleOverride}}</head><body>
 <div class="page">
   <div class="header">
-    <div class="store-name">{{StoreName}}</div>
+    {{Logo}}<div class="store-name">{{StoreName}}</div>
     <div class="store-detail">{{StoreAddress}}</div>
     <div class="store-gstin">GSTIN: {{VendorGSTIN}}</div>
     <div class="inv-badge">
@@ -147,7 +147,7 @@ td{padding:11px 12px;font-size:12px;color:#444;border-bottom:1px solid #eee}
       <div class="stat">
         <div class="stat-label">Bill To</div>
         <div class="stat-value">{{CustomerName}}</div>
-        <div class="stat-gstin">{{CustomerEmail}}</div>
+        <div class="stat-gstin">{{CustomerPhone}}</div>
         <div class="stat-gstin">GSTIN: {{CustomerGSTIN}}</div>
       </div>
       <div class="stat">
@@ -159,7 +159,7 @@ td{padding:11px 12px;font-size:12px;color:#444;border-bottom:1px solid #eee}
         <div class="stat-value">{{OrderDate}}</div>
       </div>
     </div>
-    <table>
+    {{ExtraFields}}<table>
       <thead><tr><th>Item</th><th>HSN</th><th>Qty</th><th>Unit Price</th><th>Taxable</th><th>Total</th></tr></thead>
       <tbody>{{Items}}</tbody>
     </table>
@@ -212,11 +212,11 @@ td{padding:10px 12px;font-size:12px;color:#2d5a42;border-bottom:1px solid #e0f0e
 .grand{display:flex;justify-content:space-between;font-size:19px;font-weight:900;color:#0f9b58;border-top:2px solid #0f9b58;margin-top:10px;padding-top:12px}
 .footer{background:linear-gradient(135deg,#0f9b58,#00c9a7);padding:18px 50px;text-align:center;font-size:11px;color:rgba(255,255,255,0.9)}
 .footer strong{color:#fff;font-weight:900}
-</style></head><body>
+</style>{{StyleOverride}}</head><body>
 <div class="page">
   <div class="header">
     <div>
-      <div class="store-name">{{StoreName}}</div>
+      {{Logo}}<div class="store-name">{{StoreName}}</div>
       <div class="store-detail">{{StoreAddress}}</div>
       <div class="store-gstin">GSTIN: {{VendorGSTIN}}</div>
     </div>
@@ -234,7 +234,7 @@ td{padding:10px 12px;font-size:12px;color:#2d5a42;border-bottom:1px solid #e0f0e
     <div class="bill-row">
       <div class="bill-card">
         <div class="bc-label">Bill To</div>
-        <div class="bc-value">{{CustomerName}}<br/>{{CustomerEmail}}</div>
+        <div class="bc-value">{{CustomerName}}<br/>{{CustomerPhone}}</div>
         <div class="bc-gstin">GSTIN: {{CustomerGSTIN}}</div>
       </div>
       <div class="bill-card">
@@ -242,7 +242,7 @@ td{padding:10px 12px;font-size:12px;color:#2d5a42;border-bottom:1px solid #e0f0e
         <div class="bc-value" style="font-size:11px">{{ShippingAddress}}</div>
       </div>
     </div>
-    <table>
+    {{ExtraFields}}<table>
       <thead><tr><th>Item</th><th>HSN</th><th>Qty</th><th>Unit Price</th><th>Taxable</th><th style="text-align:right">Total</th></tr></thead>
       <tbody>{{Items}}</tbody>
     </table>
@@ -293,11 +293,11 @@ td{padding:10px 12px;font-size:12px;color:#333}
 .total-row{display:flex;justify-content:space-between;padding:8px 12px;font-size:13px;color:#555;border-bottom:1px solid #eee}
 .total-row.grand{background:#111;color:#fff;font-size:16px;font-weight:900;padding:14px 12px;border-bottom:none}
 .footer{background:#f8f8f8;text-align:center;padding:16px;font-size:11px;color:#888;border-top:2px solid #111}
-</style></head><body>
+</style>{{StyleOverride}}</head><body>
 <div class="page">
   <div class="header">
     <div>
-      <div class="store-name">{{StoreName}}</div>
+      {{Logo}}<div class="store-name">{{StoreName}}</div>
       <div class="store-detail">{{StoreAddress}}</div>
       <div class="store-gstin">GSTIN: {{VendorGSTIN}}</div>
     </div>
@@ -319,7 +319,7 @@ td{padding:10px 12px;font-size:12px;color:#333}
     <div class="bill-section">
       <div class="bill-box">
         <div class="bill-label">Bill To</div>
-        <div class="bill-value">{{CustomerName}}<br/>{{CustomerEmail}}</div>
+        <div class="bill-value">{{CustomerName}}<br/>{{CustomerPhone}}</div>
         <div class="bill-gstin">GSTIN: {{CustomerGSTIN}}</div>
       </div>
       <div class="bill-box">
@@ -327,7 +327,7 @@ td{padding:10px 12px;font-size:12px;color:#333}
         <div class="bill-value">{{ShippingAddress}}</div>
       </div>
     </div>
-    <table>
+    {{ExtraFields}}<table>
       <thead><tr><th>#</th><th>Item Description</th><th>HSN</th><th>Qty</th><th>Unit Price</th><th>Taxable Amt</th><th>Total</th></tr></thead>
       <tbody>{{Items}}</tbody>
     </table>
@@ -398,6 +398,14 @@ export default function InvoicesPage() {
 
   const defaultName = saved.find(s => s.isDefault)?.name;
 
+  const handleDownload = (html: string) => {
+    const win = window.open('', '_blank');
+    if (win) {
+      win.document.write(html);
+      win.document.close();
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl">
       {/* Toast */}
@@ -460,13 +468,21 @@ export default function InvoicesPage() {
                     pointerEvents: 'none',
                   }}
                 />
-                {/* Full preview button */}
-                <button
-                  onClick={() => setPreview(t.html)}
-                  className="absolute bottom-3 right-3 flex items-center gap-1.5 text-xs font-semibold bg-white/95 hover:bg-white text-slate-700 px-3 py-2 rounded-lg shadow transition-colors"
-                >
-                  <Eye size={12} /> Full Preview
-                </button>
+                {/* Full preview + download buttons */}
+                <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                  <button
+                    onClick={() => handleDownload(t.html)}
+                    className="flex items-center gap-1.5 text-xs font-semibold bg-white/95 hover:bg-white text-slate-700 px-3 py-2 rounded-lg shadow transition-colors"
+                  >
+                    <Download size={12} /> Download
+                  </button>
+                  <button
+                    onClick={() => setPreview(t.html)}
+                    className="flex items-center gap-1.5 text-xs font-semibold bg-white/95 hover:bg-white text-slate-700 px-3 py-2 rounded-lg shadow transition-colors"
+                  >
+                    <Eye size={12} /> Full Preview
+                  </button>
+                </div>
                 {isDefault && (
                   <div className="absolute top-3 left-3 flex items-center gap-1 bg-orange-500 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-full shadow">
                     <CheckCircle2 size={11} /> Current Default

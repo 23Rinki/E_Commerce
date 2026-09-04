@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Plus, RefreshCw, Users, Pencil, Trash2, CheckCircle2, AlertCircle, Phone, MapPin, Shield, Eye, EyeOff } from 'lucide-react';
+import { Plus, RefreshCw, Users, Pencil, Trash2, CheckCircle2, AlertCircle, Phone, MapPin, Shield, Eye, EyeOff, X } from 'lucide-react';
 import { employeeApi } from '@/lib/api';
 import { DESIGNATION_ACCESS } from '@/lib/permissions';
 import { useVendorStore } from '@/store/vendorStore';
@@ -50,7 +50,7 @@ const EMPTY: Form = {
   designation: 'Sales Staff', phoneNumber: '', country: 'India', city: '', state: '', notes: '',
 };
 
-const inp = 'w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-400 transition-colors bg-white';
+const inp = 'w-full px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 border-2 border-slate-400 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors bg-white';
 
 function initials(name: string) {
   const parts = name.trim().split(' ');
@@ -180,13 +180,13 @@ export default function EmployeesPage() {
   const badge = DESIGNATION_COLORS[form.designation] || 'bg-slate-100 text-slate-600';
 
   return (
-    <div className="p-6 max-w-6xl">
+    <div className="p-6 bg-slate-200/60 rounded-3xl min-h-[calc(100vh-3rem)]">
 
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-xl font-black text-slate-900">Employees</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Add team members and preview their access in real time.</p>
+          <h1 className="text-3xl font-bold text-slate-900">Employees</h1>
+          <p className="text-sm text-slate-600 mt-0.5">Add team members and preview their access in real time.</p>
         </div>
         {editing && (
           <button onClick={resetForm}
@@ -219,10 +219,10 @@ export default function EmployeesPage() {
       )}
 
       {/* Split layout — form + preview */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
         {/* LEFT — Form */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-5">
           <p className="text-sm font-bold text-slate-900 mb-4">
             {editing ? `Editing — ${editing.employeeName}` : 'Add New Employee'}
           </p>
@@ -233,52 +233,52 @@ export default function EmployeesPage() {
               <>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">First name <span className="text-orange-400">*</span></label>
+                    <label className="text-xs font-bold text-slate-900 block mb-1.5">First name <span className="text-orange-400">*</span></label>
                     <input value={form.firstName} onChange={e => f('firstName', e.target.value)} className={inp} placeholder="John" autoComplete="off" />
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Last name</label>
+                    <label className="text-xs font-bold text-slate-900 block mb-1.5">Last name</label>
                     <input value={form.lastName} onChange={e => f('lastName', e.target.value)} className={inp} placeholder="Doe" autoComplete="off" />
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Email <span className="text-orange-400">*</span></label>
+                  <label className="text-xs font-bold text-slate-900 block mb-1.5">Email <span className="text-orange-400">*</span></label>
                   {/* autoComplete="new-password" tricks browsers into not filling saved credentials */}
                   <input type="email" value={form.email} onChange={e => f('email', e.target.value)}
                     className={inp} placeholder="employee@yourstore.com"
                     autoComplete="new-password" name="employee-email" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Password <span className="text-orange-400">*</span></label>
+                  <label className="text-xs font-bold text-slate-900 block mb-1.5">Password <span className="text-orange-400">*</span></label>
                   <div className="relative">
                     <input type={showPass ? 'text' : 'password'} value={form.password}
                       onChange={e => f('password', e.target.value)}
                       className={`${inp} pr-10`} placeholder="Min. 6 characters"
                       autoComplete="new-password" name="employee-password" />
                     <button type="button" onClick={() => setShowPass(p => !p)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-slate-600">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-indigo-400 hover:text-indigo-600">
                       {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
-                  <p className="text-[11px] text-gray-400 mt-1">The employee uses this to log in.</p>
+                  <p className="text-[11px] text-slate-500 mt-1">The employee uses this to log in.</p>
                 </div>
               </>
             )}
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Role / Designation <span className="text-orange-400">*</span></label>
+              <label className="text-xs font-bold text-slate-900 block mb-1.5">Role / Designation <span className="text-orange-400">*</span></label>
               <select value={form.designation} onChange={e => f('designation', e.target.value)} className={inp}>
                 {DESIGNATIONS.map(d => <option key={d}>{d}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Phone <span className="text-orange-400">*</span></label>
+              <label className="text-xs font-bold text-slate-900 block mb-1.5">Phone <span className="text-orange-400">*</span></label>
               <input type="tel" value={form.phoneNumber} onChange={e => f('phoneNumber', e.target.value)} className={inp} placeholder="+91 98765 43210" />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Country</label>
+              <label className="text-xs font-bold text-slate-900 block mb-1.5">Country</label>
               <input
                 value={form.country}
                 onChange={e => {
@@ -302,7 +302,7 @@ export default function EmployeesPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="relative">
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">City</label>
+                <label className="text-xs font-bold text-slate-900 block mb-1.5">City</label>
                 <input
                   value={form.city}
                   onChange={e => {
@@ -332,7 +332,7 @@ export default function EmployeesPage() {
                 )}
               </div>
               <div className="relative">
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">State</label>
+                <label className="text-xs font-bold text-slate-900 block mb-1.5">State</label>
                 <input
                   value={form.state}
                   onChange={e => {
@@ -359,7 +359,7 @@ export default function EmployeesPage() {
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Notes <span className="text-gray-400 font-normal">(optional)</span></label>
+              <label className="text-xs font-bold text-slate-900 block mb-1.5">Notes <span className="text-slate-500 font-normal">(optional)</span></label>
               <textarea value={form.notes} onChange={e => f('notes', e.target.value)}
                 className={`${inp} resize-none`} rows={2} placeholder="Any additional notes..." />
             </div>
@@ -379,17 +379,25 @@ export default function EmployeesPage() {
           </div>
         </div>
 
-        {/* RIGHT — Preview */}
-        <div className="sticky top-6 self-start">
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <p className="text-sm font-bold text-slate-900 mb-4">Employee Preview</p>
+        {/* RIGHT — Preview + Your Team, stacked */}
+        <div className="lg:col-span-3 sticky top-6 self-start space-y-6">
+          <div className="bg-white rounded-2xl shadow-md p-5">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-bold text-slate-900">Employee Preview</p>
+              {form.firstName && (
+                <button onClick={resetForm}
+                  className="flex items-center gap-1 text-xs font-semibold text-rose-500 hover:text-rose-700 hover:bg-rose-50 px-2 py-1 rounded-lg transition-colors">
+                  <X size={13} /> Clear
+                </button>
+              )}
+            </div>
 
             {!form.firstName ? (
-              <div className="rounded-xl border border-dashed border-gray-200 p-10 text-center">
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                  <Users size={22} className="text-gray-300" />
+              <div className="rounded-xl border border-dashed border-slate-200 p-10 text-center">
+                <div className="w-14 h-14 rounded-full bg-indigo-50 flex items-center justify-center mx-auto mb-3">
+                  <Users size={22} className="text-indigo-400" />
                 </div>
-                <p className="text-sm text-gray-400">Start filling the form to see a live preview.</p>
+                <p className="text-sm text-slate-500">Start filling the form to see a live preview.</p>
               </div>
             ) : (
               <div className="rounded-xl border border-gray-200 overflow-hidden shadow-sm">
@@ -408,13 +416,13 @@ export default function EmployeesPage() {
                 <div className="px-5 py-4 space-y-2.5">
                   {form.phoneNumber && (
                     <div className="flex items-center gap-2.5 text-sm text-slate-600">
-                      <Phone size={14} className="text-gray-400 flex-shrink-0" />
+                      <Phone size={14} className="text-indigo-400 flex-shrink-0" />
                       <span>{form.phoneNumber}</span>
                     </div>
                   )}
                   {(form.city || form.state) && (
                     <div className="flex items-center gap-2.5 text-sm text-slate-600">
-                      <MapPin size={14} className="text-gray-400 flex-shrink-0" />
+                      <MapPin size={14} className="text-indigo-400 flex-shrink-0" />
                       <span>{[form.city, form.state].filter(Boolean).join(', ')}</span>
                     </div>
                   )}
@@ -423,8 +431,8 @@ export default function EmployeesPage() {
                 {/* Access */}
                 <div className="px-5 pb-5">
                   <div className="flex items-center gap-1.5 mb-2">
-                    <Shield size={13} className="text-gray-400" />
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Portal Access</p>
+                    <Shield size={13} className="text-indigo-400" />
+                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wider">Portal Access</p>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {Object.keys(PAGE_ACCESS_LABELS).map(slug => (
@@ -437,91 +445,92 @@ export default function EmployeesPage() {
                       </span>
                     ))}
                   </div>
-                  <p className="text-[11px] text-gray-400 mt-2 italic">Access updates when you change the role.</p>
+                  <p className="text-[11px] text-slate-500 mt-2 italic">Access updates when you change the role.</p>
                 </div>
               </div>
             )}
           </div>
-        </div>
-      </div>
 
-      {/* ── Your Team ── */}
-      <div className="mt-8">
+          {/* ── Your Team ── */}
+          <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-bold text-slate-900">Your Team
+          <h2 onClick={load} title="Refresh team list" className="text-sm font-bold text-slate-900 cursor-pointer hover:text-indigo-600 transition-colors">Your Team
             {employees.length > 0 && (
               <span className="ml-2 px-2 py-0.5 bg-indigo-100 text-indigo-600 text-xs font-semibold rounded-full">
                 {employees.length}
               </span>
             )}
           </h2>
-          <button onClick={load} className="text-xs text-gray-400 hover:text-slate-600 flex items-center gap-1 transition-colors">
+          <button onClick={load} className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg transition-colors">
             <RefreshCw size={12} /> Refresh
           </button>
         </div>
 
         {loading ? (
-          <div className="bg-white border border-gray-100 rounded-2xl flex items-center justify-center h-32">
-            <RefreshCw size={18} className="animate-spin text-gray-400" />
+          <div className="bg-white shadow-md rounded-2xl flex items-center justify-center h-32">
+            <RefreshCw size={18} className="animate-spin text-slate-400" />
           </div>
         ) : employees.length === 0 ? (
-          <div className="bg-white border border-gray-100 rounded-2xl p-12 text-center">
-            <Users size={32} className="text-gray-200 mx-auto mb-3" />
+          <div className="bg-white shadow-md rounded-2xl p-12 text-center">
+            <div className="h-16 w-16 rounded-2xl bg-indigo-50 flex items-center justify-center mx-auto mb-3">
+              <Users size={30} className="text-indigo-400" />
+            </div>
             <p className="text-sm font-semibold text-slate-700">No team members yet</p>
-            <p className="text-xs text-gray-400 mt-1">Fill in the form above to add your first employee.</p>
+            <p className="text-xs text-slate-500 mt-1">Fill in the form above to add your first employee.</p>
           </div>
         ) : (
-          <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+          <div className="bg-white shadow-md rounded-2xl overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Name</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Role</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden md:table-cell">Phone</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden lg:table-cell">Joined</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                  <th className="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Actions</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
+                  <th className="text-left px-3 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
+                  <th className="text-left px-3 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Phone</th>
+                  <th className="text-left px-3 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined</th>
+                  <th className="text-left px-3 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="text-right px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {employees.map(emp => (
                   <tr key={emp.id}
                     className={`transition-colors ${editing?.id === emp.id ? 'bg-indigo-50/40' : 'hover:bg-gray-50'}`}>
-                    <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs flex-shrink-0">
+                    <td className="px-4 py-3">
+                      <button onClick={() => startEdit(emp)} title="View in Employee Preview"
+                        className="flex items-center gap-2.5 group text-left w-full cursor-pointer rounded-lg -mx-1.5 px-1.5 py-1 hover:bg-indigo-50 transition-colors">
+                        <div className="w-8 h-8 rounded-full bg-indigo-100 group-hover:bg-indigo-600 flex items-center justify-center text-indigo-600 group-hover:text-white font-bold text-xs flex-shrink-0 transition-colors">
                           {initials(emp.employeeName)}
                         </div>
-                        <div>
-                          <p className="font-semibold text-slate-800">{emp.employeeName}</p>
-                          <p className="text-xs text-gray-400">{emp.email}</p>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-slate-800 group-hover:text-indigo-700 group-hover:underline truncate">{emp.employeeName}</p>
+                          <p className="text-xs text-slate-500 truncate">{emp.email}</p>
                         </div>
-                      </div>
+                      </button>
                     </td>
-                    <td className="px-5 py-3.5">
-                      <span className={`px-2.5 py-1 text-xs font-medium rounded-lg ${DESIGNATION_COLORS[emp.designation] || 'bg-slate-100 text-slate-600'}`}>
+                    <td className="px-3 py-3">
+                      <span className={`px-2.5 py-1 text-xs font-medium rounded-lg whitespace-nowrap ${DESIGNATION_COLORS[emp.designation] || 'bg-slate-100 text-slate-600'}`}>
                         {emp.designation}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-gray-600 hidden md:table-cell">{emp.phoneNumber}</td>
-                    <td className="px-5 py-3.5 text-gray-400 text-xs hidden lg:table-cell">
+                    <td className="px-3 py-3 text-slate-600 whitespace-nowrap">{emp.phoneNumber}</td>
+                    <td className="px-3 py-3 text-slate-500 text-xs whitespace-nowrap">
                       {new Date(emp.joinedDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-3 py-3">
                       <button onClick={() => handleToggle(emp)}
-                        className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors
-                          ${emp.isActive ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
+                        className={`px-2.5 py-1 text-xs font-medium rounded-lg whitespace-nowrap transition-colors
+                          ${emp.isActive ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'bg-rose-50 text-rose-500 hover:bg-rose-100'}`}>
                         {emp.isActive ? 'Active' : 'Inactive'}
                       </button>
                     </td>
-                    <td className="px-5 py-3.5">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-1.5">
                         <button onClick={() => startEdit(emp)} title="Edit"
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+                          className="p-1.5 text-indigo-500 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors">
                           <Pencil size={14} />
                         </button>
                         <button onClick={() => handleDelete(emp)} title="Remove"
-                          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
                           <Trash2 size={14} />
                         </button>
                       </div>
@@ -532,6 +541,8 @@ export default function EmployeesPage() {
             </table>
           </div>
         )}
+          </div>
+        </div>
       </div>
     </div>
   );

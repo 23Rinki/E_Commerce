@@ -346,6 +346,21 @@ namespace RNVS.ECommerce.API.Controllers
                 var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
                 if (!result.Succeeded)
                 {
+                    try
+                    {
+                        var attemptTime = DateTime.UtcNow.ToString("dd MMM yyyy, HH:mm 'UTC'");
+                        var alertBody = $"""
+                            <p>Hi {user.UserName},</p>
+                            <p>We noticed a failed sign-in attempt on your RNVS CommerceX account at {attemptTime}.</p>
+                            <p>If this was you, please double-check your password and try again. If you don't recognize this activity, we recommend resetting your password right away.</p>
+                            """;
+                        await _emailService.SendEmailAsync(user.Email!, "Failed sign-in attempt on your account", alertBody);
+                    }
+                    catch (Exception emailEx)
+                    {
+                        _logger.LogWarning(emailEx, "Failed-login alert email failed for {Email}", user.Email);
+                    }
+
                     return Unauthorized(new { success = false, message = "Invalid email or password" });
                 }
 
@@ -532,7 +547,7 @@ namespace RNVS.ECommerce.API.Controllers
                 var encodedToken = Uri.EscapeDataString(token);
                 var encodedEmail = Uri.EscapeDataString(user.Email!);
                 var frontendUrl = _configuration["FrontendUrl"] ?? "http://localhost:3000";
-                var resetLink = $"{frontendUrl}/reset-password?token={encodedToken}&email={encodedEmail}";
+                var resetLink = $"{frontendUrl}/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
                 var emailBody = $"""
                     <p>Hi {user.UserName},</p>
@@ -739,8 +754,10 @@ namespace RNVS.ECommerce.API.Controllers
 
                 tenant.Status = TenantStatus.Active;
                 tenant.SubscriptionType = string.IsNullOrWhiteSpace(model.SubscriptionType) ? "Monthly" : model.SubscriptionType;
-                if (tenant.SubscriptionType == "Yearly")
-                    tenant.SubscriptionEndDate = DateTime.UtcNow.AddYears(1);
+                tenant.SubscriptionEndDate = tenant.SubscriptionType == "Yearly"
+                    ? DateTime.UtcNow.AddYears(1)
+                    : DateTime.UtcNow.AddMonths(1);
+                tenant.SuspensionEmailSentAt = null;
                 tenant.UpdatedAt = DateTime.UtcNow;
 
                 if (!string.IsNullOrWhiteSpace(model.PaymentId))

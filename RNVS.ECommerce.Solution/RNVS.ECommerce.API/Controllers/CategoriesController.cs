@@ -124,6 +124,39 @@ public class CategoriesController : ControllerBase
         }
     }
 
+    // GET: api/categories/mine — ALL active categories in the vendor's own DB, unfiltered by product usage
+    // (used by the Add/Edit Product form so a vendor can assign a category they haven't used yet)
+    [HttpGet("mine")]
+    [Authorize]
+    public async Task<IActionResult> GetMyCategories()
+    {
+        try
+        {
+            var allCats = await _categoryRepository.GetActiveCategoriesAsync();
+            var dtos = allCats
+                .Select(c => new CategoryDto
+                {
+                    Id          = c.Id,
+                    Name        = c.Name,
+                    Description = c.Description,
+                    IsActive    = c.IsActive
+                })
+                .ToList();
+
+            return Ok(new ApiResponseDto<List<CategoryDto>> { Success = true, Data = dtos });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching vendor categories");
+            return StatusCode(500, new ApiResponseDto<object>
+            {
+                Success = false,
+                Message = "Internal server error",
+                Errors  = new List<string> { ex.Message }
+            });
+        }
+    }
+
     // GET: api/categories/{id}
     [HttpGet("{id}")]
     [AllowAnonymous]

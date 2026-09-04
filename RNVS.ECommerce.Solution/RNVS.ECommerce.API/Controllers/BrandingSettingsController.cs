@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using RNVS.ECommerce.Application.DTOs.Common;
 using RNVS.ECommerce.Domain.Entities.Receipt;
 using RNVS.ECommerce.Infrastructure.Data;
+using RNVS.ECommerce.Infrastructure.PDF;
+using RNVS.ECommerce.Infrastructure.PDF.Models;
 using System.Security.Claims;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
@@ -19,11 +21,19 @@ namespace RNVS.ECommerce.API.Controllers;
 public class BrandingSettingsController : ControllerBase
 {
     private readonly VendorDbContext _context;
+    private readonly ApplicationDbContext _mainDb;
+    private readonly PdfReceiptGenerator _pdfReceiptGenerator;
     private readonly ILogger<BrandingSettingsController> _logger;
 
-    public BrandingSettingsController(VendorDbContext context, ILogger<BrandingSettingsController> logger)
+    public BrandingSettingsController(
+        VendorDbContext context,
+        ApplicationDbContext mainDb,
+        PdfReceiptGenerator pdfReceiptGenerator,
+        ILogger<BrandingSettingsController> logger)
     {
         _context = context;
+        _mainDb = mainDb;
+        _pdfReceiptGenerator = pdfReceiptGenerator;
         _logger = logger;
     }
 
@@ -70,6 +80,18 @@ public class BrandingSettingsController : ControllerBase
                     GstNumber = dto.GstNumber,
                     BillFieldsJson = dto.BillFieldsJson,
                     CustomerFieldsJson = dto.CustomerFieldsJson,
+                    TemplateStyle = dto.TemplateStyle ?? "classic",
+                    ShowQrCode = dto.ShowQrCode ?? true,
+                    QrValue = dto.QrValue,
+                    UseUpiQr = dto.UseUpiQr ?? false,
+                    UpiId = dto.UpiId,
+                    ShowBarcode = dto.ShowBarcode ?? true,
+                    FooterNote = dto.FooterNote,
+                    SignatureText = dto.SignatureText,
+                    SignatureImageUrl = dto.SignatureImageUrl,
+                    CgstPercent = dto.CgstPercent ?? 50,
+                    SgstPercent = dto.SgstPercent ?? 50,
+                    IgstPercent = dto.IgstPercent ?? 0,
                     CreatedAt = DateTime.UtcNow
                 };
                 _context.BrandingSettings.Add(existing);
@@ -91,6 +113,18 @@ public class BrandingSettingsController : ControllerBase
                 existing.CustomerFieldsJson = dto.CustomerFieldsJson ?? existing.CustomerFieldsJson;
                 if (dto.CustomReceiptImageUrl != null)
                     existing.CustomReceiptImageUrl = dto.CustomReceiptImageUrl == "" ? null : dto.CustomReceiptImageUrl;
+                existing.TemplateStyle = dto.TemplateStyle ?? existing.TemplateStyle;
+                existing.ShowQrCode = dto.ShowQrCode ?? existing.ShowQrCode;
+                if (dto.QrValue != null) existing.QrValue = dto.QrValue == "" ? null : dto.QrValue;
+                existing.UseUpiQr = dto.UseUpiQr ?? existing.UseUpiQr;
+                if (dto.UpiId != null) existing.UpiId = dto.UpiId == "" ? null : dto.UpiId;
+                existing.ShowBarcode = dto.ShowBarcode ?? existing.ShowBarcode;
+                if (dto.FooterNote != null) existing.FooterNote = dto.FooterNote == "" ? null : dto.FooterNote;
+                if (dto.SignatureText != null) existing.SignatureText = dto.SignatureText == "" ? null : dto.SignatureText;
+                if (dto.SignatureImageUrl != null) existing.SignatureImageUrl = dto.SignatureImageUrl == "" ? null : dto.SignatureImageUrl;
+                existing.CgstPercent = dto.CgstPercent ?? existing.CgstPercent;
+                existing.SgstPercent = dto.SgstPercent ?? existing.SgstPercent;
+                existing.IgstPercent = dto.IgstPercent ?? existing.IgstPercent;
             }
 
             await _context.SaveChangesAsync();
@@ -264,6 +298,155 @@ public class BrandingSettingsController : ControllerBase
             return StatusCode(500, new ApiResponseDto<object> { Success = false, Message = "Logo upload failed. " + message });
         }
     }
+
+    // POST api/brandingsettings/signature — upload a scanned/drawn signature image
+    [HttpPost("signature")]
+    public async Task<IActionResult> UploadSignature(IFormFile file)
+    {
+        try
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest(new ApiResponseDto<object> { Success = false, Message = "No file provided" });
+
+            var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp", ".svg" };
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!allowed.Contains(ext))
+                return BadRequest(new ApiResponseDto<object> { Success = false, Message = "Only JPG, PNG, WEBP, SVG allowed" });
+
+            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "signatures");
+            Directory.CreateDirectory(uploadsDir);
+
+            var fileName = $"{Guid.NewGuid()}{ext}";
+            var filePath = Path.Combine(uploadsDir, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            var signatureImageUrl = $"/uploads/signatures/{fileName}";
+            return Ok(new ApiResponseDto<object> { Success = true, Data = new { signatureImageUrl }, Message = "Signature uploaded" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error uploading signature");
+            var message = ex.InnerException?.Message ?? ex.Message;
+            return StatusCode(500, new ApiResponseDto<object> { Success = false, Message = "Signature upload failed. " + message });
+        }
+    }
+
+    /// <summary>
+    /// Generates a real downloadable PDF receipt for a specific real order, using this vendor's
+    /// saved logo/colors/store details/bill fields — not the placeholder sample data.
+    /// </summary>
+    [HttpGet("receipt-pdf/{orderId:int}")]
+    public async Task<IActionResult> DownloadReceiptPdf(int orderId)
+    {
+        try
+        {
+            var vendorId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null)
+                return NotFound(new ApiResponseDto<object> { Success = false, Message = "Order not found" });
+
+            var items = await _context.OrderItems
+                .Where(oi => oi.OrderId == orderId && oi.VendorId == vendorId)
+                .ToListAsync();
+            if (items.Count == 0)
+                return Forbid();
+
+            var branding = await _context.BrandingSettings.FirstOrDefaultAsync(s => s.VendorId == vendorId);
+            var customer = await _mainDb.Users.FindAsync(order.UserId);
+
+            string? customReceiptPath = null;
+            if (!string.IsNullOrWhiteSpace(branding?.CustomReceiptImageUrl) && !branding.CustomReceiptImageUrl.EndsWith(".pdf"))
+            {
+                var candidate = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
+                    branding.CustomReceiptImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+                if (System.IO.File.Exists(candidate)) customReceiptPath = candidate;
+            }
+
+            string? logoPath = null;
+            if (!string.IsNullOrWhiteSpace(branding?.LogoUrl))
+            {
+                var candidate = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
+                    branding.LogoUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+                if (System.IO.File.Exists(candidate) && !candidate.EndsWith(".svg")) logoPath = candidate;
+            }
+
+            // Bill Fields with a fixed value the vendor typed in — shown as receipt Notes
+            // (blank ones are meant to auto-fill per-order, which isn't modeled per custom field here)
+            string? notes = null;
+            if (!string.IsNullOrWhiteSpace(branding?.BillFieldsJson))
+            {
+                try
+                {
+                    var fields = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, string>>>(branding.BillFieldsJson);
+                    var fixedFields = (fields ?? new())
+                        .Where(f => f.TryGetValue("label", out var l) && f.TryGetValue("value", out var v) && !string.IsNullOrWhiteSpace(v))
+                        .Select(f => $"{f["label"]}: {f["value"]}");
+                    notes = string.Join("\n", fixedFields);
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger.LogWarning(ex, "Could not parse BillFieldsJson for receipt PDF");
+                }
+            }
+
+            var data = new ReceiptData
+            {
+                ReceiptNumber = $"REC-{order.Id:D6}",
+                Date = order.CreatedAt,
+                OrderId = order.OrderNumber,
+                Company = new CompanyInfo
+                {
+                    Name = branding?.StoreName ?? "Store",
+                    LogoUrl = logoPath,
+                    CustomReceiptImagePath = customReceiptPath,
+                    Address = branding?.StoreAddress ?? "",
+                    Phone = branding?.StorePhone ?? "",
+                    Email = branding?.StoreEmail ?? "",
+                    Website = branding?.Website ?? "",
+                    TaxId = string.IsNullOrWhiteSpace(branding?.GstNumber) ? "" : branding.GstNumber,
+                    PrimaryColor = string.IsNullOrWhiteSpace(branding?.PrimaryColor) ? "#1e40af" : branding.PrimaryColor,
+                },
+                Customer = new CustomerInfo
+                {
+                    Name = string.IsNullOrWhiteSpace(order.ShippingName) ? $"{customer?.FirstName} {customer?.LastName}".Trim() : order.ShippingName,
+                    Email = customer?.Email ?? "",
+                    Phone = string.IsNullOrWhiteSpace(order.ShippingPhone) ? (customer?.PhoneNumber ?? "") : order.ShippingPhone,
+                    Address = order.ShippingStreet ?? "",
+                    City = order.ShippingCity ?? "",
+                    State = order.ShippingState ?? "",
+                    ZipCode = order.ShippingPostalCode ?? "",
+                    Country = order.ShippingCountry ?? "",
+                },
+                Items = items.Select(i => new ReceiptItem
+                {
+                    Name = i.ProductName,
+                    Quantity = i.Quantity,
+                    UnitPrice = i.UnitPrice,
+                    Total = i.TotalPrice,
+                }).ToList(),
+                Subtotal = order.SubTotal,
+                Tax = order.TaxAmount,
+                Shipping = order.ShippingCost,
+                Total = order.TotalAmount,
+                PaymentMethod = "—",
+                PaymentStatus = "Paid",
+                Notes = notes ?? "",
+            };
+
+            var pdfBytes = await _pdfReceiptGenerator.GenerateReceiptAsync(data);
+
+            _logger.LogInformation("Receipt PDF downloaded for order {OrderId}", orderId);
+            return File(pdfBytes, "application/pdf", $"Receipt-{order.OrderNumber}.pdf");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error generating receipt PDF for order {OrderId}", orderId);
+            return StatusCode(500, new ApiResponseDto<object> { Success = false, Message = "Failed to generate receipt PDF" });
+        }
+    }
 }
 
 public class UpdateBrandingDto
@@ -282,4 +465,16 @@ public class UpdateBrandingDto
     public string? BillFieldsJson { get; set; }
     public string? CustomerFieldsJson { get; set; }
     public string? CustomReceiptImageUrl { get; set; }
+    public string? TemplateStyle { get; set; }
+    public bool? ShowQrCode { get; set; }
+    public string? QrValue { get; set; }
+    public bool? UseUpiQr { get; set; }
+    public string? UpiId { get; set; }
+    public bool? ShowBarcode { get; set; }
+    public string? FooterNote { get; set; }
+    public string? SignatureText { get; set; }
+    public string? SignatureImageUrl { get; set; }
+    public decimal? CgstPercent { get; set; }
+    public decimal? SgstPercent { get; set; }
+    public decimal? IgstPercent { get; set; }
 }

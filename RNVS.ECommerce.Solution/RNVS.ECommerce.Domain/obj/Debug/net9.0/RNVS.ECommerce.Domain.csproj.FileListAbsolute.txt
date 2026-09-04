@@ -1,0 +1,73 @@
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Black.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-BlackItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Bold.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-BoldItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-ExtraBold.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-ExtraLight.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Italic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Light.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-LightItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Medium.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-MediumItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Regular.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-SemiBold.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-Thin.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\Lato-ThinItalic.ttf
+C:\Program Files\Git\tmp_verify_build\LatoFont\OFL.txt
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Black.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-BlackItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Bold.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-BoldItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-ExtraBold.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-ExtraLight.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Italic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Light.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-LightItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Medium.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-MediumItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Regular.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-SemiBold.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-Thin.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\Lato-ThinItalic.ttf
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\LatoFont\OFL.txt
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\RNVS.ECommerce.Domain.deps.json
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\RNVS.ECommerce.Domain.dll
+C:\Users\rinke\AppData\Local\Temp\claude\G--E-Commerce\1ccdcc07-23a7-4f8b-aa36-1b30b5783985\scratchpad\dotnet_verify\RNVS.ECommerce.Domain.pdb
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Black.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-BlackItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Bold.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-BoldItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-ExtraBold.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-ExtraBoldItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-ExtraLight.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-ExtraLightItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Italic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Light.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-LightItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Medium.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-MediumItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Regular.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-SemiBold.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-SemiBoldItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-Thin.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\Lato-ThinItalic.ttf
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\LatoFont\OFL.txt
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\RNVS.ECommerce.Domain.deps.json
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\RNVS.ECommerce.Domain.dll
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\bin\Debug\net9.0\RNVS.ECommerce.Domain.pdb
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.csproj.AssemblyReference.cache
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.GeneratedMSBuildEditorConfig.editorconfig
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.AssemblyInfoInputs.cache
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.AssemblyInfo.cs
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.csproj.CoreCompileInputs.cache
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.sourcelink.json
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.dll
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\refint\RNVS.ECommerce.Domain.dll
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\RNVS.ECommerce.Domain.pdb
+G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.Domain\obj\Debug\net9.0\ref\RNVS.ECommerce.Domain.dll

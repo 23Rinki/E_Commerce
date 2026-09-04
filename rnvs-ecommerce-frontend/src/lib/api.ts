@@ -20,8 +20,9 @@ api.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401 && typeof window !== 'undefined') {
       const url = err.config?.url ?? '';
-      // Don't redirect for silent auth verification — let the store handle it
-      if (url.includes('/api/auth/me')) {
+      // Don't redirect for silent auth verification, or for a failed login/register
+      // attempt itself — let the page show its own inline error instead.
+      if (url.includes('/api/auth/me') || url.includes('/api/auth/login') || url.includes('/api/auth/register')) {
         return Promise.reject(err);
       }
       // Only redirect if there is genuinely no token left (i.e. session expired).
@@ -66,6 +67,8 @@ export const authApi = {
   }) => api.post('/api/auth/register', data),
   forgotPassword: (email: string) =>
     api.post('/api/auth/forgot-password', { email }),
+  resetPassword: (data: { email: string; token: string; newPassword: string }) =>
+    api.post('/api/auth/reset-password', data),
 };
 
 export const productsApi = {
@@ -132,6 +135,7 @@ export const vendorProductsApi = {
 export const categoriesApi = {
   getAll: () => api.get('/api/categories'),
   getStorefront: () => api.get('/api/categories/storefront'),
+  getMine: () => api.get('/api/categories/mine'),
   create: (name: string) => api.post('/api/categories', { name, description: name }),
 };
 
@@ -254,9 +258,25 @@ export const brandingApi = {
     gstNumber?: string;
     billFieldsJson?: string;
     customerFieldsJson?: string;
+    templateStyle?: string;
+    showQrCode?: boolean;
+    qrValue?: string;
+    useUpiQr?: boolean;
+    upiId?: string;
+    showBarcode?: boolean;
+    footerNote?: string;
+    signatureText?: string;
+    signatureImageUrl?: string;
+    cgstPercent?: number;
+    sgstPercent?: number;
+    igstPercent?: number;
   }) => api.put('/api/brandingsettings', data),
   uploadLogo: (formData: FormData) =>
     api.post('/api/brandingsettings/logo', formData, {
+      headers: { 'Content-Type': undefined },
+    }),
+  uploadSignature: (formData: FormData) =>
+    api.post('/api/brandingsettings/signature', formData, {
       headers: { 'Content-Type': undefined },
     }),
   uploadReceiptTemplate: (formData: FormData) =>
@@ -265,6 +285,8 @@ export const brandingApi = {
     }),
   removeReceiptTemplate: () =>
     api.delete('/api/brandingsettings/receipt-template'),
+  downloadReceiptPdf: (orderId: number) =>
+    api.get(`/api/brandingsettings/receipt-pdf/${orderId}`, { responseType: 'blob' }),
 };
 
 export const invoiceTemplatesApi = {

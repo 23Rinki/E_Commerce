@@ -12,6 +12,8 @@ import {
   Plus, Pencil, Trash2, Images, Search, X, Upload, Package,
   CheckCircle, AlertCircle, Loader2, ToggleLeft, ToggleRight,
   ChevronLeft, ChevronRight, ImageOff, Tag,
+  Sparkles, TrendingUp, EyeOff, PackageOpen,
+  FileText, Boxes, IndianRupee, ImagePlus,
 } from 'lucide-react';
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -69,9 +71,11 @@ function apiError(err: any, fallback: string): string {
 
 function Toast({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
   useEffect(() => {
+    // Errors need to stay readable long enough to actually act on — only auto-dismiss success toasts.
+    if (type !== 'success') return;
     const t = setTimeout(onClose, 3500);
     return () => clearTimeout(t);
-  }, [onClose]);
+  }, [onClose, type]);
   return (
     <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg text-white text-sm font-medium
       ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
@@ -450,14 +454,13 @@ function ProductPhotosSection({ productId }: { productId: number }) {
 // ── Product Form Modal ────────────────────────────────────────────────────────
 
 function ProductFormModal({
-  mode, initial, categories, onSave, onClose, onCategoryAdded,
+  mode, initial, categories, onSave, onClose,
 }: {
   mode: 'add' | 'edit';
   initial?: VendorProduct & { description?: string };
   categories: Category[];
   onSave: (form: ProductForm, pendingFiles: File[]) => Promise<void>;
   onClose: () => void;
-  onCategoryAdded?: (cat: Category) => void;
 }) {
   const [form, setForm] = useState<ProductForm>(
     initial
@@ -480,10 +483,6 @@ function ProductFormModal({
   const [error, setError] = useState('');
 
   const [localCategories, setLocalCategories] = useState<Category[]>(categories);
-  const [addingCategory, setAddingCategory] = useState(false);
-  const [newCategoryName, setNewCategoryName] = useState('');
-  const [addCatLoading, setAddCatLoading] = useState(false);
-  const [addCatError, setAddCatError] = useState('');
 
   // If the modal opened before categories finished loading, sync when they arrive
   useEffect(() => {
@@ -522,26 +521,6 @@ function ProductFormModal({
   const set = (k: keyof ProductForm, v: string | boolean) =>
     setForm((f) => ({ ...f, [k]: v }));
 
-  const handleAddCategory = async () => {
-    const name = newCategoryName.trim();
-    if (!name) return;
-    setAddCatLoading(true);
-    setAddCatError('');
-    try {
-      const res = await categoriesApi.create(name);
-      const cat: Category = res.data?.data || res.data;
-      setLocalCategories((prev) => [...prev, cat]);
-      set('categoryId', String(cat.id));
-      setAddingCategory(false);
-      setNewCategoryName('');
-      onCategoryAdded?.(cat);
-    } catch (err: any) {
-      setAddCatError(apiError(err, 'Failed to create category. Please try again.'));
-    } finally {
-      setAddCatLoading(false);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim()) { setError('Product name is required.'); return; }
@@ -561,37 +540,53 @@ function ProductFormModal({
     }
   };
 
+  const lbl = "flex items-center gap-2 mb-2 text-[11px] font-bold uppercase tracking-[0.15em] text-stone-800";
+  const inp = "w-full h-11 px-3.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-900 placeholder:text-stone-400 font-medium text-sm outline-none focus:bg-white focus:border-stone-400 transition-colors";
+
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl flex flex-col max-h-[90vh]">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-slate-900">
-            {mode === 'add' ? 'Add New Product' : 'Edit Product'}
-          </h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
-            <X size={18} className="text-gray-500" />
-          </button>
+    <div className="fixed inset-0 z-50 grid place-items-center p-4 sm:p-8">
+      <div className="absolute inset-0 bg-stone-900/40 backdrop-blur-sm" onClick={onClose} />
+
+      <div className="relative bg-white rounded-3xl w-full max-w-xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.25)] border border-stone-200 overflow-hidden flex flex-col max-h-[90vh]">
+        {/* Header */}
+        <div className="relative px-8 pt-7 pb-5 border-b border-stone-100 flex-shrink-0">
+          <div className="absolute -top-16 -left-10 h-40 w-40 rounded-full bg-amber-100/50 blur-3xl pointer-events-none" />
+          <div className="relative flex items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-stone-500 font-semibold">
+                <Sparkles className="h-3 w-3" /> {mode === 'add' ? 'New Catalogue Item' : 'Edit Catalogue Item'}
+              </div>
+              <h2 className="mt-1.5 font-display text-3xl text-stone-900 tracking-tight leading-none">
+                {mode === 'add' ? 'Add new product' : 'Edit product'}
+              </h2>
+            </div>
+            <button onClick={onClose} className="h-9 w-9 grid place-items-center rounded-full hover:bg-stone-100 text-stone-600 hover:text-stone-900 transition flex-shrink-0">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="overflow-y-auto p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="overflow-y-auto px-8 py-6 space-y-5">
           {/* Name */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Product Name <span className="text-orange-400">*</span>
+            <label className={lbl}>
+              <Package className="h-3.5 w-3.5 text-blue-500" strokeWidth={2} />
+              Product name <span className="text-red-500 font-bold">*</span>
             </label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => set('name', e.target.value)}
               placeholder="e.g. Premium Wireless Headphones"
-              className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
+              className={inp}
             />
           </div>
 
           {/* Short Description */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Short Description <span className="font-normal text-gray-400 normal-case">(shown on product card)</span>
+            <label className={lbl}>
+              Short description
+              <span className="text-[11px] text-stone-500 font-medium normal-case tracking-normal">(shown on product card)</span>
             </label>
             <input
               type="text"
@@ -599,134 +594,109 @@ function ProductFormModal({
               onChange={(e) => set('shortDescription', e.target.value)}
               maxLength={120}
               placeholder="e.g. Noise-cancelling, 30hr battery, foldable design"
-              className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
+              className={inp}
             />
-            <p className="text-[11px] text-gray-400 mt-1">{form.shortDescription.length}/120 characters</p>
+            <p className="text-[11px] text-stone-500 font-medium mt-1.5 text-right">{form.shortDescription.length}/120 characters</p>
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Description</label>
+            <label className={lbl}>
+              <FileText className="h-3.5 w-3.5 text-violet-500" strokeWidth={2} />
+              Description
+            </label>
             <textarea
               value={form.description}
               onChange={(e) => set('description', e.target.value)}
               rows={3}
-              placeholder="Describe your product..."
-              className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors resize-none"
+              placeholder="Describe your product — materials, story, care, what makes it special…"
+              className={`${inp} h-auto py-3 resize-none`}
             />
           </div>
 
           {/* Price + Stock */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                M.R.P. (₹) <span className="text-orange-400">*</span>
+              <label className={lbl}>
+                <Tag className="h-3.5 w-3.5 text-amber-500" strokeWidth={2} />
+                M.R.P. <span className="text-red-500 font-bold">*</span>
               </label>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={form.price}
-                onChange={(e) => set('price', e.target.value)}
-                placeholder="0.00"
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
-              />
+              <div className="relative">
+                <IndianRupee className="h-3.5 w-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-500" strokeWidth={2.5} />
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={form.price}
+                  onChange={(e) => set('price', e.target.value)}
+                  placeholder="0.00"
+                  className={`${inp} pl-9 font-semibold tabular-nums`}
+                />
+              </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Stock Qty</label>
+              <label className={lbl}>
+                <Boxes className="h-3.5 w-3.5 text-purple-500" strokeWidth={2} />
+                Stock qty
+              </label>
               <input
                 type="number"
                 min="0"
                 value={form.stockQuantity}
                 onChange={(e) => set('stockQuantity', e.target.value)}
                 placeholder="0"
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
+                className={`${inp} font-semibold tabular-nums`}
               />
             </div>
           </div>
 
           {/* Discount Price */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Sale Price (₹) <span className="text-xs font-normal text-gray-400 normal-case">— leave blank for no discount</span>
+            <label className={lbl}>
+              Sale price
+              <span className="text-[11px] text-stone-500 font-medium normal-case tracking-normal">— leave blank for no discount</span>
             </label>
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.discountPrice}
-              onChange={(e) => set('discountPrice', e.target.value)}
-              placeholder="e.g. 899.00"
-              className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
-            />
+            <div className="relative">
+              <IndianRupee className="h-3.5 w-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-500" strokeWidth={2.5} />
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={form.discountPrice}
+                onChange={(e) => set('discountPrice', e.target.value)}
+                placeholder="e.g. 899.00"
+                className={`${inp} pl-9 font-semibold tabular-nums`}
+              />
+            </div>
             {form.discountPrice && form.price && Number(form.discountPrice) >= Number(form.price) && (
-              <p className="text-xs text-red-500 mt-1">Sale price must be less than M.R.P.</p>
+              <p className="text-xs text-red-500 font-medium mt-1.5">Sale price must be less than M.R.P.</p>
             )}
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-              Category <span className="text-orange-400">*</span>
+            <label className={lbl}>
+              <Tag className="h-3.5 w-3.5 text-pink-500" strokeWidth={2} />
+              Category <span className="text-red-500 font-bold">*</span>
             </label>
             <select
               value={form.categoryId}
               onChange={(e) => set('categoryId', e.target.value)}
-              className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors bg-white"
+              className={`${inp} bg-stone-50`}
             >
               <option value="">Select a category</option>
               {localCategories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
             </select>
-            {!addingCategory ? (
-              <button
-                type="button"
-                onClick={() => setAddingCategory(true)}
-                className="mt-1.5 flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-medium"
-              >
-                <Tag size={11} /> Add new category
-              </button>
-            ) : (
-              <div className="mt-2 space-y-1.5">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newCategoryName}
-                    onChange={(e) => { setNewCategoryName(e.target.value); setAddCatError(''); }}
-                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCategory(); } }}
-                    placeholder="Category name"
-                    autoFocus
-                    className="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 transition-colors"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddCategory}
-                    disabled={addCatLoading || !newCategoryName.trim()}
-                    className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 text-white text-xs font-semibold rounded-xl transition-colors flex items-center gap-1"
-                  >
-                    {addCatLoading && <Loader2 size={12} className="animate-spin" />}
-                    {addCatLoading ? 'Adding…' : 'Add'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setAddingCategory(false); setNewCategoryName(''); setAddCatError(''); }}
-                    className="px-3 py-2 border border-gray-200 text-gray-500 hover:bg-gray-50 text-xs rounded-xl transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-                {addCatError && <p className="text-xs text-red-500">{addCatError}</p>}
-              </div>
-            )}
           </div>
 
           {/* Active toggle (edit only) */}
           {mode === 'edit' && (
-            <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
+            <div className="flex items-center justify-between bg-stone-50 border border-stone-200 rounded-xl px-4 py-3">
               <div>
-                <p className="text-sm font-semibold text-slate-700">Product Status</p>
-                <p className="text-xs text-gray-400">{form.isActive ? 'Visible to customers' : 'Hidden from store'}</p>
+                <p className="text-sm font-semibold text-stone-800">Product Status</p>
+                <p className="text-xs text-stone-500 font-medium">{form.isActive ? 'Visible to customers' : 'Hidden from store'}</p>
               </div>
               <button
                 type="button"
@@ -734,23 +704,24 @@ function ProductFormModal({
                 className="transition-colors"
               >
                 {form.isActive
-                  ? <ToggleRight size={32} className="text-slate-600" />
-                  : <ToggleLeft size={32} className="text-gray-300" />}
+                  ? <ToggleRight size={32} className="text-emerald-600" />
+                  : <ToggleLeft size={32} className="text-stone-300" />}
               </button>
             </div>
           )}
 
           {/* Photos — queue for add mode, inline manager for edit mode */}
           {mode === 'add' ? (
-            <div className="border-t border-gray-100 pt-4">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                Product Photos
+            <div>
+              <label className={lbl}>
+                <ImagePlus className="h-3.5 w-3.5 text-cyan-500" strokeWidth={2} />
+                Product photos
               </label>
 
               {previews.length > 0 && (
                 <div className="grid grid-cols-4 gap-2 mb-3">
                   {previews.map((src, i) => (
-                    <div key={i} className="relative group aspect-square rounded-xl overflow-hidden border border-gray-100 bg-gray-50">
+                    <div key={i} className="relative group aspect-square rounded-xl overflow-hidden border border-stone-200 bg-stone-50">
                       <img src={src} alt="" className="w-full h-full object-cover" />
                       <button
                         type="button"
@@ -769,8 +740,8 @@ function ProductFormModal({
                 onDragLeave={() => setAddDragging(false)}
                 onDrop={(e) => { e.preventDefault(); setAddDragging(false); addFiles(e.dataTransfer.files); }}
                 onClick={() => addInputRef.current?.click()}
-                className={`border-2 border-dashed rounded-xl flex items-center justify-center gap-3 py-4 cursor-pointer transition-all
-                  ${addDragging ? 'border-indigo-400 bg-indigo-50' : 'border-gray-200 bg-gray-50 hover:border-gray-300'}`}
+                className={`rounded-2xl border border-dashed p-5 flex items-center gap-4 cursor-pointer transition-all
+                  ${addDragging ? 'border-stone-400 bg-stone-100' : 'border-stone-300 bg-stone-50/50 hover:bg-stone-50 hover:border-stone-400'}`}
               >
                 <input
                   ref={addInputRef}
@@ -780,15 +751,20 @@ function ProductFormModal({
                   className="hidden"
                   onChange={(e) => { addFiles(e.target.files); e.target.value = ''; }}
                 />
-                <Upload size={16} className="text-gray-400" />
-                <span className="text-gray-500 font-medium text-sm">
-                  {previews.length > 0 ? 'Add more photos' : 'Add product photos'}
-                </span>
-                <span className="text-xs text-gray-400">JPG, PNG, WebP · Max 10 MB</span>
+                <div className="h-11 w-11 rounded-xl bg-white border border-stone-200 grid place-items-center flex-shrink-0">
+                  <ImagePlus className="h-5 w-5 text-stone-700" strokeWidth={1.75} />
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-stone-900">
+                    {previews.length > 0 ? 'Add more photos' : 'Add product photos'}
+                  </div>
+                  <div className="text-xs text-stone-600 mt-0.5">JPG, PNG, WebP · Max 10 MB each</div>
+                </div>
+                <span className="text-xs font-medium text-stone-500 flex-shrink-0">Optional</span>
               </div>
 
               {pendingFiles.length > 0 && (
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-xs text-stone-500 font-medium mt-2">
                   {pendingFiles.length} photo{pendingFiles.length > 1 ? 's' : ''} will upload when you create the product
                 </p>
               )}
@@ -805,15 +781,15 @@ function ProductFormModal({
           )}
         </form>
 
-        <div className="px-6 py-4 border-t border-gray-100 flex gap-3">
+        <div className="px-8 py-5 border-t border-stone-100 flex items-center justify-end gap-2 flex-shrink-0">
           <button type="button" onClick={onClose}
-            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-gray-50 transition-colors">
+            className="h-11 px-6 rounded-full border border-stone-300 text-stone-700 hover:bg-stone-50 text-sm font-semibold transition-colors">
             Cancel
           </button>
           <button
             onClick={handleSubmit as any}
             disabled={saving}
-            className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 text-white rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+            className="h-11 px-6 rounded-full bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300 text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2"
           >
             {saving && <Loader2 size={14} className="animate-spin" />}
             {saving
@@ -866,7 +842,7 @@ export default function VendorProductsPage() {
 
   useEffect(() => { if (isInitialized) loadProducts(); }, [loadProducts, isInitialized]);
   useEffect(() => {
-    categoriesApi.getAll()
+    categoriesApi.getMine()
       .then((r) => setCategories(r.data?.data ?? r.data ?? []))
       .catch(() => {});
   }, []);
@@ -937,16 +913,19 @@ export default function VendorProductsPage() {
   const inactiveCount = products.length - activeCount;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-8 lg:p-10 bg-slate-200/60 rounded-3xl min-h-[calc(100vh-3rem)]">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Products</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Manage your product catalogue</p>
+          <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-stone-500 font-semibold">
+            <Sparkles className="h-3 w-3" /> Catalogue
+          </div>
+          <h1 className="font-display text-3xl mt-1 tracking-tight text-stone-900 leading-[1.05]">Products</h1>
+          <p className="mt-1 text-stone-600 text-sm">Manage your catalogue — add items, set pricing and monitor inventory.</p>
         </div>
         <button
           onClick={() => setModal('add')}
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+          className="h-10 px-4 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-sm font-semibold inline-flex items-center gap-2 transition-colors flex-shrink-0"
         >
           <Plus size={16} />
           Add Product
@@ -954,32 +933,37 @@ export default function VendorProductsPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
         {[
-          { label: 'Total Products', value: totalCount, color: 'text-slate-900' },
-          { label: 'Active', value: activeCount, color: 'text-green-600' },
-          { label: 'Inactive', value: inactiveCount, color: 'text-gray-400' },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="bg-white rounded-2xl border border-gray-100 p-4">
-            <p className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-1">{label}</p>
-            <p className={`text-2xl font-black ${color}`}>{value}</p>
+          { label: 'Total Products', value: totalCount, icon: Package, tone: 'text-stone-900', box: 'bg-blue-50 text-blue-600' },
+          { label: 'Active', value: activeCount, icon: TrendingUp, tone: 'text-emerald-700', box: 'bg-emerald-50 text-emerald-600' },
+          { label: 'Inactive', value: inactiveCount, icon: EyeOff, tone: 'text-stone-500', box: 'bg-amber-50 text-amber-600' },
+        ].map(({ label, value, icon: Icon, tone, box }) => (
+          <div key={label} className="rounded-2xl bg-white border border-stone-200 p-4 flex items-center gap-3">
+            <div className={`h-10 w-10 rounded-xl grid place-items-center flex-shrink-0 ${box}`}>
+              <Icon className="h-4 w-4" strokeWidth={1.75} />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-[0.2em] text-stone-500 font-semibold">{label}</div>
+              <div className={`font-display text-2xl tracking-tight ${tone}`}>{value}</div>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Search */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
+      <div className="mt-3 rounded-2xl bg-white border border-stone-200 p-3">
         <div className="relative max-w-sm">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search products..."
-            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-slate-400 transition-colors"
+            className="w-full h-9 pl-10 pr-3 rounded-full bg-stone-50 border border-stone-200 text-sm text-stone-900 outline-none focus:bg-white focus:border-stone-400 transition-colors"
           />
           {search && (
-            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
               <X size={14} />
             </button>
           )}
@@ -987,41 +971,53 @@ export default function VendorProductsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="mt-3 rounded-2xl bg-white border border-stone-200 overflow-hidden">
         {loading ? (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-stone-100">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="flex items-center gap-4 px-5 py-4 animate-pulse">
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex-shrink-0" />
+                <div className="w-12 h-12 bg-stone-100 rounded-xl flex-shrink-0" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-100 rounded w-1/3" />
-                  <div className="h-3 bg-gray-100 rounded w-1/5" />
+                  <div className="h-4 bg-stone-100 rounded w-1/3" />
+                  <div className="h-3 bg-stone-100 rounded w-1/5" />
                 </div>
-                <div className="h-4 bg-gray-100 rounded w-20" />
-                <div className="h-6 bg-gray-100 rounded-full w-16" />
+                <div className="h-4 bg-stone-100 rounded w-20" />
+                <div className="h-6 bg-stone-100 rounded-full w-16" />
               </div>
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <Package size={40} className="mx-auto mb-3 text-gray-200" />
-            <p className="text-slate-700 font-semibold">No products found</p>
-            <p className="text-sm text-gray-400 mt-1">
-              {search ? 'Try a different search term.' : 'Add your first product to get started.'}
-            </p>
-            {!search && (
-              <button
-                onClick={() => setModal('add')}
-                className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors"
-              >
-                Add Product
-              </button>
-            )}
+          <div className="relative overflow-hidden py-16">
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-amber-100/60 blur-3xl" />
+            <div className="absolute -bottom-32 -right-24 h-64 w-64 rounded-full bg-rose-100/50 blur-3xl" />
+            <div className="relative text-center px-6">
+              <div className="mx-auto relative h-16 w-16">
+                <div className="absolute inset-0 rounded-2xl bg-stone-100 rotate-6" />
+                <div className="absolute inset-0 rounded-2xl bg-stone-50 border border-stone-200 -rotate-3" />
+                <div className="absolute inset-0 rounded-2xl bg-white border border-stone-200 grid place-items-center shadow-sm">
+                  <PackageOpen className="h-7 w-7 text-stone-700" strokeWidth={1.5} />
+                </div>
+              </div>
+              <h3 className="mt-5 font-display text-2xl tracking-tight text-stone-900">
+                {search ? 'No products found.' : <>Your shelves are <span className="italic text-stone-500">empty.</span></>}
+              </h3>
+              <p className="mt-2 text-stone-600 max-w-md mx-auto text-sm">
+                {search ? 'Try a different search term.' : 'Add your first product to start selling. Only takes 2 minutes.'}
+              </p>
+              {!search && (
+                <button
+                  onClick={() => setModal('add')}
+                  className="mt-5 h-10 px-5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-sm font-semibold inline-flex items-center gap-2 transition-colors"
+                >
+                  <Plus className="h-4 w-4" /> Add your first product
+                </button>
+              )}
+            </div>
           </div>
         ) : (
           <>
             {/* Table header */}
-            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 px-5 py-3 border-b border-gray-50 text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 px-5 py-3 border-b border-stone-100 text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
               <span>Product</span>
               <span className="w-28 text-right">Price</span>
               <span className="w-32 text-center">Category</span>
@@ -1029,31 +1025,31 @@ export default function VendorProductsPage() {
               <span className="w-28 text-center">Actions</span>
             </div>
 
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-stone-100">
               {filtered.map((product) => (
                 <div
                   key={product.id}
-                  className="flex sm:grid sm:grid-cols-[1fr_auto_auto_auto_auto] items-center gap-4 px-5 py-4 hover:bg-gray-50/50 transition-colors"
+                  className="flex sm:grid sm:grid-cols-[1fr_auto_auto_auto_auto] items-center gap-4 px-5 py-4 hover:bg-stone-50/70 transition-colors"
                 >
                   {/* Product name */}
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex-shrink-0 flex items-center justify-center">
-                      <Package size={16} className="text-slate-400" />
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex-shrink-0 flex items-center justify-center">
+                      <Package size={16} className="text-blue-500" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-slate-800 truncate">{product.name}</p>
-                      <p className="text-xs text-gray-400">ID #{product.id}</p>
+                      <p className="text-sm font-semibold text-stone-800 truncate">{product.name}</p>
+                      <p className="text-xs text-stone-400">ID #{product.id}</p>
                     </div>
                   </div>
 
                   {/* Price */}
                   <div className="w-28 text-right">
-                    <span className="text-sm font-bold text-slate-900">{formatPrice(product.price)}</span>
+                    <span className="text-sm font-bold text-stone-900">{formatPrice(product.price)}</span>
                   </div>
 
                   {/* Category */}
                   <div className="w-32 text-center">
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full font-medium">
+                    <span className="text-xs bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full font-medium">
                       {product.categoryName || '—'}
                     </span>
                   </div>
@@ -1062,8 +1058,8 @@ export default function VendorProductsPage() {
                   <div className="w-20 text-center">
                     <span className={`text-xs font-semibold px-2.5 py-1 rounded-full
                       ${product.isActive
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-gray-100 text-gray-500'}`}>
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-stone-100 text-stone-500'}`}>
                       {product.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </div>
@@ -1073,21 +1069,21 @@ export default function VendorProductsPage() {
                     <button
                       onClick={() => { setEditTarget(product); setModal('edit'); }}
                       title="Edit product"
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-slate-700 hover:bg-slate-50 transition-all"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-indigo-600 hover:text-white hover:bg-indigo-600 transition-all"
                     >
                       <Pencil size={15} />
                     </button>
                     <button
                       onClick={() => setImageTarget(product)}
                       title="Manage images"
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-blue-500 hover:bg-blue-50 transition-all"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-600 hover:text-white hover:bg-blue-600 transition-all"
                     >
                       <Images size={15} />
                     </button>
                     <button
                       onClick={() => setDeleteTarget(product)}
                       title="Delete product"
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-red-600 hover:text-white hover:bg-red-600 transition-all"
                     >
                       <Trash2 size={15} />
                     </button>
@@ -1098,22 +1094,22 @@ export default function VendorProductsPage() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between px-5 py-4 border-t border-gray-50">
-                <p className="text-xs text-gray-400">
+              <div className="flex items-center justify-between px-5 py-4 border-t border-stone-100">
+                <p className="text-xs text-stone-400">
                   Page {page} of {totalPages} · {totalCount} products
                 </p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center disabled:opacity-40 hover:border-slate-400 transition-colors"
+                    className="w-8 h-8 rounded-lg border border-stone-200 flex items-center justify-center disabled:opacity-40 hover:border-stone-400 transition-colors"
                   >
                     <ChevronLeft size={15} />
                   </button>
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center disabled:opacity-40 hover:border-slate-400 transition-colors"
+                    className="w-8 h-8 rounded-lg border border-stone-200 flex items-center justify-center disabled:opacity-40 hover:border-stone-400 transition-colors"
                   >
                     <ChevronRight size={15} />
                   </button>
@@ -1131,7 +1127,6 @@ export default function VendorProductsPage() {
           categories={categories}
           onSave={handleAdd}
           onClose={() => setModal(null)}
-          onCategoryAdded={(cat) => setCategories((prev) => [...prev, cat])}
         />
       )}
 
@@ -1142,7 +1137,6 @@ export default function VendorProductsPage() {
           categories={categories}
           onSave={handleEdit}
           onClose={() => { setModal(null); setEditTarget(null); }}
-          onCategoryAdded={(cat) => setCategories((prev) => [...prev, cat])}
         />
       )}
 

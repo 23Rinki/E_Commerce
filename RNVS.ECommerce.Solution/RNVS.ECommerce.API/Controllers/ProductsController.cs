@@ -378,7 +378,7 @@ public class ProductsController : ControllerBase
             }
             else
             {
-                (items, totalCount) = await _storefront.GetAllProductsAsync(resolvedPage, pageSize, category, includeInactive: isAdmin && includeInactive);
+                (items, totalCount) = await _storefront.GetAllProductsAsync(resolvedPage, pageSize, category, includeInactive: isAdmin && includeInactive, excludeSuspended: !isAdmin);
             }
 
             return Ok(new ApiResponseDto<PaginatedResultDto<ProductListDto>>
@@ -883,7 +883,7 @@ public class ProductsController : ControllerBase
             var productImage = new ProductImage
             {
                 ProductId = id,
-                ImagePath = uploadResult.FilePath,
+                ImagePath = uploadResult.FilePath.Replace("\\", "/"),
                 AltText = product.Name,
                 DisplayOrder = displayOrder,
                 CreatedAt = DateTime.UtcNow
@@ -915,7 +915,7 @@ public class ProductsController : ControllerBase
             var imageDto = new ProductImageDto
             {
                 Id = productImage.Id,
-                ImageUrl = productImage.ImagePath,
+                ImageUrl = productImage.ImagePath.Replace("\\", "/"),
                 AltText = productImage.AltText,
                 DisplayOrder = productImage.DisplayOrder
             };

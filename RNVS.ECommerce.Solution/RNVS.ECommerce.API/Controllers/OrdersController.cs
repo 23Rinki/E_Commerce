@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using RNVS.ECommerce.API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RNVS.ECommerce.Application.DTOs.Common;
 using RNVS.ECommerce.Application.DTOs.Order;
 using RNVS.ECommerce.Application.Interfaces.Repositories;
@@ -24,6 +25,7 @@ public class OrdersController : ControllerBase
     private readonly VendorDbContext _vendorContext;
     private readonly StorefrontProductsService _storefront;
     private readonly IEmailService _emailService;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<OrdersController> _logger;
 
     public OrdersController(
@@ -32,6 +34,7 @@ public class OrdersController : ControllerBase
         VendorDbContext vendorContext,
         StorefrontProductsService storefront,
         IEmailService emailService,
+        IServiceScopeFactory scopeFactory,
         ILogger<OrdersController> logger)
     {
         _cartRepository = cartRepository;
@@ -39,6 +42,7 @@ public class OrdersController : ControllerBase
         _vendorContext = vendorContext;
         _storefront = storefront;
         _emailService = emailService;
+        _scopeFactory = scopeFactory;
         _logger = logger;
     }
 
@@ -166,6 +170,9 @@ public class OrdersController : ControllerBase
             string sharedOrderNumber = $"ORD-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0, 4).ToUpper()}";
             var createdOrders = new List<(string VendorId, decimal SubTotal, decimal TaxAmount, decimal ShippingCost, decimal TotalAmount, List<OrderItem> Items)>();
 
+            // Phone isn't stored on Address — pull it from the customer's own account for the snapshot below.
+            var customerUser = await _context.Users.FindAsync(userId);
+
             foreach (var group in groups)
             {
                 var vendorId = group.Key;
@@ -215,7 +222,15 @@ public class OrdersController : ControllerBase
                     TotalAmount = groupTotal,
                     Status = OrderStatus.Pending,
                     CreatedAt = DateTime.UtcNow,
-                    CustomerGSTIN = string.IsNullOrWhiteSpace(dto.CustomerGSTIN) ? null : dto.CustomerGSTIN.Trim().ToUpper()
+                    CustomerGSTIN = string.IsNullOrWhiteSpace(dto.CustomerGSTIN) ? null : dto.CustomerGSTIN.Trim().ToUpper(),
+                    // Frozen shipping snapshot — captured now so later address-book edits never alter past orders
+                    ShippingName = $"{address.FirstName} {address.LastName}".Trim(),
+                    ShippingPhone = customerUser?.PhoneNumber,
+                    ShippingStreet = address.Street,
+                    ShippingCity = address.City,
+                    ShippingState = address.State,
+                    ShippingPostalCode = address.PostalCode,
+                    ShippingCountry = address.Country,
                 };
                 vendorDb.Orders.Add(order);
                 await vendorDb.SaveChangesAsync(); // need order.Id before creating items/history/payment
@@ -278,12 +293,17 @@ public class OrdersController : ControllerBase
             var capturedPaymentType = paymentMethod.Type;
             var capturedOrderNumber = sharedOrderNumber;
 
-            // Send one combined confirmation email (fire-and-forget — don't fail the order if email fails)
+            // Send one combined confirmation email (fire-and-forget — don't fail the order if email fails).
+            // Must resolve a FRESH ApplicationDbContext from a new DI scope here — the controller's own
+            // _context is request-scoped and gets disposed as soon as this HTTP response is sent, which
+            // was silently crashing every confirmation email with ObjectDisposedException (found Aug 2026).
             _ = Task.Run(async () =>
             {
                 try
                 {
-                    var customer = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
+                    using var scope = _scopeFactory.CreateScope();
+                    var scopedContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    var customer = await scopedContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
                     if (customer != null && !string.IsNullOrEmpty(customer.Email))
                     {
                         var allItems = createdOrders.SelectMany(o => o.Items).ToList();
@@ -429,6 +449,7 @@ public class OrdersController : ControllerBase
                     Id = order.Id,
                     OrderNumber = order.OrderNumber,
                     UserId = order.UserId,
+                    CustomerName = customer == null ? null : $"{customer.FirstName} {customer.LastName}".Trim(),
                     CustomerEmail = customer?.Email,
                     CustomerPhone = customer?.PhoneNumber,
                     VendorId = userId,
@@ -446,7 +467,14 @@ public class OrdersController : ControllerBase
                         Quantity = oi.Quantity,
                         UnitPrice = oi.UnitPrice,
                         TotalPrice = oi.TotalPrice
-                    }).ToList()
+                    }).ToList(),
+                    ShippingName = order.ShippingName,
+                    ShippingPhone = order.ShippingPhone,
+                    ShippingStreet = order.ShippingStreet,
+                    ShippingCity = order.ShippingCity,
+                    ShippingState = order.ShippingState,
+                    ShippingPostalCode = order.ShippingPostalCode,
+                    ShippingCountry = order.ShippingCountry,
                 });
             }
 
@@ -665,11 +693,17 @@ public class OrdersController : ControllerBase
             await using var db = found.Value.Db;
             var order = found.Value.Order;
 
-            // Vendor can only update their own orders
+            // Vendor can only update orders they have at least one item in — check OrderItems, not
+            // Order.VendorId, since a shared-DB order can contain items from multiple vendors
+            // (same reasoning as GetVendorOrders above).
             bool isAdmin = userRole == "Admin" || userRole == "SuperAdmin";
-            if (!isAdmin && order.VendorId != userId)
+            if (!isAdmin)
             {
-                return Forbid();
+                var ownsItem = await db.OrderItems.AnyAsync(oi => oi.OrderId == order.Id && oi.VendorId == userId);
+                if (!ownsItem)
+                {
+                    return Forbid();
+                }
             }
 
             // Validate status
@@ -866,6 +900,70 @@ public class OrdersController : ControllerBase
             await db.SaveChangesAsync();
 
             _logger.LogInformation("Order {OrderId} cancelled by user {UserId}", id, userId);
+
+            // Notify every vendor who had items in this order — fire-and-forget, don't fail the
+            // cancellation itself if the email fails (same pattern as the order confirmation email).
+            var capturedOrderNumber = order.OrderNumber;
+            var capturedOrderId = order.Id;
+            var vendorIds = orderItems.Select(oi => oi.VendorId).Where(v => !string.IsNullOrEmpty(v)).Distinct().ToList();
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    using var scope = _scopeFactory.CreateScope();
+                    var scopedContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    var customer = await scopedContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
+                    var customerName = customer == null ? "A customer" : $"{customer.FirstName} {customer.LastName}".Trim();
+                    if (string.IsNullOrWhiteSpace(customerName)) customerName = customer?.Email ?? "A customer";
+
+                    foreach (var vendorId in vendorIds)
+                    {
+                        var vendor = await scopedContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == vendorId);
+                        if (vendor == null || string.IsNullOrEmpty(vendor.Email)) continue;
+
+                        var vendorItemRows = string.Join("", orderItems.Where(oi => oi.VendorId == vendorId).Select(oi =>
+                            $"<tr><td style='padding:8px 12px;border-bottom:1px solid #eee'>{oi.ProductName}</td>" +
+                            $"<td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:center'>{oi.Quantity}</td>" +
+                            $"<td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:right'>&#8377;{oi.TotalPrice:N2}</td></tr>"));
+
+                        var emailBody = $@"
+<!DOCTYPE html><html><head><meta charset='utf-8'></head><body style='margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif'>
+<div style='max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)'>
+  <div style='background:#b91c1c;padding:32px 40px;text-align:center'>
+    <h1 style='margin:0;color:#fff;font-size:22px;font-weight:700'>Order Cancelled</h1>
+    <p style='margin:8px 0 0;color:#fecaca;font-size:14px'>{capturedOrderNumber}</p>
+  </div>
+  <div style='padding:32px 40px'>
+    <p style='color:#334155;font-size:15px'>Hi {vendor.FirstName},</p>
+    <p style='color:#334155;font-size:15px'>{customerName} has cancelled order <strong>{capturedOrderNumber}</strong>. It has already been marked as cancelled and the stock has been restored automatically — no action is needed from you.</p>
+    <table style='width:100%;border-collapse:collapse;margin:20px 0'>
+      <thead>
+        <tr style='background:#f1f5f9'>
+          <th style='padding:10px 12px;text-align:left;font-size:12px;color:#64748b;text-transform:uppercase'>Item</th>
+          <th style='padding:10px 12px;text-align:center;font-size:12px;color:#64748b;text-transform:uppercase'>Qty</th>
+          <th style='padding:10px 12px;text-align:right;font-size:12px;color:#64748b;text-transform:uppercase'>Total</th>
+        </tr>
+      </thead>
+      <tbody>{vendorItemRows}</tbody>
+    </table>
+    <div style='text-align:center;margin-top:28px'>
+      <a href='http://localhost:3000/vendor/orders' style='display:inline-block;background:#1e293b;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:14px 32px;border-radius:8px'>View Orders</a>
+    </div>
+  </div>
+  <div style='background:#f8fafc;padding:20px 40px;text-align:center;font-size:12px;color:#94a3b8'>
+    &copy; {DateTime.UtcNow.Year} RNVS CommerceX.
+  </div>
+</div>
+</body></html>";
+
+                        await _emailService.SendEmailAsync(vendor.Email, $"Order Cancelled — {capturedOrderNumber}", emailBody);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to send cancellation email for order {OrderId}", capturedOrderId);
+                }
+            });
 
             return Ok(new ApiResponseDto<object>
             {

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Great+Vibes&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -41,4 +42,57 @@ html {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* MAISON-style homepage design */
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Receipt Designer (Jul 2026) — scoped fonts, matches shared design exactly */
+.receipt-designer .font-heading { font-family: 'Outfit', sans-serif; letter-spacing: -0.01em; }
+.receipt-designer .font-body { font-family: 'Manrope', sans-serif; }
+.receipt-designer .font-mono-receipt { font-family: 'JetBrains Mono', monospace; }
+.receipt-designer .font-signature { font-family: 'Great Vibes', cursive; }
+
+.receipt-designer .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+.receipt-designer .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.receipt-designer .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+.receipt-designer .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+.receipt-designer .preview-dot-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(59, 91, 219, 0.09) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+.receipt-designer .paper-shadow {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 20px 40px -15px rgba(15, 23, 42, 0.18),
+    0 40px 80px -20px rgba(59, 91, 219, 0.1);
+}
+
+@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.receipt-designer .pulse-dot { animation: pulse-soft 2s ease-in-out infinite; }
+
+@media print {
+  body * { visibility: hidden; }
+  #receipt-print-area, #receipt-print-area * { visibility: visible; }
+  #receipt-print-area { position: absolute; top: 0; left: 0; width: 100%; }
 }

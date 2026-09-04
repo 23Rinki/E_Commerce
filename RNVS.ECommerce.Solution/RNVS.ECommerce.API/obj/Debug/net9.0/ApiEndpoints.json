@@ -418,6 +418,22 @@
   },
   {
     "ContainingType": "RNVS.ECommerce.API.Controllers.BrandingSettingsController",
+    "Method": "DownloadReceiptPdf",
+    "RelativePath": "api/BrandingSettings/receipt-pdf/{orderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RNVS.ECommerce.API.Controllers.BrandingSettingsController",
     "Method": "UploadReceiptTemplate",
     "RelativePath": "api/BrandingSettings/receipt-template",
     "HttpMethod": "POST",
@@ -440,6 +456,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RNVS.ECommerce.API.Controllers.BrandingSettingsController",
+    "Method": "UploadSignature",
+    "RelativePath": "api/BrandingSettings/signature",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -592,6 +624,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RNVS.ECommerce.API.Controllers.CategoriesController",
+    "Method": "GetMyCategories",
+    "RelativePath": "api/Categories/mine",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -817,6 +859,22 @@
     "Parameters": [
       {
         "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RNVS.ECommerce.API.Controllers.InvoicesController",
+    "Method": "DownloadInvoicePdf",
+    "RelativePath": "api/Invoices/download/{orderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
         "Type": "System.Int32",
         "IsRequired": true
       }

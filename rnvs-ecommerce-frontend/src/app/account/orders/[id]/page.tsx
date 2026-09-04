@@ -61,6 +61,16 @@ export default function OrderDetailPage() {
       const win = window.open('', '_blank');
       if (win) {
         win.document.write(res.data as string);
+        win.document.write(`
+          <style>
+            #__printBtn { position: fixed; top: 16px; right: 16px; z-index: 9999;
+              padding: 10px 20px; background: #1a1a6e; color: #fff; border: none;
+              border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+            @media print { #__printBtn { display: none; } }
+          </style>
+          <button id="__printBtn" onclick="window.print()">Print Invoice</button>
+        `);
         win.document.close();
       }
     } catch {

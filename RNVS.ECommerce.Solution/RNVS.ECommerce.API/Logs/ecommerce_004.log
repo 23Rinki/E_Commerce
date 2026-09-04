@@ -1,0 +1,158 @@
+2026-07-30 19:59:01 | Vendor DB migrated: All Store
+2026-07-30 19:59:02 | Vendor DB migrated: Pappu
+2026-07-30 19:59:02 | Vendor DB migrated: Guru
+2026-07-30 19:59:03 | Vendor DB migrated: RadheRadhe
+2026-07-30 19:59:03 | Vendor DB migrated: Test Vendor
+2026-07-30 19:59:04 | Hosting failed to start
+System.IO.IOException: Failed to bind to address https://127.0.0.1:7147: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-07-31 00:27:23 | Vendor DB migrated: All Store
+2026-07-31 00:27:23 | Vendor DB migrated: Pappu
+2026-07-31 00:27:24 | Vendor DB migrated: Guru
+2026-07-31 00:27:24 | Vendor DB migrated: RadheRadhe
+2026-07-31 00:27:25 | Vendor DB migrated: Test Vendor
+2026-07-31 00:30:05 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-07-31 00:50:40 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-07-31 00:50:40 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-07-31 15:39:03 | Vendor DB migrated: All Store
+2026-07-31 15:39:04 | Vendor DB migrated: Pappu
+2026-07-31 15:39:04 | Vendor DB migrated: Guru
+2026-07-31 15:39:05 | Vendor DB migrated: RadheRadhe
+2026-07-31 15:39:05 | Vendor DB migrated: Test Vendor
+2026-07-31 19:45:53 | Vendor DB migrated: All Store
+2026-07-31 19:45:54 | Vendor DB migrated: Pappu
+2026-07-31 19:45:54 | Vendor DB migrated: Guru
+2026-07-31 19:45:55 | Vendor DB migrated: RadheRadhe
+2026-07-31 19:45:55 | Vendor DB migrated: Test Vendor
+2026-08-02 15:21:31 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-08-02 15:27:02 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-02 15:27:02 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 18:40:18 | Vendor DB migrated: All Store
+2026-08-08 18:40:19 | Vendor DB migrated: Pappu
+2026-08-08 18:40:20 | Vendor DB migrated: Guru
+2026-08-08 18:40:20 | Vendor DB migrated: RadheRadhe
+2026-08-08 18:40:20 | Vendor DB migrated: Test Vendor
+2026-08-08 18:40:22 | Sending email to vendor2@test.com with subject Your RNVS CommerceX subscription is now ₹4,999/month
+2026-08-08 18:40:27 | Email sent successfully to vendor2@test.com
+2026-08-08 18:40:27 | Transition email sent to vendor decd5425-e0af-4459-85e9-e4d535d17504
+2026-08-08 19:25:18 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-08-08 19:27:07 | Order 1 status updated from "Shipped" to "Cancelled" by 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-08-08 19:28:26 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:28:26 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:28:33 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:28:33 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:31:49 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:41:10 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-08 19:41:10 | Vendor 8f870635-595e-4058-8f94-ab8a56f03e04 initialized 0 settings
+2026-08-09 13:13:17 | Sending email to nehilsinha@gmail.com with subject Failed sign-in attempt on your account
+2026-08-09 13:13:22 | Email sent successfully to nehilsinha@gmail.com
+2026-08-09 13:13:41 | Sending email to nehilsinha@gmail.com with subject Reset your password
+2026-08-09 13:13:46 | Email sent successfully to nehilsinha@gmail.com
+2026-08-10 20:11:03 | Sending email to reema.verma@yahoo.com with subject Welcome to RNVS CommerceX!
+2026-08-10 20:11:08 | Email sent successfully to reema.verma@yahoo.com
+2026-08-10 20:11:08 | JWT token generated for user: 4e813b42-47d2-437f-aa6a-ce7e2c83b24f
+2026-08-10 20:15:31 | Sending email to reema.sinha@yahoo.com with subject Reset your password
+2026-08-10 20:15:36 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-10 20:25:01 | Vendor DB migrated: All Store
+2026-08-10 20:25:02 | Vendor DB migrated: Pappu
+2026-08-10 20:25:02 | Vendor DB migrated: Guru
+2026-08-10 20:25:02 | Vendor DB migrated: RadheRadhe
+2026-08-10 20:25:03 | Vendor DB migrated: Test Vendor
+2026-08-10 20:27:00 | Sending email to reema.sinha@yahoo.com with subject Reset your password
+2026-08-10 20:27:05 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-12 12:17:06 | Sending email to reema.sinha@yahoo.com with subject Failed sign-in attempt on your account
+2026-08-12 12:17:11 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-12 12:17:30 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:18:04 | Product 7 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:18:08 | Product 3 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:20:03 | Address created for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:20:14 | Order ORD-20260812065014-7D4C created across 2 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:20:15 | Failed to send order confirmation email for order ORD-20260812065014-7D4C
+System.ObjectDisposedException: Cannot access a disposed context instance. A common cause of this error is disposing a context instance that was resolved from dependency injection and then later trying to use the same context instance elsewhere in your application. This may occur if you are calling 'Dispose' on the context instance, or wrapping it in a using statement. If you are using dependency injection, you should let the dependency injection container take care of disposing context instances.
+Object name: 'ApplicationDbContext'.
+   at Microsoft.EntityFrameworkCore.DbContext.get_ContextServices()
+   at Microsoft.EntityFrameworkCore.DbContext.get_ChangeTracker()
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal.NpgsqlCompiledQueryCacheKeyGenerator.GenerateCacheKey(Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ExecuteAsync[TSource,TResult](MethodInfo operatorMethodInfo, IQueryable`1 source, Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at RNVS.ECommerce.API.Controllers.OrdersController.<>c__DisplayClass9_1.<<CreateOrder>b__1>d.MoveNext() in G:\E_Commerce\RNVS.ECommerce.Solution\RNVS.ECommerce.API\Controllers\OrdersController.cs:line 297
+2026-08-12 12:30:31 | Vendor DB migrated: All Store
+2026-08-12 12:30:32 | Vendor DB migrated: Pappu
+2026-08-12 12:30:33 | Vendor DB migrated: Guru
+2026-08-12 12:30:33 | Vendor DB migrated: RadheRadhe
+2026-08-12 12:30:34 | Vendor DB migrated: Test Vendor
+2026-08-12 12:30:37 | Sending email to rinkiverma@rediffmail.com with subject Your RNVS CommerceX subscription is now ₹4,999/month
+2026-08-12 12:30:42 | Email sent successfully to rinkiverma@rediffmail.com
+2026-08-12 12:30:42 | Transition email sent to vendor 33878bcf-ebfd-4bc7-9171-0f25d891bfe1
+2026-08-12 12:42:46 | Product 25 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:44:55 | Order ORD-20260812071454-27F8 created across 1 vendor database(s) for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-12 12:44:55 | Sending email to reema.sinha@yahoo.com with subject Order Confirmed — ORD-20260812071454-27F8
+2026-08-12 12:44:59 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-12 13:12:18 | Vendor DB migrated: Pappu
+2026-08-12 13:12:19 | Vendor DB migrated: Guru
+2026-08-12 13:12:19 | Vendor DB migrated: RadheRadhe
+2026-08-12 13:12:20 | Vendor DB migrated: All Store
+2026-08-12 13:12:21 | Vendor DB migrated: Test Vendor
+2026-08-12 20:32:11 | Vendor DB migrated: Pappu
+2026-08-12 20:32:12 | Vendor DB migrated: Guru
+2026-08-12 20:32:12 | Vendor DB migrated: RadheRadhe
+2026-08-12 20:32:12 | Vendor DB migrated: All Store
+2026-08-12 20:32:13 | Vendor DB migrated: Test Vendor
+2026-08-17 12:06:38 | Vendor DB migrated: Pappu
+2026-08-17 12:06:39 | Vendor DB migrated: Guru
+2026-08-17 12:06:40 | Vendor DB migrated: RadheRadhe
+2026-08-17 12:06:41 | Vendor DB migrated: All Store
+2026-08-17 12:06:41 | Vendor DB migrated: Test Vendor
+2026-08-17 14:15:55 | Vendor DB migrated: Pappu
+2026-08-17 14:15:56 | Vendor DB migrated: Guru
+2026-08-17 14:15:56 | Vendor DB migrated: RadheRadhe
+2026-08-17 14:15:57 | Vendor DB migrated: All Store
+2026-08-17 14:15:58 | Vendor DB migrated: Test Vendor
+2026-08-18 13:50:25 | Sending email to reema.sinha@yahoo.com with subject Failed sign-in attempt on your account
+2026-08-18 13:50:29 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-18 13:51:40 | Sending email to reema.sinha@yahoo.com with subject Reset your password
+2026-08-18 13:51:45 | Email sent successfully to reema.sinha@yahoo.com
+2026-08-18 13:57:00 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-18 13:58:00 | Product 18 added to cart for user ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-21 19:27:53 | JWT token generated for user: ee39fee8-36aa-4adf-9155-507fe3e43699
+2026-08-21 19:28:48 | Sending email to nehilsinha@gmail.com with subject Failed sign-in attempt on your account
+2026-08-21 19:28:54 | Email sent successfully to nehilsinha@gmail.com
+2026-08-21 19:29:28 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04
+2026-09-02 14:53:41 | Vendor DB migrated: Pappu
+2026-09-02 14:53:41 | Vendor DB migrated: Guru
+2026-09-02 14:53:42 | Vendor DB migrated: All Store
+2026-09-02 14:53:42 | Vendor DB migrated: Test Vendor
+2026-09-02 14:53:42 | Vendor DB migrated: RadheRadhe
+2026-09-02 14:53:43 | Sending email to rekhaharishverma@gmail.com with subject Your RNVS CommerceX subscription is now ₹4,999/month
+2026-09-02 14:53:48 | Email sent successfully to rekhaharishverma@gmail.com
+2026-09-02 14:53:48 | Transition email sent to vendor 9bb8584a-b63b-4dd2-9ad9-c1773172c5f2
+2026-09-02 15:00:49 | Vendor DB migrated: Guru
+2026-09-02 15:00:49 | Vendor DB migrated: Pappu
+2026-09-02 15:00:49 | Vendor DB migrated: All Store
+2026-09-02 15:00:50 | Vendor DB migrated: Test Vendor
+2026-09-02 15:00:50 | Vendor DB migrated: RadheRadhe
+2026-09-02 15:02:49 | JWT token generated for user: 8f870635-595e-4058-8f94-ab8a56f03e04

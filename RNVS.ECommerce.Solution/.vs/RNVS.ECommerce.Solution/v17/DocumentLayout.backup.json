@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "G:\\E_Commerce\\RNVS.ECommerce.Solution\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|Solution Items{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|G:\\E_Commerce\\RNVS.ECommerce.Solution\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|Solution Items{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B4D2829C-8BC5-43E1-9EA5-83E447B2E0D4}|RNVS.ECommerce.API\\RNVS.ECommerce.API.csproj|g:\\e_commerce\\rnvs.ecommerce.solution\\rnvs.ecommerce.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4D2829C-8BC5-43E1-9EA5-83E447B2E0D4}|RNVS.ECommerce.API\\RNVS.ECommerce.API.csproj|solutionrelative:rnvs.ecommerce.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|Solution Items{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|G:\\E_Commerce\\RNVS.ECommerce.Solution\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|Solution Items{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6052030D-FF99-4E4C-816D-2EF513BFB8F5}|RNVS.ECommerce.Infrastructure\\RNVS.ECommerce.Infrastructure.csproj|g:\\e_commerce\\rnvs.ecommerce.solution\\rnvs.ecommerce.infrastructure\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,24 +30,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "README.md",
               "DocumentMoniker": "G:\\E_Commerce\\RNVS.ECommerce.Solution\\README.md",
               "RelativeDocumentMoniker": "README.md",
               "ToolTip": "G:\\E_Commerce\\RNVS.ECommerce.Solution\\README.md",
               "RelativeToolTip": "README.md",
-              "ViewState": "AgIAAIMEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHoEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-07-01T18:00:46.819Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2026-07-01T18:00:46.819Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "RNVS.ECommerce.Infrastructure\\Data\\DbInitializer.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAYwCYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-06T17:57:07.954Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-06T17:57:07.954Z"
             },
             {
               "$type": "Document",
@@ -76,13 +74,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "G:\\E_Commerce\\RNVS.ECommerce.Solution\\RNVS.ECommerce.API\\Program.cs",
               "RelativeDocumentMoniker": "RNVS.ECommerce.API\\Program.cs",
               "ToolTip": "G:\\E_Commerce\\RNVS.ECommerce.Solution\\RNVS.ECommerce.API\\Program.cs",
               "RelativeToolTip": "RNVS.ECommerce.API\\Program.cs",
-              "ViewState": "AgIAAMoBAAAAAAAAAAAhwNEBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAHMAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-31T14:57:37.919Z",
               "EditorCaption": ""

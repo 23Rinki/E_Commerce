@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { margin: 0; color: #a0aec0; font-size: 14px; }
+    .badge { display: inline-block; background: #fc8181; color: #1a1a2e; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-top: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .content { padding: 32px 30px; }
+    .greeting { font-size: 16px; margin-bottom: 20px; }
+    .section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; margin: 28px 0 12px 0; }
+    .product-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin: 16px 0; display: flex; gap: 16px; align-items: center; }
+    .product-thumb { width: 72px; height: 72px; border-radius: 10px; overflow: hidden; flex-shrink: 0; border: 1px solid #e2e8f0; background: #fff; }
+    .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #718096; font-weight: 600; }
+    .info-value { color: #1a1a2e; font-weight: 700; text-align: right; }
+    .note { background: #fff5f5; border-left: 4px solid #fc8181; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13px; color: #742a2a; margin: 16px 0; }
+    .cta { text-align: center; margin: 30px 0; }
+    .btn { display: inline-block; padding: 14px 36px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 8px; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    .footer { background: #f7fafc; padding: 24px 30px; text-align: center; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
+    .footer a { color: #718096; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>RNVS CommerceX</h1>
+      <p>Product Moderation Notice</p>
+      <div class="badge">Image Removed</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Hi <strong>{{VendorName}}</strong>,</p>
+      <p style="font-size:14px; color:#4a5568;">
+        An image on one of your product listings was removed by our moderation team and is no longer visible to customers.
+        Your product is still live — only this photo was taken down.
+      </p>
+
+      <div class="section-title">Removed Image</div>
+      <div class="product-box">
+        <div class="product-thumb">
+          <img src="{{ProductImageUrl}}" alt="{{ProductName}}" />
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div class="info-row"><span class="info-label">Product</span><span class="info-value">{{ProductName}}</span></div>
+          <div class="info-row"><span class="info-label">Removed On</span><span class="info-value">{{RemovedDate}}</span></div>
+          <div class="info-row"><span class="info-label">Removed By</span><span class="info-value">{{RemovedBy}}</span></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Reason:</strong> {{RemovalReason}}
+      </div>
+
+      <p style="font-size:13px; color:#718096;">
+        You can upload a replacement photo anytime from your seller dashboard.
+      </p>
+
+      <div class="cta">
+        <a href="{{ProductUrl}}" class="btn">View Product →</a>
+      </div>
+
+      <p style="font-size:13px; color:#718096; text-align:center;">
+        If you believe this was a mistake, reply to this email or contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#e07b39;">{{SupportEmail}}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>RNVS CommerceX</strong> · Seller Platform</p>
+      <p>This email was sent to {{VendorEmail}} because moderation action was taken on your store's listing.</p>
+      <p>&copy; 2026 RNVS CommerceX. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>

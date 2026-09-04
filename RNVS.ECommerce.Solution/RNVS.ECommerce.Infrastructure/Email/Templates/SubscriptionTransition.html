@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+    .header p { margin: 0; color: #a0aec0; font-size: 14px; }
+    .badge { display: inline-block; background: #f6ad55; color: #1a1a2e; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-top: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .content { padding: 32px 30px; }
+    .greeting { font-size: 16px; margin-bottom: 20px; }
+    .section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; margin: 28px 0 12px 0; }
+    .pricing-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin: 16px 0; }
+    .pricing-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+    .pricing-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .pricing-label { font-size: 14px; color: #4a5568; }
+    .pricing-label small { display: block; font-size: 11px; color: #a0aec0; margin-top: 2px; }
+    .pricing-amount { font-size: 16px; font-weight: 800; color: #1a1a2e; }
+    .pricing-amount.old { color: #a0aec0; text-decoration: line-through; font-size: 14px; }
+    .pricing-amount.new { color: #e07b39; }
+    .highlight-box { background: #fff8f0; border-left: 4px solid #f6ad55; border-radius: 0 8px 8px 0; padding: 16px 18px; margin: 20px 0; font-size: 14px; color: #744210; }
+    .highlight-box strong { display: block; font-size: 15px; margin-bottom: 6px; }
+    .note { background: #ebf8ff; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #2c5282; margin: 16px 0; }
+    .cta { text-align: center; margin: 30px 0; }
+    .btn { display: inline-block; padding: 14px 36px; background: #1a1a2e; color: white; text-decoration: none; border-radius: 8px; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    .btn-orange { background: #e07b39; }
+    .footer { background: #f7fafc; padding: 24px 30px; text-align: center; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; }
+    .footer a { color: #718096; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>RNVS CommerceX</h1>
+      <p>Subscription update for {{StoreName}}</p>
+      <div class="badge">Pricing Update</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <p class="greeting">Hi <strong>{{VendorName}}</strong>,</p>
+      <p style="font-size:14px; color:#4a5568;">
+        Your 3-month introductory offer has ended. Thank you for being one of our early sellers —
+        your subscription for <strong>{{StoreName}}</strong> is now moving to the regular monthly price.
+      </p>
+
+      <!-- Pricing change -->
+      <div class="section-title">What's Changing</div>
+      <div class="pricing-box">
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Introductory price
+            <small>First 3 months — now ended</small>
+          </div>
+          <div class="pricing-amount old">₹2,999 / month</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Regular price
+            <small>From {{EffectiveDate}} onwards</small>
+          </div>
+          <div class="pricing-amount new">₹4,999 / month</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">Platform commission</div>
+          <div class="pricing-amount">5% per sale</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>No action needed from your side.</strong>
+        Your store continues to run normally. The new amount of ₹4,999 will apply from your next billing cycle.
+        Cancel anytime — no lock-in.
+      </div>
+
+      <!-- What stays the same -->
+      <div class="section-title">What Stays the Same</div>
+      <div class="note">
+        Everything you already have: dedicated PostgreSQL database · full seller dashboard ·
+        product &amp; inventory management · order tracking · receipts &amp; invoices ·
+        employee accounts · branding tools · 5% commission on sales only.
+      </div>
+
+      <!-- Yearly option -->
+      <div class="section-title">Save More with Annual Billing</div>
+      <div class="pricing-box">
+        <div class="pricing-row">
+          <div class="pricing-label">
+            Annual plan
+            <small>Pay once, save 2 months</small>
+          </div>
+          <div class="pricing-amount new">₹49,990 / year</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            That's equivalent to
+            <small>vs ₹59,988 if billed monthly</small>
+          </div>
+          <div class="pricing-amount" style="color:#38a169;">2 months FREE</div>
+        </div>
+      </div>
+
+      <p style="font-size:13px; color:#718096;">
+        To switch to annual billing, contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#e07b39;">{{SupportEmail}}</a>
+        and we'll set it up for you.
+      </p>
+
+      <div class="cta">
+        <a href="{{DashboardUrl}}" class="btn btn-orange">Go to Seller Dashboard →</a>
+      </div>
+
+      <p style="font-size:13px; color:#718096; text-align:center;">
+        Questions? Reply to this email or contact us at
+        <a href="mailto:{{SupportEmail}}" style="color:#e07b39;">{{SupportEmail}}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>RNVS CommerceX</strong> · Seller Platform</p>
+      <p>This email was sent to {{VendorEmail}} regarding your seller subscription.</p>
+      <p>&copy; 2026 RNVS CommerceX. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>
