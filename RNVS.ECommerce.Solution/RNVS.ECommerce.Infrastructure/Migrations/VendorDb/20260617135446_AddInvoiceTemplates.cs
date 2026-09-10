@@ -10,30 +10,19 @@ namespace RNVS.ECommerce.Infrastructure.Migrations.VendorDb
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "InvoiceTemplates",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    VendorId = table.Column<string>(type: "text", nullable: false, defaultValue: ""),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    HtmlTemplate = table.Column<string>(type: "text", nullable: false),
-                    IsDefault = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoiceTemplates", x => x.Id);
-                });
+            // No-op: "InvoiceTemplates" is already created by the InitialVendorSchema migration
+            // (20260331195105) with this exact same shape. This migration originally duplicated
+            // that CreateTable call, which crashes with "relation already exists" on any database
+            // that applies migrations in order from scratch (e.g. a brand-new vendor signup, or a
+            // fresh deployment) — it only ever worked on databases where InvoiceTemplates had been
+            // created out-of-band beforehand. Left as a neutered no-op rather than deleted so
+            // existing databases that already recorded this migration as applied are unaffected.
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "InvoiceTemplates");
+            // No-op — see Up().
         }
     }
 }
