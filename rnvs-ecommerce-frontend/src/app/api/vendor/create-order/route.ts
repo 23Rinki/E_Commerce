@@ -1,13 +1,15 @@
 import Razorpay from 'razorpay';
 import { NextRequest, NextResponse } from 'next/server';
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
-
 export async function POST(req: NextRequest) {
   try {
+    // Constructed lazily (not at module scope) so this route can be statically
+    // analyzed during `next build` without RAZORPAY_KEY_ID/SECRET being set yet.
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!,
+      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    });
+
     const { vendorEmail, storeName, plan } = await req.json();
 
     // Monthly: ₹2,999 (intro offer) | Yearly: ₹49,990 (2 months free)

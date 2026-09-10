@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -130,11 +131,15 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>(options 
 });
 
 // Add CORS for Next.js frontend
+// Reads from "AllowedOrigins" config (array) so production origins can be set via env vars
+// (e.g. AllowedOrigins__0=https://shop.rnvsai.com) without touching this default for local dev.
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+    ?? new[] { "http://localhost:3000", "https://localhost:3000" };
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("NextJsPolicy", builder =>
     {
-        builder.WithOrigins("http://localhost:3000", "https://localhost:3000") // Next.js dev server
+        builder.WithOrigins(allowedOrigins)
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();
@@ -473,6 +478,21 @@ using (var scope = app.Services.CreateScope())
             }
         }
     }
+}
+
+// Trust X-Forwarded-Proto/X-Forwarded-For from the reverse proxy (Traefik/Cloudflare Tunnel) sitting
+// in front of this container — without this, UseHttpsRedirection below sees every request as plain
+// HTTP (the proxy terminates TLS and forwards HTTP internally) and redirect-loops forever.
+{
+    var forwardedHeadersOptions = new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    };
+    // Requests arrive from Traefik's Docker-bridge IP, not loopback — clear the default
+    // known-networks/proxies allowlist so the headers aren't silently ignored.
+    forwardedHeadersOptions.KnownNetworks.Clear();
+    forwardedHeadersOptions.KnownProxies.Clear();
+    app.UseForwardedHeaders(forwardedHeadersOptions);
 }
 
 // Configure the HTTP request pipeline.

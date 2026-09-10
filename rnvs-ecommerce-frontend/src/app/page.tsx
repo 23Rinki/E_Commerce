@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { X, Heart, Plus, Star, Eye, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -199,6 +199,14 @@ function searchResultToProduct(r: any): Product {
 }
 
 export default function HomePage() {
+  return (
+    <Suspense fallback={null}>
+      <HomePageContent />
+    </Suspense>
+  );
+}
+
+function HomePageContent() {
   const { isAuthenticated, initAuth } = useAuthStore();
   const router = useRouter();
   const searchParams = useSearchParams();

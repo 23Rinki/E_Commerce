@@ -159,7 +159,7 @@ export const ordersApi = {
   getAll: () => api.get('/api/orders'),
   getById: (id: number | string, vendorId?: string) =>
     api.get(`/api/orders/${id}`, vendorId ? { params: { v: vendorId } } : undefined),
-  create: (data: { shippingAddressId: number; paymentMethodId: number }) =>
+  create: (data: { shippingAddressId: number; paymentMethodId: number; customerGSTIN?: string }) =>
     api.post('/api/orders', data),
   cancel: (id: number, vendorId?: string) =>
     api.post(`/api/orders/${id}/cancel`, {}, vendorId ? { params: { v: vendorId } } : undefined),

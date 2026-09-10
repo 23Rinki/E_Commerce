@@ -151,7 +151,7 @@ export default function ProductQuickView({ product, onClose }: Props) {
             </div>
 
             {/* Stock */}
-            <p className={`text-xs font-semibold mb-3 ${outOfStock ? 'text-red-500' : stock < 10 ? 'text-amber-600' : 'text-green-600'}`}>
+            <p className={`text-xs font-semibold mb-3 ${outOfStock ? 'text-red-500' : (stock !== null && stock < 10) ? 'text-amber-600' : 'text-green-600'}`}>
               {outOfStock ? 'Out of Stock' : (stock !== null && stock < 10) ? `Only ${stock} left — order soon` : 'In Stock'}
             </p>
 

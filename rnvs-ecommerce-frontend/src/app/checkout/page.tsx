@@ -120,7 +120,6 @@ export default function CheckoutPage() {
         country: newAddr.country,
         isDefault: newAddr.isDefault,
         type: newAddr.type,
-        userId: '',
       };
       setAddresses((prev) => [...prev, saved]);
       setSelectedAddressId(newId);
