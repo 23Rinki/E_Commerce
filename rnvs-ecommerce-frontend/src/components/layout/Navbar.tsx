@@ -10,7 +10,7 @@ import {
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { cartApi } from '@/lib/api';
-import { loadCategories, getCachedCategories } from '@/lib/categoriesCache';
+import { loadCategories } from '@/lib/categoriesCache';
 import SearchBar from './SearchBar';
 import { Category } from '@/types';
 
@@ -18,7 +18,7 @@ export default function Navbar() {
   const router = useRouter();
   const { user, isAuthenticated, isInitialized, logout, initAuth } = useAuthStore();
   const { itemCount, setCart } = useCartStore();
-  const [categories, setCategories] = useState<Category[]>(getCachedCategories());
+  const [categories, setCategories] = useState<Category[]>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [catMenuOpen, setCatMenuOpen] = useState(false);

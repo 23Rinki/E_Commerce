@@ -9,7 +9,7 @@ import HeroBanner       from '@/components/home/HeroBanner';
 import TrustSection     from '@/components/home/TrustSection';
 import CategoryCarousel from '@/components/home/CategoryCarousel';
 import ProductCard, { ProductCardSkeleton } from '@/components/product/ProductCard';
-import { loadCategories, getCachedCategories, clearCategories } from '@/lib/categoriesCache';
+import { loadCategories, clearCategories } from '@/lib/categoriesCache';
 import { productsApi } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
 import { Category, Product } from '@/types';
@@ -31,7 +31,7 @@ function HomePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [categories, setCategories] = useState<Category[]>(getCachedCategories());
+  const [categories, setCategories] = useState<Category[]>([]); // start empty so server and client render the same markup
   const [products, setProducts]     = useState<Product[]>([]);
   const [loading, setLoading]       = useState(true);
 

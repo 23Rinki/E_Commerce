@@ -6,7 +6,7 @@ import Link from 'next/link';
 import ProductCard, { ProductCardSkeleton } from '@/components/product/ProductCard';
 import CategorySidebar from '@/components/shared/CategorySidebar';
 import { productsApi } from '@/lib/api';
-import { loadCategories, getCachedCategories } from '@/lib/categoriesCache';
+import { loadCategories } from '@/lib/categoriesCache';
 import { Product, Category } from '@/types';
 import { SlidersHorizontal, X, ChevronDown, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
@@ -46,7 +46,7 @@ export default function ProductsContent() {
   const { isAuthenticated } = useAuthStore();
 
   const [products, setProducts]   = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>(getCachedCategories());
+  const [categories, setCategories] = useState<Category[]>([]); // start empty so server and client render the same markup
   const [loading, setLoading]     = useState(true);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage]           = useState(1);
