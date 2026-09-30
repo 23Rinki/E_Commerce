@@ -84,7 +84,8 @@ public class StorefrontProductsService
     // ── Get all products (paginated) across all vendor DBs ───────────────────
 
     public async Task<(List<ProductListDto> Items, int TotalCount)> GetAllProductsAsync(
-        int page, int pageSize, string? categoryName = null, bool includeInactive = false, bool excludeSuspended = true)
+        int page, int pageSize, string? categoryName = null, bool includeInactive = false, bool excludeSuspended = true,
+        string? sortBy = null, bool sortDesc = true, decimal? minPrice = null, decimal? maxPrice = null)
     {
         var connStrings  = await UniqueConnectionStringsAsync(excludeSuspended);
         var allProducts  = new List<ProductListDto>();
@@ -179,12 +180,61 @@ public class StorefrontProductsService
                     p.VendorName = vn;
         }
 
-        // Global sort: newest (highest ID) first, then paginate
-        var sorted     = allProducts.OrderByDescending(p => p.Id).ToList();
+        // Price filter on what the shopper actually pays (discount price when there is one)
+        static decimal Effective(ProductListDto p) =>
+            p.DiscountPrice is > 0 && p.DiscountPrice < p.Price ? p.DiscountPrice.Value : p.Price;
+        IEnumerable<ProductListDto> filtered = allProducts;
+        if (minPrice.HasValue) filtered = filtered.Where(p => Effective(p) >= minPrice.Value);
+        if (maxPrice.HasValue) filtered = filtered.Where(p => Effective(p) <= maxPrice.Value);
+
+        // Global sort (default: newest / highest ID first), then paginate
+        var sorted = (sortBy?.ToLowerInvariant() switch
+        {
+            "price" => sortDesc ? filtered.OrderByDescending(Effective) : filtered.OrderBy(Effective),
+            "name"  => sortDesc ? filtered.OrderByDescending(p => p.Name) : filtered.OrderBy(p => p.Name),
+            _       => filtered.OrderByDescending(p => p.Id),
+        }).ToList();
         var totalCount = sorted.Count;
         var paged      = sorted.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
         return (paged, totalCount);
+    }
+
+    // ── Search corpus: every active storefront product plus its description ──
+
+    public sealed record SearchableProduct(
+        int Id, string Name, string? Description, string CategoryName, decimal Price, decimal? DiscountPrice,
+        int StockQuantity, string? PrimaryImageUrl, string? VendorId, string VendorName);
+
+    public async Task<List<SearchableProduct>> GetSearchableProductsAsync()
+    {
+        var (products, _) = await GetAllProductsAsync(1, int.MaxValue);
+
+        // Descriptions aren't part of the list DTO, so fetch them separately (id → text per vendor)
+        var descriptions = new Dictionary<(string, int), string>();
+        foreach (var connStr in await UniqueConnectionStringsAsync(excludeSuspended: true))
+        {
+            try
+            {
+                var opts = new DbContextOptionsBuilder<VendorDbContext>().UseNpgsql(connStr).Options;
+                await using var ctx = new VendorDbContext(opts);
+                var rows = await ctx.Products.AsNoTracking()
+                    .Where(p => p.IsActive)
+                    .Select(p => new { p.Id, p.VendorId, p.ShortDescription, p.Description })
+                    .ToListAsync();
+                foreach (var r in rows)
+                    descriptions[(r.VendorId ?? "", r.Id)] = $"{r.ShortDescription} {r.Description}".Trim();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Search corpus: could not read descriptions from a vendor DB");
+            }
+        }
+
+        return products.Select(p => new SearchableProduct(
+            p.Id, p.Name,
+            descriptions.TryGetValue((p.VendorId ?? "", p.Id), out var d) ? d : null,
+            p.CategoryName, p.Price, p.DiscountPrice, p.StockQuantity, p.PrimaryImageUrl, p.VendorId, p.VendorName)).ToList();
     }
 
     // ── Get all unique active categories across all vendor DBs ───────────────

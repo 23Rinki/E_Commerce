@@ -111,17 +111,17 @@ const STATUS_STYLE: Record<string, string> = {
   Active:    'bg-green-100 text-green-700',
   Trial:     'bg-blue-100 text-blue-700',
   Suspended: 'bg-red-100 text-red-600',
-  Cancelled: 'bg-gray-100 text-gray-500',
+  Cancelled: 'bg-neutral-100 text-neutral-500',
 };
 
 const PLAN_STYLE: Record<string, string> = {
-  Basic:      'bg-gray-100 text-gray-600',
-  Pro:        'bg-orange-100 text-orange-600',
+  Basic:      'bg-neutral-100 text-neutral-600',
+  Pro:        'bg-neutral-100 text-neutral-900',
   Enterprise: 'bg-purple-100 text-purple-700',
 };
 
 function activityBadge(days?: number) {
-  if (days === undefined || days === null) return { label: 'Never', cls: 'text-slate-600 font-medium' };
+  if (days === undefined || days === null) return { label: 'Never', cls: 'text-neutral-600 font-medium' };
   if (days === 0) return { label: 'Today', cls: 'text-green-700 font-bold' };
   if (days <= 7) return { label: `${days}d ago`, cls: 'text-green-700 font-semibold' };
   if (days <= 30) return { label: `${days}d ago`, cls: 'text-yellow-700 font-semibold' };
@@ -322,24 +322,24 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
     <div className="fixed inset-0 bg-black/40 z-50 flex justify-end">
       <div className="bg-white w-full max-w-lg h-full flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-gray-100 bg-slate-900">
+        <div className="px-6 py-5 border-b border-neutral-100 bg-neutral-900">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">{tenant.storeName}</h2>
+              <h2 className="font-display tracking-tight text-lg text-white">{tenant.storeName}</h2>
               {tenant.vendorName && (
-                <p className="text-xs text-slate-300 font-medium mt-0.5">{tenant.vendorName}</p>
+                <p className="text-xs text-neutral-300 font-medium mt-0.5">{tenant.vendorName}</p>
               )}
-              <p className="text-xs text-slate-400 mt-0.5">{tenant.contactEmail}</p>
+              <p className="text-xs text-neutral-400 mt-0.5">{tenant.contactEmail}</p>
             </div>
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors flex-shrink-0">
+            <button onClick={onClose} className="w-8 h-8 rounded-full bg-neutral-700 hover:bg-neutral-600 flex items-center justify-center text-white transition-colors flex-shrink-0">
               <X size={16} />
             </button>
           </div>
           <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${STATUS_STYLE[tenant.status] || 'bg-gray-100 text-gray-500'}`}>
+            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${STATUS_STYLE[tenant.status] || 'bg-neutral-100 text-neutral-500'}`}>
               {tenant.status}
             </span>
-            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${PLAN_STYLE[tenant.plan] || 'bg-gray-100 text-gray-500'}`}>
+            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${PLAN_STYLE[tenant.plan] || 'bg-neutral-100 text-neutral-500'}`}>
               {tenant.plan}
             </span>
             {tenant.hasDedicatedDb && (
@@ -347,7 +347,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                 <Database size={10} /> Railway DB
               </span>
             )}
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-700 text-slate-300 flex items-center gap-1">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-neutral-700 text-neutral-300 flex items-center gap-1">
               <TrendingUp size={10} />
               {overview
                 ? overview.totalRevenue > 0
@@ -359,7 +359,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-gray-100 overflow-x-auto">
+        <div className="flex border-b border-neutral-100 overflow-x-auto">
           {([
             { key: 'overview', label: 'Overview' },
             { key: 'orders',   label: 'Orders' },
@@ -370,7 +370,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
           ] as const).map(({ key, label }) => (
             <button key={key} onClick={() => setTab(key)}
               className={`flex-shrink-0 px-4 py-3 text-sm font-semibold transition-colors
-                ${tab === key ? 'text-orange-500 border-b-2 border-orange-500' : 'text-gray-400 hover:text-slate-700'}`}>
+                ${tab === key ? 'text-neutral-900 border-b-2 border-neutral-900' : 'text-neutral-400 hover:text-neutral-700'}`}>
               {label}
             </button>
           ))}
@@ -379,7 +379,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
         <div className="flex-1 overflow-y-auto p-6">
           {!detail ? (
             <div className="flex items-center justify-center h-32">
-              <Loader2 size={24} className="animate-spin text-gray-300" />
+              <Loader2 size={24} className="animate-spin text-neutral-300" />
             </div>
           ) : (
             <>
@@ -387,14 +387,14 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
               {tab === 'overview' && (
                 overviewLoading || !overview ? (
                   <div className="flex items-center justify-center h-32">
-                    <Loader2 size={22} className="animate-spin text-gray-300" />
+                    <Loader2 size={22} className="animate-spin text-neutral-300" />
                   </div>
                 ) : (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { label: 'Total Orders',    value: overview.totalOrders,    icon: ShoppingBag, color: 'bg-slate-800' },
-                        { label: 'Recent (30d)',     value: overview.recentOrders,   icon: Activity,    color: 'bg-orange-500' },
+                        { label: 'Total Orders',    value: overview.totalOrders,    icon: ShoppingBag, color: 'bg-neutral-800' },
+                        { label: 'Recent (30d)',     value: overview.recentOrders,   icon: Activity,    color: 'bg-neutral-900' },
                         { label: 'Total Revenue',   value: `₹${overview.totalRevenue.toLocaleString()}`,  icon: DollarSign, color: 'bg-green-500' },
                         { label: 'Revenue (30d)',   value: `₹${overview.recentRevenue.toLocaleString()}`, icon: TrendingUp, color: 'bg-blue-500' },
                         { label: 'Total Products',  value: overview.totalProducts,  icon: Package,     color: 'bg-purple-500' },
@@ -402,13 +402,13 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                         { label: 'Customers',       value: overview.totalCustomers, icon: Users,       color: 'bg-indigo-500' },
                         { label: 'Pending Orders',  value: overview.pendingOrders,  icon: Clock,       color: 'bg-yellow-500' },
                       ].map(({ label, value, icon: Icon, color }) => (
-                        <div key={label} className="bg-gray-50 rounded-xl p-3 flex items-center gap-3">
+                        <div key={label} className="bg-neutral-50 rounded-xl p-3 flex items-center gap-3">
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${color}`}>
                             <Icon size={14} className="text-white" />
                           </div>
                           <div>
-                            <p className="text-base font-black text-slate-800">{value}</p>
-                            <p className="text-xs text-gray-400">{label}</p>
+                            <p className="text-base font-semibold text-neutral-800">{value}</p>
+                            <p className="text-xs text-neutral-400">{label}</p>
                           </div>
                         </div>
                       ))}
@@ -421,10 +421,10 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
               {tab === 'orders' && (
                 ordersLoading ? (
                   <div className="flex items-center justify-center h-32">
-                    <Loader2 size={22} className="animate-spin text-gray-300" />
+                    <Loader2 size={22} className="animate-spin text-neutral-300" />
                   </div>
                 ) : orders.length === 0 ? (
-                  <div className="text-center py-10 text-gray-400">
+                  <div className="text-center py-10 text-neutral-400">
                     <ShoppingBag size={28} className="mx-auto mb-2 opacity-30" />
                     <p className="text-sm">No orders yet.</p>
                   </div>
@@ -432,15 +432,15 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                   <div>
                     <div className="space-y-3 mb-4">
                       {orders.map((o) => (
-                        <div key={o.id} className="bg-gray-50 rounded-xl px-3 py-3 border border-gray-100">
+                        <div key={o.id} className="bg-neutral-50 rounded-xl px-3 py-3 border border-neutral-100">
                           {/* Order header */}
                           <div className="flex items-start justify-between mb-2">
                             <div>
-                              <p className="text-sm font-semibold text-slate-800">#{o.orderNumber}</p>
-                              <p className="text-xs text-gray-400">{new Date(o.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                              <p className="text-sm font-semibold text-neutral-800">#{o.orderNumber}</p>
+                              <p className="text-xs text-neutral-400">{new Date(o.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                             </div>
                             <div className="text-right">
-                              <p className="text-sm font-bold text-slate-800">₹{o.totalAmount.toLocaleString()}</p>
+                              <p className="text-sm font-semibold text-neutral-800">₹{o.totalAmount.toLocaleString()}</p>
                               <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                                 o.statusName === 'Delivered' ? 'bg-green-100 text-green-700' :
                                 o.statusName === 'Cancelled' ? 'bg-red-100 text-red-600' :
@@ -451,11 +451,11 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                           </div>
 
                           {/* Customer */}
-                          <div className="flex items-center gap-1.5 mb-2 pb-2 border-b border-gray-200">
-                            <Users size={11} className="text-gray-400 flex-shrink-0" />
-                            <span className="text-xs font-medium text-slate-700">{o.customerName}</span>
-                            <span className="text-xs text-gray-400">·</span>
-                            <span className="text-xs text-gray-400">{o.customerEmail}</span>
+                          <div className="flex items-center gap-1.5 mb-2 pb-2 border-b border-neutral-200">
+                            <Users size={11} className="text-neutral-400 flex-shrink-0" />
+                            <span className="text-xs font-medium text-neutral-700">{o.customerName}</span>
+                            <span className="text-xs text-neutral-400">·</span>
+                            <span className="text-xs text-neutral-400">{o.customerEmail}</span>
                           </div>
 
                           {/* Products */}
@@ -463,10 +463,10 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                             <div className="space-y-1">
                               {o.items.map((item, idx) => (
                                 <div key={idx} className="flex items-center justify-between text-xs">
-                                  <span className="text-slate-700 truncate flex-1 mr-2">
-                                    <span className="text-gray-400">×{item.quantity}</span> {item.productName}
+                                  <span className="text-neutral-700 truncate flex-1 mr-2">
+                                    <span className="text-neutral-400">×{item.quantity}</span> {item.productName}
                                   </span>
-                                  <span className="text-slate-600 font-medium flex-shrink-0">₹{item.totalPrice.toLocaleString()}</span>
+                                  <span className="text-neutral-600 font-medium flex-shrink-0">₹{item.totalPrice.toLocaleString()}</span>
                                 </div>
                               ))}
                             </div>
@@ -475,16 +475,16 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                       ))}
                     </div>
                     {/* Pagination */}
-                    <div className="flex items-center justify-between text-xs text-gray-400">
+                    <div className="flex items-center justify-between text-xs text-neutral-400">
                       <span>{ordersTotal} total</span>
                       <div className="flex items-center gap-2">
                         <button disabled={ordersPage === 1} onClick={() => setOrdersPage(p => p - 1)}
-                          className="p-1 rounded hover:bg-gray-100 disabled:opacity-30">
+                          className="p-1 rounded hover:bg-neutral-100 disabled:opacity-30">
                           <ChevronLeft size={14} />
                         </button>
                         <span>Page {ordersPage}</span>
                         <button disabled={ordersPage * 20 >= ordersTotal} onClick={() => setOrdersPage(p => p + 1)}
-                          className="p-1 rounded hover:bg-gray-100 disabled:opacity-30">
+                          className="p-1 rounded hover:bg-neutral-100 disabled:opacity-30">
                           <ChevronRightIcon size={14} />
                         </button>
                       </div>
@@ -497,10 +497,10 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
               {tab === 'products' && (
                 productsLoading ? (
                   <div className="flex items-center justify-center h-32">
-                    <Loader2 size={22} className="animate-spin text-gray-300" />
+                    <Loader2 size={22} className="animate-spin text-neutral-300" />
                   </div>
                 ) : products.length === 0 ? (
-                  <div className="text-center py-10 text-gray-400">
+                  <div className="text-center py-10 text-neutral-400">
                     <Package size={28} className="mx-auto mb-2 opacity-30" />
                     <p className="text-sm">No products yet.</p>
                   </div>
@@ -508,21 +508,21 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                   <div>
                     <div className="space-y-2 mb-4">
                       {products.map((p) => (
-                        <div key={p.id} className="flex items-center gap-3 bg-gray-50 rounded-xl px-3 py-2.5">
+                        <div key={p.id} className="flex items-center gap-3 bg-neutral-50 rounded-xl px-3 py-2.5">
                           {p.imageUrl ? (
                             <img src={p.imageUrl} alt={p.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
                           ) : (
-                            <div className="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center flex-shrink-0">
-                              <Package size={14} className="text-gray-400" />
+                            <div className="w-10 h-10 rounded-lg bg-neutral-200 flex items-center justify-center flex-shrink-0">
+                              <Package size={14} className="text-neutral-400" />
                             </div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-slate-800 truncate">{p.name}</p>
-                            <p className="text-xs text-gray-400">Stock: {p.stockQuantity}</p>
+                            <p className="text-sm font-semibold text-neutral-800 truncate">{p.name}</p>
+                            <p className="text-xs text-neutral-400">Stock: {p.stockQuantity}</p>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <p className="text-sm font-bold text-slate-800">₹{p.price.toLocaleString()}</p>
-                            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${p.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                            <p className="text-sm font-semibold text-neutral-800">₹{p.price.toLocaleString()}</p>
+                            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${p.isActive ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-500'}`}>
                               {p.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </div>
@@ -530,16 +530,16 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                       ))}
                     </div>
                     {/* Pagination */}
-                    <div className="flex items-center justify-between text-xs text-gray-400">
+                    <div className="flex items-center justify-between text-xs text-neutral-400">
                       <span>{productsTotal} total</span>
                       <div className="flex items-center gap-2">
                         <button disabled={productsPage === 1} onClick={() => setProductsPage(p => p - 1)}
-                          className="p-1 rounded hover:bg-gray-100 disabled:opacity-30">
+                          className="p-1 rounded hover:bg-neutral-100 disabled:opacity-30">
                           <ChevronLeft size={14} />
                         </button>
                         <span>Page {productsPage}</span>
                         <button disabled={productsPage * 20 >= productsTotal} onClick={() => setProductsPage(p => p + 1)}
-                          className="p-1 rounded hover:bg-gray-100 disabled:opacity-30">
+                          className="p-1 rounded hover:bg-neutral-100 disabled:opacity-30">
                           <ChevronRightIcon size={14} />
                         </button>
                       </div>
@@ -562,35 +562,35 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                     ['Joined', new Date(detail.createdAt).toLocaleDateString()],
                   ].map(([label, value]) => (
                     <div key={label} className="flex justify-between items-start gap-4 text-sm">
-                      <span className="text-gray-400 font-medium shrink-0">{label}</span>
-                      <span className="text-slate-800 text-right break-all">{value}</span>
+                      <span className="text-neutral-400 font-medium shrink-0">{label}</span>
+                      <span className="text-neutral-800 text-right break-all">{value}</span>
                     </div>
                   ))}
 
-                  <div className="border-t border-gray-100 pt-4">
+                  <div className="border-t border-neutral-100 pt-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-semibold text-slate-700">Account Status</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-sm font-semibold text-neutral-700">Account Status</p>
+                        <p className="text-xs text-neutral-400">
                           {detail.status === 'Active' ? 'Vendor store is live' : 'Access suspended'}
                         </p>
                       </div>
                       <button onClick={handleStatusToggle} disabled={updatingStatus} className="transition-colors disabled:opacity-50">
                         {updatingStatus
-                          ? <Loader2 size={28} className="animate-spin text-gray-400" />
+                          ? <Loader2 size={28} className="animate-spin text-neutral-400" />
                           : detail.status === 'Active'
-                            ? <ToggleRight size={34} className="text-orange-500" />
-                            : <ToggleLeft size={34} className="text-gray-300" />}
+                            ? <ToggleRight size={34} className="text-neutral-900" />
+                            : <ToggleLeft size={34} className="text-neutral-300" />}
                       </button>
                     </div>
                   </div>
 
                   <div className="border-t border-red-100 pt-4 mt-2">
-                    <p className="text-sm font-bold text-red-600 mb-1">Remove Vendor</p>
-                    <p className="text-xs text-gray-500 mb-3">
+                    <p className="text-sm font-semibold text-red-600 mb-1">Remove Vendor</p>
+                    <p className="text-xs text-neutral-500 mb-3">
                       This permanently deletes the vendor account, bank details, and registration record. This cannot be undone.
                     </p>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">
                       Type store name to confirm
                     </label>
                     <input
@@ -605,7 +605,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                     <button
                       onClick={handleDelete}
                       disabled={deleteConfirm !== detail.storeName || deleting}
-                      className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-red-200 disabled:text-red-400 text-white text-sm font-bold py-2.5 rounded-xl transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-red-200 disabled:text-red-400 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
                     >
                       {deleting && <Loader2 size={14} className="animate-spin" />}
                       Remove Vendor Permanently
@@ -619,35 +619,35 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                 <div className="space-y-4">
 
                   {/* Send Payment Link */}
-                  <div className="bg-orange-50 border border-orange-100 rounded-xl p-4">
-                    <p className="text-xs font-bold text-orange-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                  <div className="bg-neutral-100 border border-neutral-200 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-neutral-900 uppercase tracking-wide mb-3 flex items-center gap-1.5">
                       <Send size={11} /> Send Payment Link
                     </p>
                     <div className="grid grid-cols-2 gap-2 mb-2">
                       <div>
-                        <label className="text-xs text-gray-500 mb-1 block">Amount (₹)</label>
+                        <label className="text-xs text-neutral-500 mb-1 block">Amount (₹)</label>
                         <input
                           type="number"
                           value={payAmount}
                           onChange={(e) => setPayAmount(Number(e.target.value))}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-400"
+                          className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:border-neutral-900"
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 mb-1 block">Description</label>
+                        <label className="text-xs text-neutral-500 mb-1 block">Description</label>
                         <input
                           type="text"
                           value={payDesc}
                           onChange={(e) => setPayDesc(e.target.value)}
                           placeholder="Month 2 subscription"
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-400"
+                          className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:border-neutral-900"
                         />
                       </div>
                     </div>
                     <button
                       onClick={handleSendPayLink}
                       disabled={sendingLink || !payAmount}
-                      className="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white text-sm font-bold py-2.5 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-400 text-white text-sm font-semibold py-2.5 rounded-full transition-colors"
                     >
                       {sendingLink
                         ? <><Loader2 size={13} className="animate-spin" /> Sending...</>
@@ -658,13 +658,13 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                     )}
                     {payLinkResult && (
                       <div className="mt-3 space-y-2">
-                        <div className="bg-white border border-gray-200 rounded-lg p-3">
-                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1">Payment Link</p>
+                        <div className="bg-white border border-neutral-200 rounded-lg p-3">
+                          <p className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wide mb-1">Payment Link</p>
                           <div className="flex items-center gap-2">
                             <p className="text-xs text-blue-600 break-all flex-1">{payLinkResult.link}</p>
                             <button
                               onClick={() => copyToClipboard(payLinkResult.link, 'link')}
-                              className="flex-shrink-0 text-gray-400 hover:text-orange-500 transition-colors"
+                              className="flex-shrink-0 text-neutral-400 hover:text-neutral-950 transition-colors"
                             >
                               {copied === 'link' ? <CheckCheck size={14} className="text-green-500" /> : <Copy size={14} />}
                             </button>
@@ -672,7 +672,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                         </div>
                         <button
                           onClick={() => copyToClipboard(payLinkResult.whatsapp, 'wa')}
-                          className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs font-bold py-2.5 rounded-lg transition-colors"
+                          className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs font-semibold py-2.5 rounded-lg transition-colors"
                         >
                           {copied === 'wa'
                             ? <><CheckCheck size={13} /> Copied!</>
@@ -683,7 +683,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">
                       Add Maintenance Note
                     </label>
                     <textarea
@@ -691,12 +691,12 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                       onChange={(e) => setNote(e.target.value)}
                       rows={3}
                       placeholder="e.g. Vendor reported image upload issue. Checked server — disk space was low. Cleared old logs. Resolved 2026-03-29."
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 resize-none"
+                      className="w-full px-3 py-2.5 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 resize-none"
                     />
                     <button
                       onClick={handleSaveNote}
                       disabled={savingNote || !note.trim()}
-                      className="mt-2 flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+                      className="mt-2 flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-400 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors"
                     >
                       {savingNote && <Loader2 size={13} className="animate-spin" />}
                       Save Note
@@ -705,13 +705,13 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
 
                   {detail.maintenanceNotes ? (
                     <div>
-                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">History</p>
-                      <pre className="text-sm text-slate-700 bg-gray-50 rounded-xl p-4 whitespace-pre-wrap font-mono leading-relaxed border border-gray-100">
+                      <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-2">History</p>
+                      <pre className="text-sm text-neutral-700 bg-neutral-50 rounded-xl p-4 whitespace-pre-wrap font-mono leading-relaxed border border-neutral-100">
                         {detail.maintenanceNotes}
                       </pre>
                     </div>
                   ) : (
-                    <div className="text-center py-8 text-gray-400">
+                    <div className="text-center py-8 text-neutral-400">
                       <StickyNote size={28} className="mx-auto mb-2 opacity-40" />
                       <p className="text-sm">No notes yet.</p>
                     </div>
@@ -730,7 +730,7 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">
                       Railway Database URL
                     </label>
                     <input
@@ -738,11 +738,11 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                       value={railwayUrl}
                       onChange={(e) => setRailwayUrl(e.target.value)}
                       placeholder="postgresql://user:pass@host.railway.app:5432/railway"
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 font-mono"
+                      className="w-full px-3 py-2.5 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 font-mono"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                    <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">
                       Railway Service ID (optional)
                     </label>
                     <input
@@ -750,13 +750,13 @@ function TenantDetailPanel({ tenant, onClose, onRefresh }: {
                       value={railwayId}
                       onChange={(e) => setRailwayId(e.target.value)}
                       placeholder="railway-service-uuid"
-                      className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 font-mono"
+                      className="w-full px-3 py-2.5 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 font-mono"
                     />
                   </div>
                   <button
                     onClick={handleSaveRailway}
                     disabled={savingRailway || !railwayUrl.trim()}
-                    className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 disabled:bg-gray-300 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+                    className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 text-white text-sm font-semibold px-4 py-2.5 rounded-full transition-colors"
                   >
                     {savingRailway && <Loader2 size={13} className="animate-spin" />}
                     Save Railway Config
@@ -890,16 +890,17 @@ export default function AdminVendorsPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Vendor Registry</h1>
-          <p className="text-sm text-gray-500 mt-0.5">All stores using your platform</p>
+          <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">Admin</div>
+          <h1 className="font-display tracking-tight text-3xl lg:text-4xl mt-1 text-neutral-900">Vendor Registry</h1>
+          <p className="text-sm text-neutral-500 mt-0.5">All stores using your platform</p>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={exportToCsv} disabled={tenants.length === 0}
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-green-600 transition-colors px-3 py-2 rounded-xl hover:bg-green-50 disabled:opacity-40">
+            className="flex items-center gap-2 text-sm text-neutral-500 hover:text-green-600 transition-colors px-3 py-2 rounded-xl hover:bg-green-50 disabled:opacity-40">
             <Activity size={15} />
             Export CSV
           </button>
-          <button onClick={load} className="flex items-center gap-2 text-sm text-gray-500 hover:text-orange-500 transition-colors px-3 py-2 rounded-xl hover:bg-orange-50">
+          <button onClick={load} className="flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-950 transition-colors px-3 py-2 rounded-xl hover:bg-neutral-100">
             <RefreshCw size={15} />
             Refresh
           </button>
@@ -910,89 +911,89 @@ export default function AdminVendorsPage() {
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
           {[
-            { label: 'Total Vendors', value: stats.total, icon: Users, color: 'text-slate-900' },
+            { label: 'Total Vendors', value: stats.total, icon: Users, color: 'text-neutral-900' },
             { label: 'Active', value: stats.active, icon: CheckCircle, color: 'text-green-600' },
-            { label: 'Active (7d)', value: stats.activeLast7Days, icon: Activity, color: 'text-orange-500' },
+            { label: 'Active (7d)', value: stats.activeLast7Days, icon: Activity, color: 'text-neutral-900' },
             { label: 'Inactive (30d+)', value: stats.inactive30Days, icon: AlertCircle, color: 'text-red-500' },
-            { label: 'Basic Plan', value: stats.basicPlan, icon: Shield, color: 'text-gray-500' },
-            { label: 'Pro Plan', value: stats.proPlan, icon: Zap, color: 'text-orange-500' },
+            { label: 'Basic Plan', value: stats.basicPlan, icon: Shield, color: 'text-neutral-500' },
+            { label: 'Pro Plan', value: stats.proPlan, icon: Zap, color: 'text-neutral-900' },
             { label: 'Dedicated DBs', value: stats.withDedicatedDb, icon: Database, color: 'text-blue-600' },
             { label: 'Pending Support', value: stats.pendingMaintenance, icon: StickyNote, color: 'text-yellow-600' },
           ].map(({ label, value, icon: Icon, color }) => (
-            <div key={label} className="bg-white rounded-2xl border border-gray-100 p-4">
+            <div key={label} className="bg-white rounded-2xl border border-neutral-100 p-4">
               <div className="flex items-center gap-2 mb-1">
                 <Icon size={14} className={color} />
-                <p className="text-xs text-gray-400 font-medium">{label}</p>
+                <p className="text-xs text-neutral-400 font-medium">{label}</p>
               </div>
-              <p className={`text-2xl font-black ${color}`}>{value}</p>
+              <p className={`text-2xl font-semibold ${color}`}>{value}</p>
             </div>
           ))}
         </div>
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-4 flex flex-wrap gap-3">
+      <div className="bg-white rounded-2xl border border-neutral-100 p-4 mb-4 flex flex-wrap gap-3">
         <div className="relative flex-1 min-w-48">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by store name or email..."
-            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 transition-colors"
+            className="w-full pl-9 pr-3 py-2 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 transition-colors"
           />
-          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"><X size={13} /></button>}
+          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400"><X size={13} /></button>}
         </div>
 
         <div className="relative">
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
-            className="pl-3 pr-7 py-2 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:border-orange-400 appearance-none cursor-pointer">
+            className="pl-3 pr-7 py-2 border border-neutral-200 rounded-xl text-sm bg-white focus:outline-none focus:border-neutral-900 appearance-none cursor-pointer">
             <option value="">All Status</option>
             <option value="Active">Active</option>
             <option value="Trial">Trial</option>
             <option value="Suspended">Suspended</option>
             <option value="Cancelled">Cancelled</option>
           </select>
-          <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
         </div>
 
         <div className="relative">
           <select value={planFilter} onChange={(e) => setPlanFilter(e.target.value)}
-            className="pl-3 pr-7 py-2 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:border-orange-400 appearance-none cursor-pointer">
+            className="pl-3 pr-7 py-2 border border-neutral-200 rounded-xl text-sm bg-white focus:outline-none focus:border-neutral-900 appearance-none cursor-pointer">
             <option value="">All Plans</option>
             <option value="Basic">Basic</option>
             <option value="Pro">Pro</option>
             <option value="Enterprise">Enterprise</option>
           </select>
-          <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-neutral-100 overflow-hidden">
         {loading ? (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-neutral-50">
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="flex items-center gap-4 px-5 py-4 animate-pulse">
-                <div className="w-9 h-9 bg-gray-100 rounded-xl flex-shrink-0" />
+                <div className="w-9 h-9 bg-neutral-100 rounded-xl flex-shrink-0" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-100 rounded w-1/3" />
-                  <div className="h-3 bg-gray-100 rounded w-1/4" />
+                  <div className="h-4 bg-neutral-100 rounded w-1/3" />
+                  <div className="h-3 bg-neutral-100 rounded w-1/4" />
                 </div>
-                <div className="h-5 bg-gray-100 rounded-full w-16" />
-                <div className="h-5 bg-gray-100 rounded-full w-12" />
+                <div className="h-5 bg-neutral-100 rounded-full w-16" />
+                <div className="h-5 bg-neutral-100 rounded-full w-12" />
               </div>
             ))}
           </div>
         ) : tenants.length === 0 ? (
           <div className="text-center py-16">
-            <Users size={36} className="mx-auto mb-3 text-gray-200" />
-            <p className="text-slate-700 font-semibold">No vendors found</p>
-            <p className="text-sm text-gray-400 mt-1">Vendors will appear here once they sign up.</p>
+            <Users size={36} className="mx-auto mb-3 text-neutral-200" />
+            <p className="text-neutral-700 font-semibold">No vendors found</p>
+            <p className="text-sm text-neutral-400 mt-1">Vendors will appear here once they sign up.</p>
           </div>
         ) : (
-          <>
-            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto_auto_auto_auto] gap-3 px-5 py-3 border-b border-gray-100 text-xs font-bold text-slate-600 uppercase tracking-wide">
+          <div className="overflow-x-auto"><div className="min-w-[880px]">{/* scrolls sideways on phones instead of squashing columns */}
+            <div className="grid grid-cols-[1fr_auto_auto_auto_auto_auto_auto] gap-3 px-5 py-3 border-b border-neutral-100 text-xs font-semibold text-neutral-600 uppercase tracking-wide">
               <span>Store</span>
               <span className="w-28 text-center">Status / Plan</span>
               <span className="w-24 text-center">DB</span>
@@ -1002,39 +1003,39 @@ export default function AdminVendorsPage() {
               <span className="w-12 text-center">Remove</span>
             </div>
 
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-neutral-50">
               {tenants.map((t) => {
                 const act = activityBadge(t.daysSinceLastActivity);
                 return (
                   <div
                     key={t.id}
                     onClick={() => setSelected(t)}
-                    className={`flex sm:grid sm:grid-cols-[1fr_auto_auto_auto_auto_auto_auto] items-center gap-3 px-5 py-4 cursor-pointer transition-colors
-                      ${isExpiringSoon(t.subscriptionEndDate) ? 'bg-yellow-50/60 hover:bg-yellow-100/40' : 'hover:bg-orange-50/30'}`}
+                    className={`grid grid-cols-[1fr_auto_auto_auto_auto_auto_auto] items-center gap-3 px-5 py-4 cursor-pointer transition-colors
+                      ${isExpiringSoon(t.subscriptionEndDate) ? 'bg-yellow-50/60 hover:bg-yellow-100/40' : 'hover:bg-neutral-100/30'}`}
                   >
                     {/* Store */}
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <p className="text-sm font-bold text-slate-900 truncate">{t.storeName}</p>
+                        <p className="text-sm font-semibold text-neutral-900 truncate">{t.storeName}</p>
                         {isExpiringSoon(t.subscriptionEndDate) && (
-                          <span className="flex-shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-yellow-200 text-yellow-800">Expiring</span>
+                          <span className="flex-shrink-0 text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-yellow-200 text-yellow-800">Expiring</span>
                         )}
                       </div>
                       {t.vendorName && (
-                        <p className="text-xs font-semibold text-slate-700 truncate">{t.vendorName}</p>
+                        <p className="text-xs font-semibold text-neutral-700 truncate">{t.vendorName}</p>
                       )}
-                      <p className="text-xs text-slate-500 truncate">{t.contactEmail}</p>
+                      <p className="text-xs text-neutral-500 truncate">{t.contactEmail}</p>
                     </div>
 
                     {/* Status + Plan */}
                     <div className="w-28 text-center space-y-1">
                       <div>
-                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${STATUS_STYLE[t.status] || 'bg-gray-100 text-gray-500'}`}>
+                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${STATUS_STYLE[t.status] || 'bg-neutral-100 text-neutral-500'}`}>
                           {t.status}
                         </span>
                       </div>
                       <div>
-                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${PLAN_STYLE[t.plan] || 'bg-gray-100 text-gray-500'}`}>
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${PLAN_STYLE[t.plan] || 'bg-neutral-100 text-neutral-500'}`}>
                           {t.plan}
                         </span>
                       </div>
@@ -1045,12 +1046,12 @@ export default function AdminVendorsPage() {
                       {t.hasDedicatedDb ? (
                         <>
                           <Database size={13} className="text-blue-500" />
-                          <span className="text-[10px] font-bold text-blue-500">Railway</span>
+                          <span className="text-[10px] font-semibold text-blue-500">Railway</span>
                         </>
                       ) : (
                         <>
-                          <Database size={13} className="text-slate-400" />
-                          <span className="text-[10px] font-semibold text-slate-400">Local</span>
+                          <Database size={13} className="text-neutral-400" />
+                          <span className="text-[10px] font-semibold text-neutral-400">Local</span>
                         </>
                       )}
                     </div>
@@ -1059,23 +1060,23 @@ export default function AdminVendorsPage() {
                     <div className="w-28 text-right">
                       {!(t.id in vendorRevenues) ? (
                         <>
-                          <p className="text-xs font-bold text-slate-700">—</p>
-                          <p className="text-[10px] font-medium text-slate-500">Still loading</p>
+                          <p className="text-xs font-semibold text-neutral-700">—</p>
+                          <p className="text-[10px] font-medium text-neutral-500">Still loading</p>
                         </>
                       ) : vendorRevenues[t.id] === null ? (
                         <>
-                          <p className="text-xs font-bold text-slate-700">N/A</p>
-                          <p className="text-[10px] font-medium text-slate-500">DB unavailable</p>
+                          <p className="text-xs font-semibold text-neutral-700">N/A</p>
+                          <p className="text-[10px] font-medium text-neutral-500">DB unavailable</p>
                         </>
                       ) : vendorRevenues[t.id] === 0 ? (
                         <>
-                          <p className="text-xs font-bold text-slate-700">No sales</p>
-                          <p className="text-[10px] font-medium text-slate-500">No revenue yet</p>
+                          <p className="text-xs font-semibold text-neutral-700">No sales</p>
+                          <p className="text-[10px] font-medium text-neutral-500">No revenue yet</p>
                         </>
                       ) : (
                         <>
-                          <p className="text-xs font-bold text-green-700">₹{vendorRevenues[t.id]!.toLocaleString('en-IN')}</p>
-                          <p className="text-[10px] font-medium text-slate-500">Total revenue</p>
+                          <p className="text-xs font-semibold text-green-700">₹{vendorRevenues[t.id]!.toLocaleString('en-IN')}</p>
+                          <p className="text-[10px] font-medium text-neutral-500">Total revenue</p>
                         </>
                       )}
                     </div>
@@ -1101,7 +1102,7 @@ export default function AdminVendorsPage() {
                           setRemoveConfirm(t.storeName);
                           setRemoveError('');
                         }}
-                        className="p-1.5 rounded-lg text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors"
+                        className="p-1.5 rounded-lg text-neutral-300 hover:text-red-500 hover:bg-red-50 transition-colors"
                         title="Remove vendor"
                       >
                         <Trash2 size={14} />
@@ -1111,54 +1112,54 @@ export default function AdminVendorsPage() {
                 );
               })}
             </div>
-          </>
+          </div></div>
         )}
       </div>
 
       {/* Removed Vendors Table */}
       <div className="mt-8">
         <div className="flex items-center gap-2 mb-3">
-          <UserX size={16} className="text-slate-500" />
-          <h2 className="text-base font-bold text-slate-800">Removed Vendors</h2>
-          <span className="text-xs text-gray-400 font-medium">Vendors who left or were removed from the platform</span>
+          <UserX size={16} className="text-neutral-500" />
+          <h2 className="font-display tracking-tight text-base text-neutral-800">Removed Vendors</h2>
+          <span className="text-xs text-neutral-400 font-medium">Vendors who left or were removed from the platform</span>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-neutral-100 overflow-hidden">
           {removedLoading ? (
             <div className="py-10 flex items-center justify-center">
-              <Loader2 size={20} className="animate-spin text-gray-300" />
+              <Loader2 size={20} className="animate-spin text-neutral-300" />
             </div>
           ) : removedVendors.length === 0 ? (
             <div className="text-center py-10">
-              <UserX size={28} className="mx-auto mb-2 text-gray-200" />
-              <p className="text-sm text-gray-400">No vendors have been removed yet.</p>
+              <UserX size={28} className="mx-auto mb-2 text-neutral-200" />
+              <p className="text-sm text-neutral-400">No vendors have been removed yet.</p>
             </div>
           ) : (
             <>
-              <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-gray-100 text-xs font-bold text-slate-600 uppercase tracking-wide">
+              <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-neutral-100 text-xs font-semibold text-neutral-600 uppercase tracking-wide">
                 <span>Store / Vendor</span>
                 <span className="w-24 text-center">Was Status</span>
                 <span className="w-36 text-right">Joined</span>
                 <span className="w-36 text-right">Removed On</span>
               </div>
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y divide-neutral-50">
                 {removedVendors.map((r) => (
                   <div key={r.id}
                     onClick={() => setSelectedRemoved(r)}
                     className="flex sm:grid sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-5 py-3.5 hover:bg-red-50/30 cursor-pointer transition-colors"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-slate-800 truncate line-through decoration-red-300">{r.storeName}</p>
-                      <p className="text-xs font-semibold text-slate-600 truncate">{r.vendorName}</p>
-                      <p className="text-xs text-slate-400 truncate">{r.contactEmail}</p>
+                      <p className="text-sm font-semibold text-neutral-800 truncate line-through decoration-red-300">{r.storeName}</p>
+                      <p className="text-xs font-semibold text-neutral-600 truncate">{r.vendorName}</p>
+                      <p className="text-xs text-neutral-400 truncate">{r.contactEmail}</p>
                     </div>
                     <div className="w-24 text-center">
-                      <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                      <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-500">
                         {r.status}
                       </span>
                     </div>
                     <div className="w-36 text-right">
-                      <p className="text-xs text-slate-600">{new Date(r.joinedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                      <p className="text-xs text-neutral-600">{new Date(r.joinedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                     </div>
                     <div className="w-36 text-right">
                       <p className="text-xs font-semibold text-red-600">{new Date(r.removedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
@@ -1180,16 +1181,16 @@ export default function AdminVendorsPage() {
                 <Trash2 size={18} className="text-red-600" />
               </div>
               <div>
-                <p className="text-base font-bold text-slate-900">Remove Vendor</p>
-                <p className="text-xs text-gray-400">This cannot be undone</p>
+                <p className="text-base font-semibold text-neutral-900">Remove Vendor</p>
+                <p className="text-xs text-neutral-400">This cannot be undone</p>
               </div>
             </div>
 
-            <p className="text-sm text-slate-600 mb-4">
-              This will permanently delete <span className="font-bold text-slate-900">{removeTarget.storeName}</span> and all associated account data. Their name will be saved in the removed vendors log below.
+            <p className="text-sm text-neutral-600 mb-4">
+              This will permanently delete <span className="font-semibold text-neutral-900">{removeTarget.storeName}</span> and all associated account data. Their name will be saved in the removed vendors log below.
             </p>
 
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">
               Type store name to confirm
             </label>
             <input
@@ -1208,14 +1209,14 @@ export default function AdminVendorsPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => { setRemoveTarget(null); setRemoveConfirm(''); setRemoveError(''); }}
-                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-slate-600 hover:bg-gray-50 transition-colors"
+                className="flex-1 py-2.5 rounded-xl border border-neutral-200 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleRemove}
                 disabled={removeConfirm.trim() !== removeTarget.storeName.trim() || removing}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:bg-red-200 disabled:text-red-400 text-white text-sm font-bold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:bg-red-200 disabled:text-red-400 text-white text-sm font-semibold transition-colors"
               >
                 {removing && <Loader2 size={13} className="animate-spin" />}
                 Remove
@@ -1244,41 +1245,41 @@ export default function AdminVendorsPage() {
                   <UserX size={18} className="text-red-500" />
                 </div>
                 <div>
-                  <p className="text-base font-bold text-slate-900 line-through decoration-red-300">{selectedRemoved.storeName}</p>
-                  <p className="text-xs text-gray-400">Removed vendor</p>
+                  <p className="text-base font-semibold text-neutral-900 line-through decoration-red-300">{selectedRemoved.storeName}</p>
+                  <p className="text-xs text-neutral-400">Removed vendor</p>
                 </div>
               </div>
-              <button onClick={() => setSelectedRemoved(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 transition-colors">
+              <button onClick={() => setSelectedRemoved(null)} className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-400 transition-colors">
                 <X size={16} />
               </button>
             </div>
 
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 font-medium">Vendor Name</span>
-                <span className="text-slate-800 font-semibold">{selectedRemoved.vendorName || '—'}</span>
+                <span className="text-neutral-500 font-medium">Vendor Name</span>
+                <span className="text-neutral-800 font-semibold">{selectedRemoved.vendorName || '—'}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 font-medium">Email</span>
-                <span className="text-slate-800 font-semibold">{selectedRemoved.contactEmail}</span>
+                <span className="text-neutral-500 font-medium">Email</span>
+                <span className="text-neutral-800 font-semibold">{selectedRemoved.contactEmail}</span>
               </div>
               {selectedRemoved.contactPhone && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-500 font-medium">Phone</span>
-                  <span className="text-slate-800 font-semibold">{selectedRemoved.contactPhone}</span>
+                  <span className="text-neutral-500 font-medium">Phone</span>
+                  <span className="text-neutral-800 font-semibold">{selectedRemoved.contactPhone}</span>
                 </div>
               )}
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 font-medium">Status at removal</span>
-                <span className="text-slate-800 font-semibold">{selectedRemoved.status}</span>
+                <span className="text-neutral-500 font-medium">Status at removal</span>
+                <span className="text-neutral-800 font-semibold">{selectedRemoved.status}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-500 font-medium">Joined</span>
-                <span className="text-slate-800 font-semibold">{new Date(selectedRemoved.joinedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                <span className="text-neutral-500 font-medium">Joined</span>
+                <span className="text-neutral-800 font-semibold">{new Date(selectedRemoved.joinedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
               </div>
               <div className="flex justify-between text-sm border-t border-red-100 pt-3">
                 <span className="text-red-500 font-medium">Removed On</span>
-                <span className="text-red-600 font-bold">{new Date(selectedRemoved.removedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                <span className="text-red-600 font-semibold">{new Date(selectedRemoved.removedAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
               </div>
             </div>
           </div>

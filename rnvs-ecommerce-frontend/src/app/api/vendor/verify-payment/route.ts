@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendMail } from '@/lib/server/mailer';
+import { BACKEND_URL } from '@/lib/server/backend';
 
 function successEmailHtml(vendorName: string, storeName: string, paymentId: string, plan: string) {
   const isYearly = plan === 'yearly';
@@ -75,8 +76,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Mark vendor as paid in backend — passes subscription type so the scheduler knows monthly vs yearly
-    const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:5000';
-    const markRes = await fetch(`${backendUrl}/api/auth/mark-vendor-paid`, {
+    const markRes = await fetch(`${BACKEND_URL}/api/auth/mark-vendor-paid`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

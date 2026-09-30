@@ -51,12 +51,12 @@ function BannedWordsManager() {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
+    <div className="bg-white rounded-2xl border border-neutral-100 p-6 mb-6">
       <div className="flex items-center gap-2 mb-1">
         <ShieldAlert size={16} className="text-red-500" />
-        <h2 className="text-base font-bold text-slate-900">Banned Words</h2>
+        <h2 className="font-display tracking-tight text-base text-neutral-900">Banned Words</h2>
       </div>
-      <p className="text-xs text-gray-400 mb-4">Products whose name or description contains any of these words are automatically hidden and sent for review.</p>
+      <p className="text-xs text-neutral-400 mb-4">Products whose name or description contains any of these words are automatically hidden and sent for review.</p>
 
       <div className="flex gap-2 mb-4">
         <input
@@ -65,12 +65,12 @@ function BannedWordsManager() {
           onChange={(e) => setNewWord(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') addWord(); }}
           placeholder="Add a word..."
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 transition-colors"
+          className="flex-1 px-3 py-2 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 transition-colors"
         />
         <button
           onClick={addWord}
           disabled={adding || !newWord.trim()}
-          className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+          className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors"
         >
           {adding ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
           Add
@@ -79,15 +79,15 @@ function BannedWordsManager() {
       {error && <p className="text-xs text-red-500 mb-3">{error}</p>}
 
       {loading ? (
-        <p className="text-xs text-gray-400">Loading…</p>
+        <p className="text-xs text-neutral-400">Loading…</p>
       ) : words.length === 0 ? (
-        <p className="text-xs text-gray-400">No banned words yet.</p>
+        <p className="text-xs text-neutral-400">No banned words yet.</p>
       ) : (
         <div className="flex flex-wrap gap-2">
           {words.map((w) => (
-            <span key={w.id} className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 text-slate-700 text-xs font-medium px-3 py-1.5 rounded-full">
+            <span key={w.id} className="flex items-center gap-1.5 bg-neutral-50 border border-neutral-200 text-neutral-700 text-xs font-medium px-3 py-1.5 rounded-full">
               {w.word}
-              <button onClick={() => removeWord(w.id)} className="text-gray-400 hover:text-red-500 transition-colors">
+              <button onClick={() => removeWord(w.id)} className="text-neutral-400 hover:text-red-500 transition-colors">
                 <Trash2 size={11} />
               </button>
             </span>
@@ -136,44 +136,44 @@ function RemovedImagesHistory({ refreshKey }: { refreshKey: number }) {
   return (
     <div className="mb-6">
       <div className="flex items-center gap-2 mb-3">
-        <ImageOff size={16} className="text-slate-500" />
-        <h2 className="text-base font-bold text-slate-800">Removed Images</h2>
-        <span className="text-xs text-gray-400 font-medium">Images taken down from products via moderation</span>
+        <ImageOff size={16} className="text-neutral-500" />
+        <h2 className="font-display tracking-tight text-base text-neutral-800">Removed Images</h2>
+        <span className="text-xs text-neutral-400 font-medium">Images taken down from products via moderation</span>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-neutral-100 overflow-hidden">
         {loading ? (
           <div className="py-10 flex items-center justify-center">
-            <Loader2 size={20} className="animate-spin text-gray-300" />
+            <Loader2 size={20} className="animate-spin text-neutral-300" />
           </div>
         ) : records.length === 0 ? (
           <div className="text-center py-10">
-            <ImageOff size={28} className="mx-auto mb-2 text-gray-200" />
-            <p className="text-sm text-gray-400">No images have been removed yet.</p>
+            <ImageOff size={28} className="mx-auto mb-2 text-neutral-200" />
+            <p className="text-sm text-neutral-400">No images have been removed yet.</p>
           </div>
         ) : (
           <>
-            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-gray-100 text-xs font-bold text-slate-600 uppercase tracking-wide">
+            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-neutral-100 text-xs font-semibold text-neutral-600 uppercase tracking-wide">
               <span>Product / Vendor</span>
               <span className="w-40 text-center">Removed By</span>
               <span className="w-36 text-right">Removed On</span>
               <span className="w-24 text-center">Approve</span>
             </div>
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-neutral-50">
               {records.map((r) => (
                 <div key={r.id} className="flex sm:grid sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-5 py-3.5 transition-colors">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-10 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                    <div className="w-10 h-10 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-50">
                       <img src={getImageUrl(r.archivedImagePath)} alt={r.productName} className="w-full h-full object-cover"
                         onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-slate-800 truncate">{r.productName}</p>
-                      <p className="text-xs text-slate-500 truncate">{r.vendorName}</p>
+                      <p className="text-sm font-semibold text-neutral-800 truncate">{r.productName}</p>
+                      <p className="text-xs text-neutral-500 truncate">{r.vendorName}</p>
                     </div>
                   </div>
                   <div className="w-40 text-center">
-                    <span className="text-xs font-semibold text-slate-600 truncate">{r.removedBy}</span>
+                    <span className="text-xs font-semibold text-neutral-600 truncate">{r.removedBy}</span>
                   </div>
                   <div className="w-36 text-right">
                     <span className="text-xs font-semibold text-red-500">{new Date(r.removedAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
@@ -379,8 +379,9 @@ export default function AdminProductsPage() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-slate-900">Product Moderation</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Hover a photo below and click the trash icon to remove just that image, or use the row's Remove button to take down the whole product.</p>
+        <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">Admin</div>
+        <h1 className="font-display tracking-tight text-3xl lg:text-4xl mt-1 text-neutral-900">Product Moderation</h1>
+        <p className="text-sm text-neutral-500 mt-0.5">Hover a photo below and click the trash icon to remove just that image, or use the row's Remove button to take down the whole product.</p>
       </div>
 
       <BannedWordsManager />
@@ -389,18 +390,18 @@ export default function AdminProductsPage() {
       {/* Search */}
       <div className="flex items-center gap-3 mb-4">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input
             type="text"
             value={query}
             onChange={(e) => runSearch(e.target.value)}
             placeholder="Search by product name..."
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-400 transition-colors bg-white"
+            className="w-full pl-10 pr-4 py-2.5 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-neutral-900 transition-colors bg-white"
           />
         </div>
-        <label className="flex items-center gap-2 text-xs font-semibold text-slate-600 whitespace-nowrap cursor-pointer">
+        <label className="flex items-center gap-2 text-xs font-semibold text-neutral-600 whitespace-nowrap cursor-pointer">
           <input type="checkbox" checked={showInactive} onChange={(e) => setShowInactive(e.target.checked)}
-            className="w-4 h-4 accent-orange-500 cursor-pointer" />
+            className="w-4 h-4 accent-neutral-900 cursor-pointer" />
           Show removed products too
         </label>
       </div>
@@ -408,37 +409,37 @@ export default function AdminProductsPage() {
       {/* Results */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <Package size={16} className="text-slate-500" />
-          <h2 className="text-base font-bold text-slate-800">{browsing ? 'All Products' : 'Search Results'}</h2>
-          <span className="text-xs text-gray-400 font-medium">{browsing ? 'Browse visually, or search by name above' : `Results for "${query}"`}</span>
+          <Package size={16} className="text-neutral-500" />
+          <h2 className="font-display tracking-tight text-base text-neutral-800">{browsing ? 'All Products' : 'Search Results'}</h2>
+          <span className="text-xs text-neutral-400 font-medium">{browsing ? 'Browse visually, or search by name above' : `Results for "${query}"`}</span>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-neutral-100 overflow-hidden">
           {searching ? (
             <div className="py-10 flex items-center justify-center">
-              <Loader2 size={20} className="animate-spin text-gray-300" />
+              <Loader2 size={20} className="animate-spin text-neutral-300" />
             </div>
           ) : hits.length === 0 ? (
             <div className="text-center py-10">
-              <Package size={28} className="mx-auto mb-2 text-gray-200" />
-              <p className="text-sm text-gray-400">No products found.</p>
+              <Package size={28} className="mx-auto mb-2 text-neutral-200" />
+              <p className="text-sm text-neutral-400">No products found.</p>
             </div>
           ) : (
             <>
-              <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-gray-100 text-xs font-bold text-slate-600 uppercase tracking-wide">
+              <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-3 px-5 py-3 border-b border-neutral-100 text-xs font-semibold text-neutral-600 uppercase tracking-wide">
                 <span>Product (hover photo to remove it)</span>
                 <span className="w-48 text-center">Vendor</span>
                 <span className="w-12 text-center">View</span>
                 <span className="w-28 text-center">Product</span>
               </div>
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y divide-neutral-50">
                 {hits.map((hit) => (
                   <div
                     key={`${hit.vendorId}_${hit.productId}`}
-                    className={`flex sm:grid sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-5 py-3.5 transition-colors ${hit.isActive ? 'hover:bg-orange-50/30' : 'bg-red-50/30'}`}
+                    className={`flex sm:grid sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-5 py-3.5 transition-colors ${hit.isActive ? 'hover:bg-neutral-100/30' : 'bg-red-50/30'}`}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="relative group w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 overflow-hidden flex-shrink-0">
+                      <div className="relative group w-10 h-10 rounded-lg bg-neutral-50 border border-neutral-100 overflow-hidden flex-shrink-0">
                         <img src={getImageUrl(hit.imageUrl)} alt={hit.title} className="w-full h-full object-cover"
                           onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }} />
                         {hit.imageId && (
@@ -455,15 +456,15 @@ export default function AdminProductsPage() {
                         )}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-slate-900 truncate">{hit.title}</p>
-                        {!hit.isActive && <span className="text-[10px] font-bold text-red-500 uppercase">Removed</span>}
+                        <p className="text-sm font-semibold text-neutral-900 truncate">{hit.title}</p>
+                        {!hit.isActive && <span className="text-[10px] font-semibold text-red-500 uppercase">Removed</span>}
                       </div>
                     </div>
                     <div className="w-48 text-center">
-                      <span className="text-xs font-semibold text-slate-600 truncate">{hit.vendorName}</span>
+                      <span className="text-xs font-semibold text-neutral-600 truncate">{hit.vendorName}</span>
                     </div>
                     <div className="w-12 flex justify-center">
-                      <button onClick={() => openProduct(hit)} className="p-1.5 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition-colors" title="View all photos">
+                      <button onClick={() => openProduct(hit)} className="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-950 hover:bg-neutral-100 transition-colors" title="View all photos">
                         <ChevronRight size={15} />
                       </button>
                     </div>
@@ -500,35 +501,35 @@ export default function AdminProductsPage() {
 
       {/* Selected product's images */}
       {loadingDetail && (
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-neutral-400">
           <Loader2 size={14} className="animate-spin" /> Loading product…
         </div>
       )}
 
       {selected && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900">{selected.name}</h2>
-              <p className="text-xs text-gray-400 mt-0.5">Sold by {selected.vendorName}</p>
+              <h2 className="font-display tracking-tight text-base text-neutral-900">{selected.name}</h2>
+              <p className="text-xs text-neutral-400 mt-0.5">Sold by {selected.vendorName}</p>
             </div>
             <a
               href={`/products/${selected.id}?v=${encodeURIComponent(selected.vendorId)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-semibold text-orange-500 hover:text-orange-600"
+              className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 hover:text-neutral-950"
             >
               View live <ExternalLink size={12} />
             </a>
           </div>
 
           {selected.images.length === 0 ? (
-            <p className="text-sm text-gray-400 flex items-center gap-2"><ImageOff size={14} /> No images on this product.</p>
+            <p className="text-sm text-neutral-400 flex items-center gap-2"><ImageOff size={14} /> No images on this product.</p>
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
               {selected.images.map((img) => (
                 <div key={img.id} className="relative group">
-                  <div className="aspect-square rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                  <div className="aspect-square rounded-xl overflow-hidden border border-neutral-200 bg-neutral-50">
                     <img src={getImageUrl(img.imagePath)} alt="" className="w-full h-full object-cover"
                       onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }} />
                   </div>
@@ -537,7 +538,7 @@ export default function AdminProductsPage() {
                     disabled={removingId === img.id}
                     className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-xl"
                   >
-                    <span className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    <span className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
                       {removingId === img.id ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
                       Remove
                     </span>
@@ -553,23 +554,23 @@ export default function AdminProductsPage() {
       {confirmImage && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Remove this image?</h3>
-            <p className="text-sm text-gray-500 mb-4">This will hide it from the listing immediately. The file is archived, not deleted, so it can be recovered if needed.</p>
+            <h3 className="text-base font-semibold text-neutral-900 mb-1">Remove this image?</h3>
+            <p className="text-sm text-neutral-500 mb-4">This will hide it from the listing immediately. The file is archived, not deleted, so it can be recovered if needed.</p>
 
-            <div className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl p-3 mb-5">
-              <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 bg-neutral-50 border border-neutral-100 rounded-xl p-3 mb-5">
+              <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200 bg-white">
                 <img src={getImageUrl(confirmImage.imagePath)} alt="" className="w-full h-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-800 truncate">{confirmImage.productName}</p>
-                <p className="text-xs text-gray-400 truncate">Sold by {confirmImage.vendorName}</p>
+                <p className="text-sm font-semibold text-neutral-800 truncate">{confirmImage.productName}</p>
+                <p className="text-xs text-neutral-400 truncate">Sold by {confirmImage.vendorName}</p>
               </div>
             </div>
 
             <div className="flex gap-3">
               <button onClick={() => setConfirmImage(null)}
-                className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-gray-50 transition-colors">
+                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors">
                 Cancel
               </button>
               <button
@@ -589,23 +590,23 @@ export default function AdminProductsPage() {
       {confirmRemoveProduct && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Remove this product?</h3>
-            <p className="text-sm text-gray-500 mb-4">This takes the product off the storefront immediately. It is deactivated, not deleted — the vendor's data is preserved.</p>
+            <h3 className="text-base font-semibold text-neutral-900 mb-1">Remove this product?</h3>
+            <p className="text-sm text-neutral-500 mb-4">This takes the product off the storefront immediately. It is deactivated, not deleted — the vendor's data is preserved.</p>
 
-            <div className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl p-3 mb-5">
-              <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 bg-neutral-50 border border-neutral-100 rounded-xl p-3 mb-5">
+              <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200 bg-white">
                 <img src={getImageUrl(confirmRemoveProduct.imageUrl)} alt="" className="w-full h-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-800 truncate">{confirmRemoveProduct.title}</p>
-                <p className="text-xs text-gray-400 truncate">Sold by {confirmRemoveProduct.vendorName}</p>
+                <p className="text-sm font-semibold text-neutral-800 truncate">{confirmRemoveProduct.title}</p>
+                <p className="text-xs text-neutral-400 truncate">Sold by {confirmRemoveProduct.vendorName}</p>
               </div>
             </div>
 
             <div className="flex gap-3">
               <button onClick={() => setConfirmRemoveProduct(null)}
-                className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-gray-50 transition-colors">
+                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors">
                 Cancel
               </button>
               <button

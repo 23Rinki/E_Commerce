@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   Store, ChevronRight, ChevronLeft,
-  CheckCircle2, ShoppingBag, TrendingUp, Shield, Eye, EyeOff, AlertTriangle, FileText,
+  CheckCircle2, TrendingUp, Shield, Eye, EyeOff, AlertTriangle, FileText,
 } from 'lucide-react';
 import { authApi } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
@@ -299,12 +299,13 @@ export default function BecomeSellerPage() {
       >
         <div>
           <Link href="/" className="flex items-center gap-2 mb-12">
-            <ShoppingBag size={22} className="text-neutral-900" />
-            <span className="font-semibold text-lg tracking-tight">RNVS CommerceX</span>
+            <div className="h-8 w-8 rounded-full bg-white grid place-items-center text-neutral-900 font-display text-sm">R</div>
+            <span className="font-display text-xl tracking-tight">RNVS CommerceX</span>
           </Link>
-          <h1 className="font-display tracking-tight text-3xl leading-snug mb-4">
+          <div className="text-xs uppercase tracking-[0.3em] text-neutral-400 mb-4">For Sellers</div>
+          <h1 className="font-display tracking-tight text-4xl leading-[1.1] mb-4">
             Start selling to<br />
-            <span className="text-neutral-900">millions of buyers</span>
+            <span className="italic text-neutral-300">millions of buyers.</span>
           </h1>
           <p className="text-neutral-300 text-sm leading-relaxed">
             Join thousands of sellers growing their business on India&apos;s fastest growing marketplace.
@@ -316,8 +317,8 @@ export default function BecomeSellerPage() {
               { icon: Shield, title: 'Secure payouts', desc: 'Weekly payouts directly to your bank.' },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-neutral-900/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Icon size={15} className="text-neutral-900" />
+                <div className="w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
+                  <Icon size={15} className="text-white" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold">{title}</p>
@@ -329,7 +330,7 @@ export default function BecomeSellerPage() {
         </div>
         <p className="text-xs text-neutral-400">
           Already a seller?{' '}
-          <button onClick={() => router.push('/auth/login')} className="text-neutral-900 underline">Sign in</button>
+          <button onClick={() => router.push('/auth/login')} className="text-white font-medium underline underline-offset-4">Sign in</button>
         </p>
       </div>
 

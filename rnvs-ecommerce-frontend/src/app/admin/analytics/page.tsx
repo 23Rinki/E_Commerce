@@ -61,9 +61,9 @@ function StatCard({
   trend?: 'up' | 'down' | null;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5">
+    <div className="bg-white rounded-2xl border border-neutral-100 p-5">
       <div className="flex items-start justify-between">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${color}`}>
           <Icon size={18} className="text-white" />
         </div>
         {trend && (
@@ -72,9 +72,9 @@ function StatCard({
           </span>
         )}
       </div>
-      <p className="text-2xl font-black text-slate-900 mt-3">{value}</p>
-      <p className="text-sm font-medium text-gray-500 mt-0.5">{label}</p>
-      {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+      <p className="text-2xl font-semibold text-neutral-900 mt-3">{value}</p>
+      <p className="text-sm font-medium text-neutral-500 mt-0.5">{label}</p>
+      {sub && <p className="text-xs text-neutral-400 mt-0.5">{sub}</p>}
     </div>
   );
 }
@@ -97,7 +97,10 @@ export default function AdminAnalyticsPage() {
     }).finally(() => setLoading(false));
 
     platformAdminApi.getSalesSummary()
-      .then((r) => setSales(r.data?.data || r.data))
+      .then((r) => {
+        const d = r.data?.data || r.data;
+        setSales(d && Array.isArray(d.vendors) ? d : null); // anything unexpected → "no sales data" state
+      })
       .catch(() => setSales(null))
       .finally(() => setSalesLoading(false));
   }, []);
@@ -105,14 +108,14 @@ export default function AdminAnalyticsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 size={28} className="animate-spin text-gray-300" />
+        <Loader2 size={28} className="animate-spin text-neutral-300" />
       </div>
     );
   }
 
   if (!stats) {
     return (
-      <div className="p-6 text-center text-gray-400">
+      <div className="p-6 text-center text-neutral-400">
         <BarChart2 size={36} className="mx-auto mb-2 opacity-30" />
         <p>Could not load analytics. Make sure the backend is running.</p>
       </div>
@@ -125,29 +128,30 @@ export default function AdminAnalyticsPage() {
     <div className="p-6 max-w-5xl mx-auto">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-slate-900">Platform Analytics</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Overview of all vendors and platform health</p>
+        <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">Admin</div>
+        <h1 className="font-display tracking-tight text-3xl lg:text-4xl mt-1 text-neutral-900">Platform Analytics</h1>
+        <p className="text-sm text-neutral-500 mt-0.5">Overview of all vendors and platform health</p>
       </div>
 
       {/* Sales Overview */}
-      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden mb-6">
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div className="bg-white border border-neutral-100 rounded-2xl overflow-hidden mb-6">
+        <div className="px-6 py-4 border-b border-neutral-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <IndianRupee size={15} className="text-slate-500" />
-            <h2 className="text-base font-bold text-slate-800">Sales Overview</h2>
-            <span className="text-xs text-gray-400 ml-1">Per vendor + platform total</span>
+            <IndianRupee size={15} className="text-neutral-500" />
+            <h2 className="font-display tracking-tight text-base text-neutral-800">Sales Overview</h2>
+            <span className="text-xs text-neutral-400 ml-1">Per vendor + platform total</span>
           </div>
           {!salesLoading && sales && (
             <div className="text-right">
-              <p className="text-xs text-gray-400">Platform Total</p>
-              <p className="text-xl font-black text-slate-900">{formatINR(sales.grandTotal)}</p>
+              <p className="text-xs text-neutral-400">Platform Total</p>
+              <p className="text-xl font-semibold text-neutral-900">{formatINR(sales.grandTotal)}</p>
             </div>
           )}
         </div>
 
         {salesLoading && (
           <div className="flex items-center justify-center py-10">
-            <Loader2 size={20} className="animate-spin text-gray-300" />
+            <Loader2 size={20} className="animate-spin text-neutral-300" />
           </div>
         )}
 
@@ -159,15 +163,15 @@ export default function AdminAnalyticsPage() {
 
         {!salesLoading && sales && sales.vendors.length === 0 && (
           <div className="flex flex-col items-center justify-center py-10 text-center">
-            <PackageX size={28} className="text-gray-200 mb-2" />
-            <p className="text-sm text-gray-400">No vendors found</p>
+            <PackageX size={28} className="text-neutral-200 mb-2" />
+            <p className="text-sm text-neutral-400">No vendors found</p>
           </div>
         )}
 
         {!salesLoading && sales && sales.vendors.length > 0 && (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-neutral-50">
             {/* Column headers */}
-            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-4 px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gray-50">
+            <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-4 px-6 py-2 text-xs font-semibold text-neutral-500 uppercase tracking-wide bg-neutral-50">
               <span>Store</span>
               <span className="w-24 text-right">Orders</span>
               <span className="w-32 text-right">Total Sales</span>
@@ -178,13 +182,13 @@ export default function AdminAnalyticsPage() {
               <div key={v.tenantId} className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-2 sm:gap-4 px-6 py-3.5 items-center">
                 {/* Store info */}
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 truncate">{v.storeName}</p>
-                  {v.vendorName && <p className="text-xs text-gray-400 truncate">{v.vendorName}</p>}
+                  <p className="text-sm font-semibold text-neutral-800 truncate">{v.storeName}</p>
+                  {v.vendorName && <p className="text-xs text-neutral-400 truncate">{v.vendorName}</p>}
                 </div>
 
                 {/* Orders */}
                 <div className="w-24 text-right">
-                  <span className="text-sm font-medium text-slate-700">
+                  <span className="text-sm font-medium text-neutral-700">
                     {v.totalOrders != null ? v.totalOrders : '—'}
                   </span>
                 </div>
@@ -192,10 +196,10 @@ export default function AdminAnalyticsPage() {
                 {/* Total sales */}
                 <div className="w-32 text-right">
                   {v.dbStatus === 'ok' && v.totalSales != null && (
-                    <span className="text-sm font-bold text-green-700">{formatINR(v.totalSales)}</span>
+                    <span className="text-sm font-semibold text-green-700">{formatINR(v.totalSales)}</span>
                   )}
                   {v.dbStatus === 'not_provisioned' && (
-                    <span className="text-xs text-gray-400">DB not set up</span>
+                    <span className="text-xs text-neutral-400">DB not set up</span>
                   )}
                   {v.dbStatus === 'error' && (
                     <span className="text-xs text-red-400">Unavailable</span>
@@ -208,7 +212,7 @@ export default function AdminAnalyticsPage() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">Connected</span>
                   )}
                   {v.dbStatus === 'not_provisioned' && (
-                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">No DB</span>
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-500">No DB</span>
                   )}
                   {v.dbStatus === 'error' && (
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Error</span>
@@ -218,15 +222,15 @@ export default function AdminAnalyticsPage() {
             ))}
 
             {/* Grand total row */}
-            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-4 px-6 py-4 bg-slate-50 items-center">
-              <p className="text-sm font-black text-slate-900">Platform Grand Total</p>
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-4 px-6 py-4 bg-neutral-50 items-center">
+              <p className="text-sm font-semibold text-neutral-900">Platform Grand Total</p>
               <div className="w-24 text-right">
-                <span className="text-sm font-bold text-slate-700">
+                <span className="text-sm font-semibold text-neutral-700">
                   {sales.vendors.reduce((s, v) => s + (v.totalOrders ?? 0), 0)} orders
                 </span>
               </div>
               <div className="w-32 text-right">
-                <span className="text-base font-black text-slate-900">{formatINR(sales.grandTotal)}</span>
+                <span className="text-base font-semibold text-neutral-900">{formatINR(sales.grandTotal)}</span>
               </div>
               <div className="w-24" />
             </div>
@@ -236,16 +240,16 @@ export default function AdminAnalyticsPage() {
 
       {/* Key metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard label="Total Vendors" value={stats.total} icon={Users} color="bg-slate-800" />
+        <StatCard label="Total Vendors" value={stats.total} icon={Users} color="bg-neutral-800" />
         <StatCard label="Active Vendors" value={stats.active} sub={`${healthPct}% of total`} icon={Activity} color="bg-green-500" trend="up" />
-        <StatCard label="Active (Last 7d)" value={stats.activeLast7Days} sub="Recently logged in" icon={TrendingUp} color="bg-orange-500" />
+        <StatCard label="Active (Last 7d)" value={stats.activeLast7Days} sub="Recently logged in" icon={TrendingUp} color="bg-neutral-900" />
         <StatCard label="Inactive 30d+" value={stats.inactive30Days} sub="Need follow-up" icon={ShoppingBag} color="bg-red-400" trend="down" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4 mb-4">
         {/* Activity breakdown */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          <h2 className="text-base font-bold text-slate-800 mb-4">Activity Breakdown</h2>
+        <div className="bg-white rounded-2xl border border-neutral-100 p-6">
+          <h2 className="font-display tracking-tight text-base text-neutral-800 mb-4">Activity Breakdown</h2>
           <div className="space-y-3">
             {[
               { label: 'Active this week', value: stats.activeLast7Days, cls: 'bg-green-100 text-green-700' },
@@ -256,13 +260,13 @@ export default function AdminAnalyticsPage() {
               <div key={label} className="flex items-center justify-between">
                 <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${cls}`}>{label}</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="w-32 h-2 bg-neutral-100 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full ${cls.split(' ')[0].replace('100', '400')}`}
                       style={{ width: stats.total > 0 ? `${(value / stats.total) * 100}%` : '0%' }}
                     />
                   </div>
-                  <span className="text-sm font-bold text-slate-700 w-6 text-right">{value}</span>
+                  <span className="text-sm font-semibold text-neutral-700 w-6 text-right">{value}</span>
                 </div>
               </div>
             ))}
@@ -272,15 +276,15 @@ export default function AdminAnalyticsPage() {
 
       {/* Vendor Infrastructure — URL & DB per vendor */}
       {tenants.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden mb-4">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
-            <Database size={15} className="text-slate-500" />
-            <h2 className="text-base font-bold text-slate-800">Vendor Infrastructure</h2>
-            <span className="text-xs text-gray-400 ml-1">Store URLs &amp; databases</span>
+        <div className="bg-white rounded-2xl border border-neutral-100 overflow-hidden mb-4">
+          <div className="px-6 py-4 border-b border-neutral-100 flex items-center gap-2">
+            <Database size={15} className="text-neutral-500" />
+            <h2 className="font-display tracking-tight text-base text-neutral-800">Vendor Infrastructure</h2>
+            <span className="text-xs text-neutral-400 ml-1">Store URLs &amp; databases</span>
           </div>
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-neutral-50">
             {/* Header row */}
-            <div className="hidden sm:grid grid-cols-[1fr_1fr_auto] gap-4 px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gray-50">
+            <div className="hidden sm:grid grid-cols-[1fr_1fr_auto] gap-4 px-6 py-2 text-xs font-semibold text-neutral-500 uppercase tracking-wide bg-neutral-50">
               <span>Store</span>
               <span>Store URL</span>
               <span className="w-40">Database</span>
@@ -293,19 +297,19 @@ export default function AdminAnalyticsPage() {
               return (
                 <div key={t.id} className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2 sm:gap-4 px-6 py-3 items-center">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-800 truncate">{t.storeName}</p>
-                    {t.vendorName && <p className="text-xs text-gray-400 truncate">{t.vendorName}</p>}
+                    <p className="text-sm font-semibold text-neutral-800 truncate">{t.storeName}</p>
+                    {t.vendorName && <p className="text-xs text-neutral-400 truncate">{t.vendorName}</p>}
                   </div>
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <Link size={11} className="text-gray-400 flex-shrink-0" />
+                    <Link size={11} className="text-neutral-400 flex-shrink-0" />
                     <span className="text-xs text-indigo-600 font-mono truncate">
-                      inovativeai.com/<span className="font-bold">{slug}</span>
+                      inovativeai.com/<span className="font-semibold">{slug}</span>
                     </span>
-                    <span className="text-[9px] text-gray-400 flex-shrink-0">(slug pending)</span>
+                    <span className="text-[9px] text-neutral-400 flex-shrink-0">(slug pending)</span>
                   </div>
                   <div className="w-40 flex items-center gap-1.5">
-                    <Database size={11} className={t.hasDedicatedDb ? 'text-blue-500' : 'text-gray-400'} />
-                    <span className={`text-xs font-medium truncate ${t.hasDedicatedDb ? 'text-blue-600' : 'text-gray-500'}`}>
+                    <Database size={11} className={t.hasDedicatedDb ? 'text-blue-500' : 'text-neutral-400'} />
+                    <span className={`text-xs font-medium truncate ${t.hasDedicatedDb ? 'text-blue-600' : 'text-neutral-500'}`}>
                       {dbLabel}
                     </span>
                   </div>
@@ -318,34 +322,34 @@ export default function AdminAnalyticsPage() {
 
       {/* Infrastructure & support */}
       <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 flex items-center gap-4">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
             <DollarSign size={18} className="text-white" />
           </div>
           <div>
-            <p className="text-xl font-black text-slate-900">{stats.withDedicatedDb}</p>
-            <p className="text-sm text-gray-500">Dedicated DBs</p>
-            <p className="text-xs text-gray-400">Railway PostgreSQL</p>
+            <p className="text-xl font-semibold text-neutral-900">{stats.withDedicatedDb}</p>
+            <p className="text-sm text-neutral-500">Dedicated DBs</p>
+            <p className="text-xs text-neutral-400">Railway PostgreSQL</p>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 flex items-center gap-4">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center flex-shrink-0">
             <Activity size={18} className="text-white" />
           </div>
           <div>
-            <p className="text-xl font-black text-slate-900">{stats.pendingMaintenance}</p>
-            <p className="text-sm text-gray-500">Pending Support</p>
-            <p className="text-xs text-gray-400">Maintenance notes</p>
+            <p className="text-xl font-semibold text-neutral-900">{stats.pendingMaintenance}</p>
+            <p className="text-sm text-neutral-500">Pending Support</p>
+            <p className="text-xs text-neutral-400">Maintenance notes</p>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center flex-shrink-0">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center flex-shrink-0">
             <TrendingUp size={18} className="text-white" />
           </div>
           <div>
-            <p className="text-xl font-black text-slate-900">{healthPct}%</p>
-            <p className="text-sm text-gray-500">Platform Health</p>
-            <p className="text-xs text-gray-400">Active / Total vendors</p>
+            <p className="text-xl font-semibold text-neutral-900">{healthPct}%</p>
+            <p className="text-sm text-neutral-500">Platform Health</p>
+            <p className="text-xs text-neutral-400">Active / Total vendors</p>
           </div>
         </div>
       </div>

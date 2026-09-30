@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { X, Eye, EyeOff, ShoppingBag, CheckCircle2 } from 'lucide-react';
+import { X, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
 import { authApi } from '@/lib/api';
@@ -47,7 +47,7 @@ export default function LoginModal() {
       setAuth(user, token);
       closeLoginModal();
       const role = Number(user.role);
-      if (role === 4) window.location.href = '/admin/vendors';
+      if (role === 4 || role === 5) window.location.href = '/admin/vendors';
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Invalid email or password.');
     } finally {
@@ -113,8 +113,8 @@ export default function LoginModal() {
         >
           <div>
             <div className="flex items-center gap-2 mb-8">
-              <ShoppingBag size={22} className="text-neutral-900" />
-              <span className="font-semibold text-lg tracking-tight">RNVS CommerceX</span>
+              <div className="h-8 w-8 rounded-full bg-white grid place-items-center text-neutral-900 font-display text-sm">R</div>
+              <span className="font-display text-xl tracking-tight">RNVS CommerceX</span>
             </div>
             <h2 className="font-display tracking-tight text-2xl leading-snug mb-3">
               {tab === 'login' ? 'Welcome back!' : 'Join us today!'}
@@ -129,7 +129,7 @@ export default function LoginModal() {
           <div className="space-y-3 mt-8">
             {['10,000+ Products', 'Verified Sellers', 'Free Returns', '24/7 Support'].map((item) => (
               <div key={item} className="flex items-center gap-2.5 text-sm text-neutral-300">
-                <CheckCircle2 size={15} className="text-neutral-900 flex-shrink-0" />
+                <CheckCircle2 size={15} className="text-white flex-shrink-0" />
                 {item}
               </div>
             ))}

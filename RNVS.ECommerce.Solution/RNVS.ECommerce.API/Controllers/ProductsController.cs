@@ -325,7 +325,11 @@ public class ProductsController : ControllerBase
         [FromQuery] int pageSize = 20,
         [FromQuery] string? category = null,
         [FromQuery] int? pageNumber = null,
-        [FromQuery] bool includeInactive = false)
+        [FromQuery] bool includeInactive = false,
+        [FromQuery] string? sortBy = null,
+        [FromQuery] bool sortDesc = true,
+        [FromQuery] decimal? minPrice = null,
+        [FromQuery] decimal? maxPrice = null)
     {
         var resolvedPage = pageNumber ?? page;
         try
@@ -378,7 +382,8 @@ public class ProductsController : ControllerBase
             }
             else
             {
-                (items, totalCount) = await _storefront.GetAllProductsAsync(resolvedPage, pageSize, category, includeInactive: isAdmin && includeInactive, excludeSuspended: !isAdmin);
+                (items, totalCount) = await _storefront.GetAllProductsAsync(resolvedPage, pageSize, category, includeInactive: isAdmin && includeInactive, excludeSuspended: !isAdmin,
+                    sortBy: sortBy, sortDesc: sortDesc, minPrice: minPrice, maxPrice: maxPrice);
             }
 
             return Ok(new ApiResponseDto<PaginatedResultDto<ProductListDto>>

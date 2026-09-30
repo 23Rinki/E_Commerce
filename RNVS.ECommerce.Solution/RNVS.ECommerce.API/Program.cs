@@ -255,6 +255,7 @@ builder.Services.AddScoped<IVendorDbProvisioning, VendorDatabaseProvisioningServ
 
 // Storefront aggregation — queries ALL vendor DBs so customers see every vendor's products
 builder.Services.AddScoped<StorefrontProductsService>();
+builder.Services.AddScoped<CatalogSearchService>(); // DB fallback when Meilisearch returns nothing
 
 // Daily email scheduler — sends subscription transition and anniversary reminders
 builder.Services.AddHostedService<DailyEmailSchedulerService>();

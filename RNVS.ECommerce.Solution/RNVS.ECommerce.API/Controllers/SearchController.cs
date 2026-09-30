@@ -12,15 +12,18 @@ public class SearchController : ControllerBase
 {
     private readonly ISearchService _searchService;
     private readonly StorefrontProductsService _storefront;
+    private readonly CatalogSearchService _catalogSearch;
     private readonly ILogger<SearchController> _logger;
 
     public SearchController(
         ISearchService searchService,
         StorefrontProductsService storefront,
+        CatalogSearchService catalogSearch,
         ILogger<SearchController> logger)
     {
         _searchService = searchService;
         _storefront    = storefront;
+        _catalogSearch = catalogSearch;
         _logger        = logger;
     }
 
@@ -36,7 +39,9 @@ public class SearchController : ControllerBase
         [FromQuery] double? minRating = null,
         [FromQuery] string sortBy = "relevance",
         [FromQuery] bool onlyInStock = false,
-        [FromQuery] string? vendorId = null)
+        [FromQuery] string? vendorId = null,
+        [FromQuery] string? category = null,
+        [FromQuery] bool sortDesc = false)
     {
         if (string.IsNullOrWhiteSpace(query))
             return BadRequest(new { success = false, message = "Query cannot be empty" });
@@ -46,9 +51,9 @@ public class SearchController : ControllerBase
             Query       = query,
             Page        = Math.Max(1, page),
             PageSize    = Math.Clamp(pageSize, 1, 100),
-            Categories  = string.IsNullOrWhiteSpace(categoryId)
-                            ? new List<string>()
-                            : new List<string> { categoryId },
+            Categories  = (category ?? categoryId) is { Length: > 0 } cat
+                            ? new List<string> { cat }
+                            : new List<string>(),
             MinPrice    = minPrice,
             MaxPrice    = maxPrice,
             MinRating   = minRating,
@@ -57,7 +62,15 @@ public class SearchController : ControllerBase
             VendorId    = vendorId ?? string.Empty,
         };
 
+        // The storefront sends "price"/"name" + sortDesc; Meilisearch understands price_asc/price_desc
+        if (sortBy == "price") request.SortBy = sortDesc ? "price_desc" : "price_asc";
+
         var response = await _searchService.SearchAsync(request);
+
+        // Meilisearch is down, its index is empty/stale, or the words don't appear literally
+        // ("car" vs "SUV") — fall back to the database search, which also understands synonyms.
+        if (response.TotalCount == 0)
+            response = await _catalogSearch.SearchAsync(request, request.Categories.FirstOrDefault(), sortDesc);
 
         return Ok(new
         {

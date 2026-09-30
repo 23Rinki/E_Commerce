@@ -193,7 +193,9 @@ export default function ProductDetailClient({ product, reviews }: Props) {
   const pct           = discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
   const saved         = price - displayPrice;
 
-  const ratingCount = reviews.length || (((Number(product.id) * 137 + 43) % 1980) + 20);
+  // Real review data only — no reviews means no rating shown
+  const ratingCount = reviews.length;
+  const avgRating = ratingCount ? reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / ratingCount : 0;
 
   return (
     <div className="bg-white min-h-screen">
@@ -261,14 +263,20 @@ export default function ProductDetailClient({ product, reviews }: Props) {
             )}
 
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-neutral-200">
-              <div className="flex items-center gap-0.5">
-                {[1,2,3,4,5].map(s => (
-                  <Star key={s} size={14} className="text-neutral-900" fill="currentColor" />
-                ))}
-              </div>
-              <span className="text-sm text-neutral-500">
-                {ratingCount.toLocaleString()} ratings
-              </span>
+              {ratingCount > 0 ? (
+                <>
+                  <div className="flex items-center gap-0.5">
+                    {[1,2,3,4,5].map(s => (
+                      <Star key={s} size={14} className={s <= Math.round(avgRating) ? 'text-neutral-900' : 'text-neutral-200'} fill="currentColor" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-neutral-500">
+                    {avgRating.toFixed(1)} · {ratingCount.toLocaleString()} {ratingCount === 1 ? 'rating' : 'ratings'}
+                  </span>
+                </>
+              ) : (
+                <a href="#reviews" className="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">No ratings yet</a>
+              )}
             </div>
 
             {/* Price block */}
@@ -465,7 +473,7 @@ export default function ProductDetailClient({ product, reviews }: Props) {
 
         {/* Reviews */}
         <div className="mt-10 pt-8 border-t border-neutral-200 max-w-3xl mb-10">
-          <h2 className="font-display tracking-tight text-xl text-neutral-900 mb-6">Customer Reviews</h2>
+          <h2 id="reviews" className="font-display tracking-tight text-xl text-neutral-900 mb-6 scroll-mt-32">Customer Reviews</h2>
           {reviews.length > 0 ? (
             <div className="space-y-6">
               {reviews.map((r) => (

@@ -68,13 +68,13 @@ export default function AccountPage() {
     <div className="max-w-3xl mx-auto px-4 py-8">
       {/* Profile header */}
       <div className="bg-neutral-900 rounded-2xl p-6 text-white mb-6 flex items-center gap-5">
-        <div className="w-16 h-16 rounded-full bg-neutral-900 flex items-center justify-center text-2xl font-semibold">
+        <div className="w-16 h-16 rounded-full bg-white text-neutral-900 flex items-center justify-center text-2xl font-display">
           {user.firstName[0]?.toUpperCase()}
         </div>
         <div>
           <h1 className="font-display tracking-tight text-xl">{user.firstName} {user.lastName}</h1>
           <p className="text-neutral-400 text-sm">{user.email}</p>
-          <span className="inline-block mt-1.5 bg-neutral-900/20 text-neutral-900 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-neutral-900/30">
+          <span className="inline-block mt-1.5 bg-white/10 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full border border-white/20">
             {user.role || 'Customer'}
           </span>
         </div>

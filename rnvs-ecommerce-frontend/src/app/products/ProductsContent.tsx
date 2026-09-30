@@ -104,6 +104,7 @@ export default function ProductsContent() {
           page,
           pageSize,
           sortBy: debouncedFilters.sortBy === 'createdAt' ? 'relevance' : debouncedFilters.sortBy,
+          sortDesc: debouncedFilters.sortDesc,
         };
         if (debouncedFilters.category) params.category = debouncedFilters.category;
         if (debouncedFilters.minPrice) params.minPrice = debouncedFilters.minPrice;

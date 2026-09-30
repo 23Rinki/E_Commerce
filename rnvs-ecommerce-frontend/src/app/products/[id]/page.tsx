@@ -1,23 +1,18 @@
 import { notFound } from 'next/navigation';
 import ProductDetailClient from './ProductDetailClient';
+import { BACKEND_URL as BACKEND } from '@/lib/server/backend';
 
-// Server-to-server call uses HTTP (avoids self-signed cert issue on localhost)
-const BACKEND = process.env.BACKEND_URL ?? 'http://localhost:5000';
-
+// Returns null only when the API says the product doesn't exist; any other failure throws,
+// so an unreachable backend shows the error page instead of a misleading "not found".
 async function fetchProduct(id: string, vendorId?: string) {
-  try {
-    const url = vendorId
-      ? `${BACKEND}/api/products/${id}?v=${encodeURIComponent(vendorId)}`
-      : `${BACKEND}/api/products/${id}`;
-    const res = await fetch(url, {
-      cache: 'no-store',
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json?.data ?? json;
-  } catch {
-    return null;
-  }
+  const url = vendorId
+    ? `${BACKEND}/api/products/${id}?v=${encodeURIComponent(vendorId)}`
+    : `${BACKEND}/api/products/${id}`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Product API returned ${res.status}`);
+  const json = await res.json();
+  return json?.data ?? json;
 }
 
 async function fetchReviews(id: string): Promise<any[]> {
