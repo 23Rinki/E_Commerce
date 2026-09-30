@@ -39,13 +39,13 @@ function DeleteConfirm({
         <div className="w-11 h-11 rounded-full bg-red-100 flex items-center justify-center mb-4">
           <Trash2 size={20} className="text-red-500" />
         </div>
-        <h3 className="text-base font-bold text-slate-900 mb-1">Delete Product</h3>
-        <p className="text-sm text-gray-500 mb-5">
+        <h3 className="text-base font-semibold text-neutral-900 mb-1">Delete Product</h3>
+        <p className="text-sm text-neutral-500 mb-5">
           Are you sure you want to delete <strong>&ldquo;{name}&rdquo;</strong>? This cannot be undone.
         </p>
         <div className="flex gap-3">
           <button onClick={onCancel}
-            className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-gray-50">
+            className="flex-1 px-4 py-2 border border-neutral-200 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50">
             Cancel
           </button>
           <button onClick={onConfirm} disabled={loading}
@@ -87,7 +87,7 @@ function ProductCard({
   return (
     <>
       <Link href={`/products/${product.id}${(product as any).vendorId ? `?v=${encodeURIComponent((product as any).vendorId)}` : ''}`} className="block flex-shrink-0 w-44 group">
-        <div className="bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-200 h-full flex flex-col relative">
+        <div className="bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-lg transition-all duration-200 h-full flex flex-col relative">
 
           {/* Image */}
           <div className="relative h-44 bg-white flex items-center justify-center overflow-hidden">
@@ -100,23 +100,23 @@ function ProductCard({
               onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }}
             />
             {hasDisc && (
-              <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm leading-none">
+              <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded-sm leading-none">
                 -{discPct}%
               </span>
             )}
             {(product as any)._sellerCount > 1 && (
-              <span className="absolute bottom-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm leading-none">
+              <span className="absolute bottom-2 left-2 bg-blue-600 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-sm leading-none">
                 {(product as any)._sellerCount} sellers
               </span>
             )}
             {canManage && (
               <div className="absolute top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/vendor/products?edit=${product.id}`); }}
-                  className="w-7 h-7 bg-white shadow border border-gray-200 rounded-full flex items-center justify-center hover:bg-indigo-50 hover:border-indigo-300">
+                  className="w-7 h-7 bg-white shadow border border-neutral-200 rounded-full flex items-center justify-center hover:bg-indigo-50 hover:border-indigo-300">
                   <Pencil size={12} className="text-indigo-600" />
                 </button>
                 <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setConfirmDelete(true); }}
-                  className="w-7 h-7 bg-white shadow border border-gray-200 rounded-full flex items-center justify-center hover:bg-red-50 hover:border-red-300">
+                  className="w-7 h-7 bg-white shadow border border-neutral-200 rounded-full flex items-center justify-center hover:bg-red-50 hover:border-red-300">
                   <Trash2 size={12} className="text-red-500" />
                 </button>
               </div>
@@ -125,7 +125,7 @@ function ProductCard({
 
           {/* Info */}
           <div className="px-3 pt-2 pb-3 flex flex-col flex-1">
-            <p className="text-[13px] text-slate-800 line-clamp-2 leading-snug mb-2 flex-1">
+            <p className="text-[13px] text-neutral-800 line-clamp-2 leading-snug mb-2 flex-1">
               {product.name}
             </p>
             <div className="flex items-center gap-1 mb-1.5">
@@ -136,13 +136,13 @@ function ProductCard({
             </div>
             <div className="mb-2">
               <div className="flex items-baseline gap-0.5">
-                <span className="text-xs text-slate-700">₹</span>
-                <span className="text-lg font-bold text-slate-900 leading-none tabular-nums">
+                <span className="text-xs text-neutral-700">₹</span>
+                <span className="text-lg font-semibold text-neutral-900 leading-none tabular-nums">
                   {Math.floor(selling).toLocaleString('en-IN')}
                 </span>
               </div>
               {hasDisc && (
-                <p className="text-[11px] text-gray-500 mt-0.5 leading-snug">
+                <p className="text-[11px] text-neutral-500 mt-0.5 leading-snug">
                   M.R.P.:{' '}
                   <span className="line-through">₹{Math.floor(mrp).toLocaleString('en-IN')}</span>
                   <span className="text-green-700 font-semibold ml-1">({discPct}% off)</span>
@@ -152,7 +152,7 @@ function ProductCard({
             <button
               type="button"
               onClick={(e) => e.preventDefault()}
-              className="w-full bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-900 text-xs font-semibold py-1.5 rounded-full transition-colors"
+              className="w-full bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-neutral-900 text-xs font-semibold py-1.5 rounded-full transition-colors"
             >
               Add to Cart
             </button>
@@ -211,10 +211,10 @@ function Carousel({
   return (
     <div className="bg-white shadow-sm" style={{ borderLeft: `4px solid ${color}` }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-gray-100">
+      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-neutral-100">
         <div className="flex items-center gap-2">
           <span className="text-xl">{emoji}</span>
-          <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+          <h2 className="font-display tracking-tight text-lg text-neutral-900">{title}</h2>
         </div>
         <Link
           href={`/products?categoryId=${categoryId}`}
@@ -229,8 +229,8 @@ function Carousel({
       <div className="relative px-1 py-4">
         {canLeft && (
           <button onClick={() => scroll('left')} aria-label="Scroll left"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-28 bg-white border border-gray-200 shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors">
-            <ChevronLeft size={22} className="text-slate-700" />
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-28 bg-white border border-neutral-200 shadow-md flex items-center justify-center hover:bg-neutral-50 transition-colors">
+            <ChevronLeft size={22} className="text-neutral-700" />
           </button>
         )}
         <div ref={ref} className="flex gap-3 overflow-x-auto scrollbar-hide px-4">
@@ -240,8 +240,8 @@ function Carousel({
         </div>
         {canRight && (
           <button onClick={() => scroll('right')} aria-label="Scroll right"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-28 bg-white border border-gray-200 shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors">
-            <ChevronRight size={22} className="text-slate-700" />
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-28 bg-white border border-neutral-200 shadow-md flex items-center justify-center hover:bg-neutral-50 transition-colors">
+            <ChevronRight size={22} className="text-neutral-700" />
           </button>
         )}
       </div>
@@ -307,7 +307,7 @@ export default function DealsSection({ products }: Props) {
     <section className="bg-[#f1f3f6] py-3">
       <div className="max-w-7xl mx-auto px-4 space-y-3">
         {canManage && (
-          <p className="text-xs text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full inline-block">
+          <p className="text-xs text-neutral-500 bg-white border border-neutral-200 px-3 py-1 rounded-full inline-block">
             Hover a product to edit or delete
           </p>
         )}

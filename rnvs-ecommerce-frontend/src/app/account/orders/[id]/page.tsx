@@ -19,8 +19,8 @@ const STATUS_CONFIG: Record<string, { color: string; bg: string; icon: React.Ele
   Shipped:    { color: 'text-purple-700', bg: 'bg-purple-100', icon: Truck },
   Delivered:  { color: 'text-green-700',  bg: 'bg-green-100',  icon: CheckCircle },
   Cancelled:  { color: 'text-red-700',    bg: 'bg-red-100',    icon: XCircle },
-  Refunded:   { color: 'text-gray-700',   bg: 'bg-gray-100',   icon: RefreshCw },
-  Returned:   { color: 'text-orange-700', bg: 'bg-orange-100', icon: RotateCcw },
+  Refunded:   { color: 'text-neutral-700',   bg: 'bg-neutral-100',   icon: RefreshCw },
+  Returned:   { color: 'text-neutral-900', bg: 'bg-neutral-100', icon: RotateCcw },
 };
 
 const STATUS_ORDER = ['Pending', 'Processing', 'Shipped', 'Delivered'];
@@ -122,9 +122,9 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-8 animate-pulse space-y-4">
-        <div className="bg-gray-200 rounded-2xl h-28" />
-        <div className="bg-gray-200 rounded-2xl h-48" />
-        <div className="bg-gray-200 rounded-2xl h-32" />
+        <div className="bg-neutral-200 rounded-2xl h-28" />
+        <div className="bg-neutral-200 rounded-2xl h-48" />
+        <div className="bg-neutral-200 rounded-2xl h-32" />
       </div>
     );
   }
@@ -132,9 +132,9 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-        <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
-        <p className="text-xl text-gray-500 mb-4">Order not found.</p>
-        <Link href="/account/orders" className="text-orange-500 font-semibold">← Back to Orders</Link>
+        <AlertCircle size={48} className="text-neutral-400 mx-auto mb-4" />
+        <p className="text-xl text-neutral-500 mb-4">Order not found.</p>
+        <Link href="/account/orders" className="text-neutral-900 font-semibold">← Back to Orders</Link>
       </div>
     );
   }
@@ -155,12 +155,12 @@ export default function OrderDetailPage() {
     <div className="max-w-3xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <Link href="/account/orders" className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
-          <ArrowLeft size={20} className="text-slate-700" />
+        <Link href="/account/orders" className="p-2 hover:bg-neutral-100 rounded-xl transition-colors">
+          <ArrowLeft size={20} className="text-neutral-700" />
         </Link>
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Order Details</h1>
-          <p className="text-sm text-gray-500">#{order.orderNumber || order.id}</p>
+          <h1 className="font-display tracking-tight text-2xl text-neutral-900">Order Details</h1>
+          <p className="text-sm text-neutral-500">#{order.orderNumber || order.id}</p>
         </div>
       </div>
 
@@ -171,12 +171,12 @@ export default function OrderDetailPage() {
             <StatusIcon size={20} className={cfg.color} />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Status</p>
-            <p className={`text-lg font-black ${cfg.color}`}>{statusLabel}</p>
+            <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide">Order Status</p>
+            <p className={`text-lg font-semibold ${cfg.color}`}>{statusLabel}</p>
           </div>
           <div className="ml-auto text-right">
-            <p className="text-xs text-gray-500">Placed on</p>
-            <p className="text-sm font-semibold text-slate-700">
+            <p className="text-xs text-neutral-500">Placed on</p>
+            <p className="text-sm font-semibold text-neutral-700">
               {new Date(order.createdAt).toLocaleDateString('en-IN', {
                 day: 'numeric', month: 'long', year: 'numeric',
               })}
@@ -187,7 +187,7 @@ export default function OrderDetailPage() {
 
       {/* Progress stepper — hidden for cancelled orders */}
       {!isCancelled && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm mb-5">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm mb-5">
           <div className="flex items-center justify-between">
             {progressSteps.map((step, i) => {
               const StepIcon = STATUS_CONFIG[step.label]?.icon || Clock;
@@ -196,15 +196,15 @@ export default function OrderDetailPage() {
                   {/* Connector line */}
                   {i < progressSteps.length - 1 && (
                     <div className={`absolute top-4 left-1/2 w-full h-0.5 ${
-                      progressSteps[i + 1].done ? 'bg-orange-400' : 'bg-gray-200'
+                      progressSteps[i + 1].done ? 'bg-neutral-200' : 'bg-neutral-200'
                     }`} />
                   )}
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 ${
-                    step.done ? 'bg-orange-500' : 'bg-gray-100'
+                    step.done ? 'bg-neutral-900' : 'bg-neutral-100'
                   }`}>
-                    <StepIcon size={15} className={step.done ? 'text-white' : 'text-gray-400'} />
+                    <StepIcon size={15} className={step.done ? 'text-white' : 'text-neutral-400'} />
                   </div>
-                  <p className={`text-xs mt-1.5 font-semibold text-center ${step.done ? 'text-orange-600' : 'text-gray-400'}`}>
+                  <p className={`text-xs mt-1.5 font-semibold text-center ${step.done ? 'text-neutral-900' : 'text-neutral-400'}`}>
                     {step.label}
                   </p>
                 </div>
@@ -216,13 +216,13 @@ export default function OrderDetailPage() {
 
       {/* Track Order — status history timeline */}
       {tracking && tracking.statusHistory && tracking.statusHistory.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm mb-5">
-          <h2 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <MapPin size={18} className="text-orange-500" /> Track Order
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm mb-5">
+          <h2 className="font-display tracking-tight text-neutral-900 mb-4 flex items-center gap-2">
+            <MapPin size={18} className="text-neutral-900" /> Track Order
           </h2>
           <div className="relative pl-6">
             {/* Vertical line */}
-            <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-gray-200" />
+            <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-neutral-200" />
 
             {[...tracking.statusHistory].reverse().map((step, i) => {
               const statusCfg = STATUS_CONFIG[step.newStatus] || STATUS_CONFIG['Pending'];
@@ -231,23 +231,23 @@ export default function OrderDetailPage() {
                 <div key={i} className="relative mb-5 last:mb-0">
                   {/* Dot */}
                   <div className={`absolute -left-[18px] w-4 h-4 rounded-full border-2 border-white flex items-center justify-center ${
-                    i === 0 ? 'bg-orange-500' : 'bg-gray-300'
+                    i === 0 ? 'bg-neutral-900' : 'bg-neutral-300'
                   }`}>
-                    <StepIcon size={9} className={i === 0 ? 'text-white' : 'text-gray-500'} />
+                    <StepIcon size={9} className={i === 0 ? 'text-white' : 'text-neutral-500'} />
                   </div>
-                  <div className={`rounded-xl p-3 ${i === 0 ? 'bg-orange-50 border border-orange-200' : 'bg-gray-50'}`}>
+                  <div className={`rounded-xl p-3 ${i === 0 ? 'bg-neutral-100 border border-neutral-200' : 'bg-neutral-50'}`}>
                     <div className="flex items-center justify-between gap-2 mb-0.5">
-                      <span className={`text-sm font-bold ${i === 0 ? 'text-orange-700' : 'text-slate-700'}`}>
+                      <span className={`text-sm font-semibold ${i === 0 ? 'text-neutral-900' : 'text-neutral-700'}`}>
                         {step.newStatus}
                       </span>
-                      <span className="text-xs text-gray-400 flex-shrink-0">
+                      <span className="text-xs text-neutral-400 flex-shrink-0">
                         {new Date(step.createdAt).toLocaleString('en-IN', {
                           day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
                         })}
                       </span>
                     </div>
                     {step.comment && (
-                      <p className="text-xs text-gray-500">{step.comment}</p>
+                      <p className="text-xs text-neutral-500">{step.comment}</p>
                     )}
                   </div>
                 </div>
@@ -258,62 +258,62 @@ export default function OrderDetailPage() {
       )}
 
       {/* Order items */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm mb-5">
-        <h2 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <Package size={18} className="text-orange-500" /> Items Ordered
+      <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm mb-5">
+        <h2 className="font-display tracking-tight text-neutral-900 mb-4 flex items-center gap-2">
+          <Package size={18} className="text-neutral-900" /> Items Ordered
         </h2>
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-neutral-100">
           {order.items?.map((item) => (
             <div key={item.id} className="py-3 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Package size={16} className="text-orange-400" />
+                <div className="w-10 h-10 bg-neutral-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Package size={16} className="text-neutral-900" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-slate-800 line-clamp-1">{item.productName}</p>
-                  <p className="text-xs text-gray-500">Qty: {item.quantity} × {formatPrice(item.unitPrice)}</p>
+                  <p className="font-semibold text-sm text-neutral-800 line-clamp-1">{item.productName}</p>
+                  <p className="text-xs text-neutral-500">Qty: {item.quantity} × {formatPrice(item.unitPrice)}</p>
                 </div>
               </div>
-              <span className="font-bold text-slate-900 flex-shrink-0">{formatPrice(item.totalPrice)}</span>
+              <span className="font-semibold text-neutral-900 flex-shrink-0">{formatPrice(item.totalPrice)}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Price breakdown */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm mb-5">
-        <h2 className="font-bold text-slate-900 mb-4">Price Breakdown</h2>
+      <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm mb-5">
+        <h2 className="font-display tracking-tight text-neutral-900 mb-4">Price Breakdown</h2>
         <div className="space-y-2 text-sm">
-          <div className="flex justify-between text-gray-600">
+          <div className="flex justify-between text-neutral-600">
             <span>Subtotal</span><span>{formatPrice(order.subTotal)}</span>
           </div>
-          <div className="flex justify-between text-gray-600">
+          <div className="flex justify-between text-neutral-600">
             <span>Tax</span><span>{formatPrice(order.taxAmount)}</span>
           </div>
-          <div className="flex justify-between text-gray-600">
+          <div className="flex justify-between text-neutral-600">
             <span>Shipping</span>
             <span className={order.shippingCost === 0 ? 'text-green-600 font-medium' : ''}>
               {order.shippingCost === 0 ? 'FREE' : formatPrice(order.shippingCost)}
             </span>
           </div>
-          <div className="border-t border-gray-100 pt-2 flex justify-between font-black text-slate-900 text-base">
+          <div className="border-t border-neutral-100 pt-2 flex justify-between font-semibold text-neutral-900 text-base">
             <span>Total</span><span>{formatPrice(order.totalAmount)}</span>
           </div>
         </div>
       </div>
 
       {/* Download Invoice */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm mb-5">
-        <h2 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
-          <FileText size={18} className="text-orange-500" /> Invoice
+      <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm mb-5">
+        <h2 className="font-display tracking-tight text-neutral-900 mb-3 flex items-center gap-2">
+          <FileText size={18} className="text-neutral-900" /> Invoice
         </h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-neutral-500 mb-4">
           Download a GST-compliant tax invoice for this order. You can print it or save it as a PDF.
         </p>
         <button
           onClick={handleDownloadInvoice}
           disabled={invoiceLoading}
-          className="flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-700 disabled:bg-slate-400 text-white text-sm font-semibold rounded-xl transition-colors"
+          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 hover:bg-neutral-700 disabled:bg-neutral-400 text-white text-sm font-semibold rounded-xl transition-colors"
         >
           {invoiceLoading
             ? <><Loader2 size={15} className="animate-spin" /> Generating…</>
@@ -323,7 +323,7 @@ export default function OrderDetailPage() {
 
       {/* Cancel button */}
       {canCancel && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+        <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm">
           {cancelError && (
             <p className="text-sm text-red-600 mb-3">{cancelError}</p>
           )}
@@ -334,7 +334,7 @@ export default function OrderDetailPage() {
           >
             {cancelling ? 'Cancelling...' : 'Cancel Order'}
           </button>
-          <p className="text-xs text-gray-400 text-center mt-2">
+          <p className="text-xs text-neutral-400 text-center mt-2">
             Orders can only be cancelled when Pending or Processing
           </p>
         </div>

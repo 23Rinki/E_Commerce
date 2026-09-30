@@ -190,23 +190,23 @@ export default function CheckoutPage() {
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
           <CheckCircle size={40} className="text-green-500" />
         </div>
-        <h2 className="text-3xl font-black text-slate-900 mb-2">Order Placed!</h2>
-        <p className="text-gray-500 mb-2">Thank you for your order.</p>
+        <h2 className="font-display tracking-tight text-3xl text-neutral-900 mb-2">Order Placed!</h2>
+        <p className="text-neutral-500 mb-2">Thank you for your order.</p>
         {orderId && (
-          <p className="text-sm text-gray-500 mb-6">
-            Order: <span className="font-semibold text-slate-700">{orderId}</span>
+          <p className="text-sm text-neutral-500 mb-6">
+            Order: <span className="font-semibold text-neutral-700">{orderId}</span>
           </p>
         )}
         <div className="flex gap-3 justify-center">
           <button
             onClick={() => router.push('/account/orders')}
-            className="bg-orange-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-orange-600 transition-colors"
+            className="bg-neutral-900 text-white font-semibold px-6 py-3 rounded-full hover:bg-neutral-800 transition-colors"
           >
             Track Order
           </button>
           <button
             onClick={() => router.push('/products')}
-            className="bg-white border border-gray-200 text-slate-700 font-bold px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors"
+            className="bg-white border border-neutral-200 text-neutral-700 font-semibold px-6 py-3 rounded-xl hover:bg-neutral-50 transition-colors"
           >
             Shop More
           </button>
@@ -218,17 +218,17 @@ export default function CheckoutPage() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-8 animate-pulse">
-        <div className="bg-gray-200 rounded-2xl h-96" />
+        <div className="bg-neutral-200 rounded-2xl h-96" />
       </div>
     );
   }
 
   const fieldCls = (err: string) =>
-    `w-full px-3 py-2.5 border rounded-xl text-sm outline-none transition-colors ${err ? 'border-amber-400 bg-amber-50' : 'border-gray-200 focus:border-orange-400'}`;
+    `w-full px-3 py-2.5 border rounded-xl text-sm outline-none transition-colors ${err ? 'border-amber-400 bg-amber-50' : 'border-neutral-200 focus:border-neutral-900'}`;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-black text-slate-900 mb-6">Checkout</h1>
+      <h1 className="font-display tracking-tight text-2xl text-neutral-900 mb-6">Checkout</h1>
 
       {error && (
         <div className="flex items-start gap-3 bg-amber-50 border border-amber-300 text-amber-900 text-sm px-4 py-3 rounded-xl mb-5">
@@ -243,12 +243,12 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2 space-y-5">
 
             {/* Shipping Address */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <MapPin size={16} className="text-orange-500" />
+                <div className="w-8 h-8 bg-neutral-100 rounded-lg flex items-center justify-center">
+                  <MapPin size={16} className="text-neutral-900" />
                 </div>
-                <h2 className="font-bold text-slate-900">Shipping Address</h2>
+                <h2 className="font-display tracking-tight text-neutral-900">Shipping Address</h2>
               </div>
 
               {/* Saved addresses */}
@@ -258,8 +258,8 @@ export default function CheckoutPage() {
                     key={addr.id}
                     className={`flex items-start gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
                       selectedAddressId === addr.id && !showNewAddrForm
-                        ? 'border-orange-500 bg-orange-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        ? 'border-neutral-900 bg-neutral-100'
+                        : 'border-neutral-200 hover:border-neutral-300'
                     }`}
                   >
                     <input
@@ -268,25 +268,25 @@ export default function CheckoutPage() {
                       value={addr.id}
                       checked={selectedAddressId === addr.id && !showNewAddrForm}
                       onChange={() => { setSelectedAddressId(addr.id); setShowNewAddrForm(false); setAddrSaveError(''); }}
-                      className="accent-orange-500 mt-0.5"
+                      className="accent-neutral-900 mt-0.5"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-semibold text-sm text-slate-800">
+                        <p className="font-semibold text-sm text-neutral-800">
                           {addr.firstName} {addr.lastName}
                         </p>
                         {addr.isDefault && (
-                          <span className="text-xs font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="text-xs font-semibold text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-full flex items-center gap-1">
                             <Star size={9} fill="currentColor" /> Default
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs text-neutral-500 mt-0.5">
                         {addr.street}, {addr.city}, {addr.state} — {addr.postalCode}
                       </p>
                     </div>
                     {selectedAddressId === addr.id && !showNewAddrForm && (
-                      <CheckCircle size={18} className="text-orange-500 flex-shrink-0" />
+                      <CheckCircle size={18} className="text-neutral-900 flex-shrink-0" />
                     )}
                   </label>
                 ))}
@@ -295,8 +295,8 @@ export default function CheckoutPage() {
                 <label
                   className={`flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
                     showNewAddrForm
-                      ? 'border-orange-500 bg-orange-50'
-                      : 'border-dashed border-gray-300 hover:border-orange-400 hover:bg-orange-50/40'
+                      ? 'border-neutral-900 bg-neutral-100'
+                      : 'border-dashed border-neutral-300 hover:border-neutral-900 hover:bg-neutral-100/40'
                   }`}
                 >
                   <input
@@ -304,58 +304,58 @@ export default function CheckoutPage() {
                     name="address"
                     checked={showNewAddrForm}
                     onChange={() => { setShowNewAddrForm(true); setSelectedAddressId(null); setAddrSaveError(''); }}
-                    className="accent-orange-500"
+                    className="accent-neutral-900"
                   />
-                  <Plus size={16} className="text-orange-500" />
-                  <span className="text-sm font-semibold text-slate-700">Add a new address</span>
+                  <Plus size={16} className="text-neutral-900" />
+                  <span className="text-sm font-semibold text-neutral-700">Add a new address</span>
                 </label>
               </div>
 
               {/* New address form */}
               {showNewAddrForm && (
-                <div className="border border-orange-200 rounded-xl p-4 bg-orange-50/30 mt-2">
-                  <p className="text-xs font-semibold text-orange-700 mb-3 uppercase tracking-wide">New Shipping Address</p>
+                <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-100/30 mt-2">
+                  <p className="text-xs font-semibold text-neutral-900 mb-3 uppercase tracking-wide">New Shipping Address</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">First Name *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">First Name *</label>
                       <input value={newAddr.firstName} onChange={(e) => setNewAddr({ ...newAddr, firstName: e.target.value })}
                         placeholder="Enter first name" className={fieldCls(addrErrors.firstName)} />
                       {addrErrors.firstName && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.firstName}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Last Name *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">Last Name *</label>
                       <input value={newAddr.lastName} onChange={(e) => setNewAddr({ ...newAddr, lastName: e.target.value })}
                         placeholder="Enter last name" className={fieldCls(addrErrors.lastName)} />
                       {addrErrors.lastName && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.lastName}</p>}
                     </div>
                     <div className="sm:col-span-2">
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Street Address *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">Street Address *</label>
                       <input value={newAddr.street} onChange={(e) => setNewAddr({ ...newAddr, street: e.target.value })}
                         placeholder="House no., street, area" className={fieldCls(addrErrors.street)} />
                       {addrErrors.street && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.street}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">City *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">City *</label>
                       <input value={newAddr.city} onChange={(e) => setNewAddr({ ...newAddr, city: e.target.value })}
                         placeholder="Enter city" className={fieldCls(addrErrors.city)} />
                       {addrErrors.city && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.city}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">State *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">State *</label>
                       <input value={newAddr.state} onChange={(e) => setNewAddr({ ...newAddr, state: e.target.value })}
                         placeholder="Enter state" className={fieldCls(addrErrors.state)} />
                       {addrErrors.state && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.state}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Pincode *</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">Pincode *</label>
                       <input value={newAddr.postalCode} onChange={(e) => setNewAddr({ ...newAddr, postalCode: e.target.value })}
                         placeholder="6-digit pincode" className={fieldCls(addrErrors.postalCode)} />
                       {addrErrors.postalCode && <p className="text-xs text-amber-700 mt-0.5">{addrErrors.postalCode}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Country</label>
+                      <label className="block text-xs font-semibold text-neutral-500 mb-1 uppercase tracking-wide">Country</label>
                       <input value={newAddr.country} readOnly
-                        className="w-full px-3 py-2.5 border border-gray-100 rounded-xl text-sm bg-gray-50 text-gray-500" />
+                        className="w-full px-3 py-2.5 border border-neutral-100 rounded-xl text-sm bg-neutral-50 text-neutral-500" />
                     </div>
                     <div className="sm:col-span-2 flex items-center gap-2 pt-1">
                       <input
@@ -363,9 +363,9 @@ export default function CheckoutPage() {
                         id="isDefault"
                         checked={newAddr.isDefault}
                         onChange={(e) => setNewAddr({ ...newAddr, isDefault: e.target.checked })}
-                        className="accent-orange-500"
+                        className="accent-neutral-900"
                       />
-                      <label htmlFor="isDefault" className="text-sm text-slate-600 cursor-pointer select-none">
+                      <label htmlFor="isDefault" className="text-sm text-neutral-600 cursor-pointer select-none">
                         Set as default address
                       </label>
                     </div>
@@ -381,7 +381,7 @@ export default function CheckoutPage() {
                       type="button"
                       onClick={handleSaveAddress}
                       disabled={savingAddr}
-                      className="flex items-center gap-2 bg-slate-900 hover:bg-slate-700 disabled:bg-slate-400 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+                      className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-700 disabled:bg-neutral-400 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
                     >
                       <Save size={15} />
                       {savingAddr ? 'Saving...' : 'Save Address'}
@@ -396,7 +396,7 @@ export default function CheckoutPage() {
                           setAddrSaveError('');
                           setNewAddr(EMPTY_FORM);
                         }}
-                        className="text-sm text-gray-500 hover:text-gray-700 font-medium px-3 py-2.5 transition-colors"
+                        className="text-sm text-neutral-500 hover:text-neutral-700 font-medium px-3 py-2.5 transition-colors"
                       >
                         Cancel
                       </button>
@@ -407,27 +407,27 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Method */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <CreditCard size={16} className="text-orange-500" />
+                <div className="w-8 h-8 bg-neutral-100 rounded-lg flex items-center justify-center">
+                  <CreditCard size={16} className="text-neutral-900" />
                 </div>
-                <h2 className="font-bold text-slate-900">Payment Method</h2>
+                <h2 className="font-display tracking-tight text-neutral-900">Payment Method</h2>
               </div>
               <div className="space-y-3">
                 {PAYMENT_OPTIONS.map(({ type, label, desc, icon }) => (
                   <label
                     key={type}
                     className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                      selectedPaymentType === type ? 'border-orange-500 bg-orange-50' : 'border-gray-200 hover:border-gray-300'
+                      selectedPaymentType === type ? 'border-neutral-900 bg-neutral-100' : 'border-neutral-200 hover:border-neutral-300'
                     }`}
                   >
                     <input type="radio" name="payment" value={type} checked={selectedPaymentType === type}
-                      onChange={() => setSelectedPaymentType(type)} className="accent-orange-500" />
+                      onChange={() => setSelectedPaymentType(type)} className="accent-neutral-900" />
                     <span className="text-2xl">{icon}</span>
                     <div>
-                      <p className="font-semibold text-slate-800 text-sm">{label}</p>
-                      <p className="text-xs text-gray-500">{desc}</p>
+                      <p className="font-semibold text-neutral-800 text-sm">{label}</p>
+                      <p className="text-xs text-neutral-500">{desc}</p>
                     </div>
                     {paymentMethods.some((pm) => pm.type === type) && (
                       <span className="ml-auto text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full font-semibold">Saved</span>
@@ -440,42 +440,42 @@ export default function CheckoutPage() {
 
           {/* Right — order summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm sticky top-20">
-              <h2 className="font-black text-slate-900 text-lg mb-4">Order Summary</h2>
+            <div className="bg-white rounded-2xl border border-neutral-100 p-5 shadow-sm sticky top-20">
+              <h2 className="font-display tracking-tight text-neutral-900 text-lg mb-4">Order Summary</h2>
               <div className="space-y-2 max-h-48 overflow-y-auto mb-4 pr-1">
                 {cart?.items?.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm text-gray-600">
+                  <div key={item.id} className="flex justify-between text-sm text-neutral-600">
                     <span className="truncate max-w-[60%]">{item.productName} × {item.quantity}</span>
                     <span className="font-medium">{formatPrice(item.totalPrice)}</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-gray-100 pt-3 space-y-2 text-sm mb-4">
-                <div className="flex justify-between text-gray-600">
+              <div className="border-t border-neutral-100 pt-3 space-y-2 text-sm mb-4">
+                <div className="flex justify-between text-neutral-600">
                   <span>Subtotal</span><span>{formatPrice(subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-neutral-600">
                   <span>Shipping</span>
                   <span className={shipping === 0 ? 'text-green-600' : ''}>{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
                 </div>
               </div>
-              <div className="border-t border-gray-100 pt-3 mb-5">
-                <div className="flex justify-between font-black text-slate-900 text-lg">
+              <div className="border-t border-neutral-100 pt-3 mb-5">
+                <div className="flex justify-between font-semibold text-neutral-900 text-lg">
                   <span>Total</span><span>{formatPrice(total)}</span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
+                <p className="text-xs text-neutral-500 mt-1">Inclusive of all taxes</p>
               </div>
 
               {/* Optional GST for business buyers */}
-              <div className="mb-4 bg-slate-800 rounded-xl p-4">
-                <p className="text-xs font-semibold text-gray-300 mb-2">Business Purchase? (Optional)</p>
+              <div className="mb-4 bg-neutral-800 rounded-xl p-4">
+                <p className="text-xs font-semibold text-neutral-300 mb-2">Business Purchase? (Optional)</p>
                 <input
                   type="text"
                   value={customerGST}
                   onChange={(e) => setCustomerGST(e.target.value.toUpperCase())}
                   placeholder="Enter your GSTIN to get a B2B tax invoice"
                   maxLength={15}
-                  className="w-full px-3 py-2 border border-slate-600 bg-slate-700 text-white placeholder-slate-400 rounded-lg text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+                  className="w-full px-3 py-2 border border-neutral-600 bg-neutral-700 text-white placeholder-neutral-400 rounded-lg text-sm focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900/10"
                 />
                 {customerGST && !/^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/.test(customerGST) && (
                   <p className="text-xs text-amber-400 mt-1">Invalid GSTIN format — e.g. 27ABCDE1234F1Z5</p>
@@ -486,19 +486,19 @@ export default function CheckoutPage() {
               </div>
 
               {showNewAddrForm && !selectedAddressId ? (
-                <div className="w-full flex items-center justify-center gap-2 bg-gray-100 text-gray-400 font-bold py-4 rounded-xl text-sm cursor-not-allowed select-none">
+                <div className="w-full flex items-center justify-center gap-2 bg-neutral-100 text-neutral-400 font-semibold py-4 rounded-xl text-sm cursor-not-allowed select-none">
                   <Truck size={18} />
                   Save address first
                 </div>
               ) : (
                 <button type="submit" disabled={placing}
-                  className="w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-4 rounded-xl transition-colors">
+                  className="w-full flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-400 text-white font-semibold py-4 rounded-full transition-colors">
                   <Truck size={18} />
                   {placing ? 'Placing Order...' : 'Place Order'}
                 </button>
               )}
 
-              <p className="text-xs text-gray-400 text-center mt-3">
+              <p className="text-xs text-neutral-400 text-center mt-3">
                 By placing your order, you agree to our Terms of Service
               </p>
             </div>

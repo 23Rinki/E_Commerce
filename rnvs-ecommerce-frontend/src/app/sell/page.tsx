@@ -259,7 +259,7 @@ export default function BecomeSellerPage() {
           name: `${form.firstName} ${form.lastName}`.trim(),
           contact: form.phone,
         },
-        theme: { color: '#f97316' },
+        theme: { color: '#171717' },
       };
 
       const rzp = new window.Razorpay(options);
@@ -295,18 +295,18 @@ export default function BecomeSellerPage() {
       {/* Left panel — unchanged */}
       <div
         className="hidden lg:flex flex-col justify-between w-[400px] flex-shrink-0 p-10 text-white"
-        style={{ background: 'linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}
+        style={{ background: '#171717' }}
       >
         <div>
           <Link href="/" className="flex items-center gap-2 mb-12">
-            <ShoppingBag size={22} className="text-orange-400" />
-            <span className="font-black text-lg tracking-tight">RNVS CommerceX</span>
+            <ShoppingBag size={22} className="text-neutral-900" />
+            <span className="font-semibold text-lg tracking-tight">RNVS CommerceX</span>
           </Link>
-          <h1 className="text-3xl font-black leading-snug mb-4">
+          <h1 className="font-display tracking-tight text-3xl leading-snug mb-4">
             Start selling to<br />
-            <span className="text-orange-400">millions of buyers</span>
+            <span className="text-neutral-900">millions of buyers</span>
           </h1>
-          <p className="text-blue-200 text-sm leading-relaxed">
+          <p className="text-neutral-300 text-sm leading-relaxed">
             Join thousands of sellers growing their business on India&apos;s fastest growing marketplace.
           </p>
           <div className="mt-10 space-y-4">
@@ -316,20 +316,20 @@ export default function BecomeSellerPage() {
               { icon: Shield, title: 'Secure payouts', desc: 'Weekly payouts directly to your bank.' },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Icon size={15} className="text-orange-400" />
+                <div className="w-8 h-8 rounded-full bg-neutral-900/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon size={15} className="text-neutral-900" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold">{title}</p>
-                  <p className="text-xs text-blue-300 mt-0.5">{desc}</p>
+                  <p className="text-xs text-neutral-400 mt-0.5">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <p className="text-xs text-blue-400">
+        <p className="text-xs text-neutral-400">
           Already a seller?{' '}
-          <button onClick={() => router.push('/auth/login')} className="text-orange-400 underline">Sign in</button>
+          <button onClick={() => router.push('/auth/login')} className="text-neutral-900 underline">Sign in</button>
         </p>
       </div>
 
@@ -356,7 +356,7 @@ export default function BecomeSellerPage() {
             <div className="flex items-center gap-1 mb-8 flex-wrap">
               {STEPS.map((label, i) => (
                 <div key={label} className="flex items-center gap-1 flex-shrink-0">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors
                     ${i < step ? 'bg-emerald-400 text-neutral-900' : i === step ? 'bg-white text-neutral-900' : 'bg-white/15 text-white/50'}`}>
                     {i < step ? <CheckCircle2 size={13} /> : i + 1}
                   </div>
@@ -478,7 +478,7 @@ export default function BecomeSellerPage() {
               <div className="bg-white/10 border border-white/20 rounded-2xl p-5 max-h-72 overflow-y-auto text-xs text-white/80 leading-relaxed space-y-4 mb-4">
 
                 <div>
-                  <p className="font-bold text-white mb-1">Terms and Conditions</p>
+                  <p className="font-semibold text-white mb-1">Terms and Conditions</p>
                   <p className="font-semibold text-white/90 mt-2">1. Who We Are</p>
                   <p>RNVS Inovative AI LLP (&quot;we&quot;, &quot;us&quot;, &quot;the platform&quot;) operates CommerceX — a software platform that allows sellers (&quot;vendors&quot;) to run their own online store.</p>
 
@@ -506,7 +506,7 @@ export default function BecomeSellerPage() {
                 </div>
 
                 <div className="border-t border-white/15 pt-4">
-                  <p className="font-bold text-white mb-1">Privacy Policy</p>
+                  <p className="font-semibold text-white mb-1">Privacy Policy</p>
                   <p className="font-semibold text-white/90 mt-2">1. What Information We Collect</p>
                   <p>Your full name, email, phone number, business details (store name, GST, PAN, Udyam number), bank account details, sales data, and login activity.</p>
 
@@ -698,8 +698,8 @@ export default function BecomeSellerPage() {
                         : 'border-white/20 bg-white/5 hover:border-white/40'
                     }`}
                   >
-                    <p className="text-[11px] font-bold text-white/70 uppercase tracking-wide">{opt.label}</p>
-                    <p className="text-xl font-black text-white mt-1">{opt.price}</p>
+                    <p className="text-[11px] font-semibold text-white/70 uppercase tracking-wide">{opt.label}</p>
+                    <p className="text-xl font-semibold text-white mt-1">{opt.price}</p>
                     <p className="text-xs text-white/70">{opt.sub}</p>
                     <p className={`text-xs font-semibold mt-1 ${form.plan === opt.id ? 'text-white' : 'text-white/50'}`}>
                       {opt.tag}
@@ -710,24 +710,24 @@ export default function BecomeSellerPage() {
 
               {/* Selected plan card */}
               {form.plan === 'monthly' ? (
-                <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white text-center mb-4">
-                  <span className="inline-block bg-white/20 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+                <div className="bg-neutral-900 rounded-2xl p-6 text-white text-center mb-4">
+                  <span className="inline-block bg-white/20 text-white text-[11px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
                     Introductory Offer
                   </span>
                   <div className="flex items-end justify-center gap-1">
-                    <p className="text-4xl font-black">&#8377;2,999</p>
+                    <p className="text-4xl font-semibold">&#8377;2,999</p>
                     <p className="text-base opacity-80 mb-1">/month</p>
                   </div>
                   <p className="text-sm opacity-90 mt-1 font-semibold">First 3 months</p>
                   <p className="text-sm opacity-70 mt-0.5">Then &#8377;4,999/month &middot; cancel anytime</p>
                 </div>
               ) : (
-                <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-6 text-white text-center mb-4">
-                  <span className="inline-block bg-green-400/20 text-green-300 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+                <div className="bg-neutral-900 rounded-2xl p-6 text-white text-center mb-4">
+                  <span className="inline-block bg-green-400/20 text-green-300 text-[11px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
                     Best Value &mdash; 2 Months Free
                   </span>
                   <div className="flex items-end justify-center gap-1">
-                    <p className="text-4xl font-black">&#8377;49,990</p>
+                    <p className="text-4xl font-semibold">&#8377;49,990</p>
                     <p className="text-base opacity-80 mb-1">/year</p>
                   </div>
                   <p className="text-sm opacity-90 mt-1 font-semibold">Pay once, sell all year</p>
@@ -784,7 +784,7 @@ export default function BecomeSellerPage() {
               <div className="mt-5 pt-4 border-t border-dashed border-white/20 text-center">
                 <button
                   onClick={handleSkipPayment}
-                  className="px-4 py-2 bg-black/30 border border-white/20 hover:bg-black/50 text-white text-xs font-bold rounded-full transition-colors"
+                  className="px-4 py-2 bg-black/30 border border-white/20 hover:bg-black/50 text-white text-xs font-semibold rounded-full transition-colors"
                 >
                   Testing only
                 </button>

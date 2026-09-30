@@ -18,80 +18,46 @@ interface Props {
 export default function CategorySidebar({ categories, selectedId, onSelect }: Props) {
   const allActive = !selectedId;
 
+  const rowCls = (active: boolean) =>
+    `w-full flex items-center gap-3 px-3 py-2 rounded-full text-sm text-left transition-colors cursor-pointer
+     ${active ? 'bg-neutral-900 text-white font-medium' : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950'}`;
+
+  const chipCls = (active: boolean) =>
+    `flex-shrink-0 h-9 px-4 rounded-full text-xs font-medium border transition-colors cursor-pointer
+     ${active ? 'bg-neutral-900 text-white border-neutral-900' : 'bg-white text-neutral-700 border-neutral-200 hover:border-neutral-900'}`;
+
   return (
     <>
       {/* ── Desktop sidebar ────────────────────────────────────────────── */}
-      <aside className="hidden lg:block w-52 flex-shrink-0 self-start sticky top-20">
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
-            <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
-              Shop by Category
-            </h2>
-          </div>
-          <nav className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 160px)' }}>
-            <button
-              onClick={() => onSelect('')}
-              className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left transition-colors border-l-2 cursor-pointer
-                ${allActive
-                  ? 'border-orange-500 bg-orange-50 text-orange-700 font-semibold'
-                  : 'border-transparent text-slate-600 hover:bg-gray-50 hover:text-slate-800'}`}
-            >
-              <LayoutGrid size={14} className={allActive ? 'text-orange-500' : 'text-gray-400'} />
-              All Products
-            </button>
+      <aside className="hidden lg:block w-56 flex-shrink-0 self-start sticky top-32">
+        <div className="text-xs uppercase tracking-[0.3em] text-neutral-500 px-3 mb-3">Categories</div>
+        <nav className="overflow-y-auto no-scrollbar space-y-0.5" style={{ maxHeight: 'calc(100vh - 180px)' }}>
+          <button onClick={() => onSelect('')} className={rowCls(allActive)}>
+            <LayoutGrid size={15} className={allActive ? 'text-white' : 'text-neutral-400'} strokeWidth={1.8} />
+            All Products
+          </button>
 
-            {categories.map((cat) => {
-              const { Icon, color } = ICON_MAP[cat.name] ?? FALLBACK;
-              const active = cat.name === selectedId;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => onSelect(cat.name)}
-                  className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left transition-colors border-l-2 cursor-pointer
-                    ${active
-                      ? 'border-orange-500 bg-orange-50 text-orange-700 font-semibold'
-                      : 'border-transparent text-slate-600 hover:bg-gray-50 hover:text-slate-800'}`}
-                >
-                  <Icon
-                    size={14}
-                    style={{ color: active ? '#f97316' : color }}
-                    strokeWidth={1.8}
-                    className="flex-shrink-0"
-                  />
-                  <span className="truncate leading-tight">{cat.name}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+          {categories.map((cat) => {
+            const { Icon } = ICON_MAP[cat.name] ?? FALLBACK;
+            const active = cat.name === selectedId;
+            return (
+              <button key={cat.id} onClick={() => onSelect(cat.name)} className={rowCls(active)}>
+                <Icon size={15} strokeWidth={1.8} className={`flex-shrink-0 ${active ? 'text-white' : 'text-neutral-400'}`} />
+                <span className="truncate leading-tight">{cat.name}</span>
+              </button>
+            );
+          })}
+        </nav>
       </aside>
 
       {/* ── Mobile chip row ─────────────────────────────────────────────── */}
-      <div className="lg:hidden flex gap-2 overflow-x-auto pb-1 flex-shrink-0">
-        <button
-          onClick={() => onSelect('')}
-          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer
-            ${allActive
-              ? 'bg-orange-500 text-white border-orange-500'
-              : 'bg-white text-slate-700 border-gray-200 hover:border-orange-400'}`}
-        >
-          All
-        </button>
-        {categories.map((cat) => {
-          const active = cat.name === selectedId;
-          return (
-            <button
-              key={cat.id}
-              onClick={() => onSelect(cat.name)}
-              className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer
-                ${active
-                  ? 'bg-orange-500 text-white border-orange-500'
-                  : 'bg-white text-slate-700 border-gray-200 hover:border-orange-400'}`}
-            >
-              {cat.name}
-            </button>
-          );
-        })}
+      <div className="lg:hidden flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4">
+        <button onClick={() => onSelect('')} className={chipCls(allActive)}>All</button>
+        {categories.map((cat) => (
+          <button key={cat.id} onClick={() => onSelect(cat.name)} className={chipCls(cat.name === selectedId)}>
+            {cat.name}
+          </button>
+        ))}
       </div>
     </>
   );

@@ -45,7 +45,7 @@ function ImageZoom({ src, alt }: { src: string; alt: string }) {
   return (
     <>
       <div
-        className="relative bg-white border border-gray-200 select-none"
+        className="relative bg-white border border-neutral-200 select-none"
         style={{ width: '100%', paddingBottom: '100%', cursor: on ? 'crosshair' : 'zoom-in' }}
         onMouseEnter={() => setOn(true)}
         onMouseMove={move}
@@ -61,19 +61,19 @@ function ImageZoom({ src, alt }: { src: string; alt: string }) {
         />
         {on && (
           <div
-            className="absolute border border-gray-500/50 bg-amber-100/30 pointer-events-none z-10"
+            className="absolute border border-neutral-500/50 bg-amber-100/30 pointer-events-none z-10"
             style={{ width: LENS, height: LENS, left: z.lx, top: z.ly }}
           />
         )}
       </div>
 
-      <p className="text-[11px] text-gray-400 text-center mt-2 hidden lg:block">
+      <p className="text-[11px] text-neutral-400 text-center mt-2 hidden lg:block">
         Hover to zoom · Double-click for full view
       </p>
 
       {on && (
         <div
-          className="hidden lg:block pointer-events-none border border-gray-300 shadow-2xl bg-white overflow-hidden"
+          className="hidden lg:block pointer-events-none border border-neutral-300 shadow-2xl bg-white overflow-hidden"
           style={{
             position: 'fixed',
             top: z.panelTop,
@@ -200,18 +200,18 @@ export default function ProductDetailClient({ product, reviews }: Props) {
       <div className="max-w-7xl mx-auto px-4 py-4">
 
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-5 flex-wrap">
-          <Link href="/" className="hover:text-orange-500 hover:underline">Home</Link>
-          <span className="text-gray-400">›</span>
-          <Link href="/products" className="hover:text-orange-500 hover:underline">Products</Link>
+        <nav className="flex items-center gap-1.5 text-sm text-neutral-500 mb-5 flex-wrap">
+          <Link href="/" className="hover:text-neutral-950">Home</Link>
+          <span className="text-neutral-400">›</span>
+          <Link href="/products" className="hover:text-neutral-950">Products</Link>
           {product.categoryName && (
             <>
-              <span className="text-gray-400">›</span>
-              <span className="text-gray-500">{product.categoryName}</span>
+              <span className="text-neutral-400">›</span>
+              <span className="text-neutral-500">{product.categoryName}</span>
             </>
           )}
-          <span className="text-gray-400">›</span>
-          <span className="text-slate-700 font-medium truncate max-w-xs">{product.name}</span>
+          <span className="text-neutral-400">›</span>
+          <span className="text-neutral-700 font-medium truncate max-w-xs">{product.name}</span>
         </nav>
 
         {/* Main grid */}
@@ -225,8 +225,8 @@ export default function ProductDetailClient({ product, reviews }: Props) {
                   <button
                     key={i}
                     onClick={() => setSelIdx(i)}
-                    className={`w-14 h-14 border-2 rounded overflow-hidden transition-all flex-shrink-0
-                      ${selIdx === i ? 'border-[#c7511f] shadow-sm' : 'border-gray-200 hover:border-gray-400'}`}
+                    className={`w-14 h-14 border-2 rounded-xl overflow-hidden transition-all flex-shrink-0
+                      ${selIdx === i ? 'border-neutral-900' : 'border-neutral-200 hover:border-neutral-400'}`}
                   >
                     <img
                       src={src}
@@ -240,7 +240,7 @@ export default function ProductDetailClient({ product, reviews }: Props) {
             )}
             <div className="relative flex-1">
               {pct > 0 && (
-                <div className="absolute top-2 left-2 z-20 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-sm leading-none">
+                <div className="absolute top-2 left-2 z-20 bg-neutral-900 text-white text-[11px] font-semibold tracking-wide px-2.5 py-1 rounded-full leading-none">
                   -{pct}%
                 </div>
               )}
@@ -251,39 +251,39 @@ export default function ProductDetailClient({ product, reviews }: Props) {
           {/* ── Product info column ───────────────────────────── */}
           <div className="flex-1 min-w-0 max-w-lg">
 
-            <h1 className="text-xl font-medium text-slate-900 mb-2 leading-snug">{product.name}</h1>
+            <h1 className="font-display tracking-tight text-3xl lg:text-4xl text-neutral-900 mb-3 leading-tight">{product.name}</h1>
 
             {product.vendorName && (
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="text-sm text-neutral-600 mb-2">
                 Sold by{' '}
-                <span className="text-[#0066c0] hover:text-orange-500 cursor-pointer">{product.vendorName}</span>
+                <span className="font-medium text-neutral-900 underline underline-offset-4 decoration-neutral-300">{product.vendorName}</span>
               </p>
             )}
 
-            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-200">
+            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-neutral-200">
               <div className="flex items-center gap-0.5">
                 {[1,2,3,4,5].map(s => (
-                  <Star key={s} size={14} className="text-[#FFA41C]" fill="#FFA41C" />
+                  <Star key={s} size={14} className="text-neutral-900" fill="currentColor" />
                 ))}
               </div>
-              <span className="text-sm text-[#0066c0] cursor-pointer hover:text-orange-500">
+              <span className="text-sm text-neutral-500">
                 {ratingCount.toLocaleString()} ratings
               </span>
             </div>
 
             {/* Price block */}
-            <div className="mb-5 pb-5 border-b border-gray-200">
+            <div className="mb-5 pb-5 border-b border-neutral-200">
               {pct > 0 && (
-                <p className="text-sm text-gray-600 mb-0.5">
+                <p className="text-sm text-neutral-600 mb-0.5">
                   M.R.P.:{' '}
-                  <span className="line-through text-gray-500">
+                  <span className="line-through text-neutral-500">
                     ₹{price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </span>
                 </p>
               )}
               <div className="flex items-baseline gap-2">
-                {pct > 0 && <span className="text-lg text-red-700 font-medium">-{pct}%</span>}
-                <span className="text-3xl font-medium text-slate-900">
+                {pct > 0 && <span className="text-sm font-semibold px-2.5 py-1 rounded-full bg-neutral-900 text-white self-center">−{pct}%</span>}
+                <span className="font-display text-4xl text-neutral-900">
                   ₹{displayPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </span>
               </div>
@@ -292,7 +292,7 @@ export default function ProductDetailClient({ product, reviews }: Props) {
                   You save: ₹{saved.toLocaleString('en-IN', { minimumFractionDigits: 2 })} ({pct}%)
                 </p>
               )}
-              <p className="text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
+              <p className="text-xs text-neutral-500 mt-1">Inclusive of all taxes</p>
             </div>
 
             {/* Stock */}
@@ -309,16 +309,16 @@ export default function ProductDetailClient({ product, reviews }: Props) {
             {/* Variants */}
             {product.variants?.length > 0 && (
               <div className="mb-4">
-                <p className="text-sm font-semibold text-slate-800 mb-2">Style:</p>
+                <p className="text-sm font-semibold text-neutral-800 mb-2">Style:</p>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.map((v: any) => (
                     <button
                       key={v.id}
                       onClick={() => setSelVariant(v.id)}
-                      className={`px-3 py-1.5 border text-sm rounded transition-all
+                      className={`h-10 px-4 border text-sm rounded-full transition-all
                         ${selVariant === Number(v.id)
-                          ? 'border-[#c7511f] bg-orange-50 shadow-[0_0_0_2px_#c7511f33]'
-                          : 'border-gray-300 hover:border-gray-500'}`}
+                          ? 'border-neutral-900 bg-neutral-900 text-white'
+                          : 'border-neutral-300 hover:border-neutral-500'}`}
                     >
                       {v.name}: {v.value}
                     </button>
@@ -329,16 +329,16 @@ export default function ProductDetailClient({ product, reviews }: Props) {
 
             {/* Quantity */}
             <div className="flex items-center gap-3 mb-5">
-              <label className="text-sm font-semibold text-slate-700">Qty:</label>
-              <div className="flex items-center border border-gray-300 rounded bg-gray-50">
+              <label className="text-sm font-semibold text-neutral-700">Qty:</label>
+              <div className="flex items-center border border-neutral-200 rounded-full overflow-hidden">
                 <button
                   onClick={() => setQty(q => Math.max(1, q - 1))}
-                  className="w-9 h-9 flex items-center justify-center hover:bg-gray-200 font-bold text-lg transition-colors"
+                  className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 text-lg transition-colors"
                 >−</button>
-                <span className="w-10 text-center text-sm font-semibold border-x border-gray-300 py-1.5">{qty}</span>
+                <span className="w-10 text-center text-sm font-semibold">{qty}</span>
                 <button
                   onClick={() => setQty(q => Math.min(99, q + 1))}
-                  className="w-9 h-9 flex items-center justify-center hover:bg-gray-200 font-bold text-lg transition-colors"
+                  className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 text-lg transition-colors"
                 >+</button>
               </div>
             </div>
@@ -348,10 +348,10 @@ export default function ProductDetailClient({ product, reviews }: Props) {
               <button
                 onClick={addToCart}
                 disabled={adding || product.stockQuantity === 0}
-                className={`w-full py-2.5 rounded-full text-sm font-semibold border transition-all flex items-center justify-center gap-2
+                className={`w-full h-12 rounded-full text-sm font-medium border transition-all flex items-center justify-center gap-2
                   ${added
                     ? 'bg-green-500 border-green-500 text-white'
-                    : 'bg-[#FFD814] hover:bg-[#F7CA00] active:bg-[#F0C400] border-[#FFA41C] text-slate-900 disabled:opacity-50'}`}
+                    : 'bg-neutral-900 hover:bg-neutral-800 border-neutral-900 text-white disabled:opacity-50'}`}
               >
                 {added
                   ? <><CheckCircle size={16} /> Added to Cart</>
@@ -363,7 +363,7 @@ export default function ProductDetailClient({ product, reviews }: Props) {
               <button
                 onClick={async () => { await addToCart(); router.push('/cart'); }}
                 disabled={product.stockQuantity === 0}
-                className="w-full py-2.5 rounded-full text-sm font-semibold bg-[#FF9900] hover:bg-[#F0911B] active:bg-[#e88a15] border border-[#FF8C00] text-slate-900 transition-all disabled:opacity-50"
+                className="w-full h-12 rounded-full text-sm font-medium bg-white hover:bg-neutral-50 border border-neutral-900 text-neutral-900 transition-all disabled:opacity-50"
               >
                 Buy Now
               </button>
@@ -375,10 +375,10 @@ export default function ProductDetailClient({ product, reviews }: Props) {
                     else setWishlisted(false);
                   } catch { /* ignore */ }
                 }}
-                className={`flex items-center justify-center gap-2 w-full py-2.5 rounded-full text-sm font-semibold border transition-all
+                className={`flex items-center justify-center gap-2 w-full h-12 rounded-full text-sm font-medium border transition-all
                   ${wishlisted
                     ? 'border-red-300 bg-red-50 text-red-600'
-                    : 'border-gray-300 text-slate-700 hover:border-gray-400 hover:bg-gray-50'}`}
+                    : 'border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50'}`}
               >
                 <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} />
                 {wishlisted ? 'Wishlisted' : 'Add to Wishlist'}
@@ -386,17 +386,17 @@ export default function ProductDetailClient({ product, reviews }: Props) {
             </div>
 
             {/* Trust badges */}
-            <div className="border border-gray-200 rounded-lg divide-y divide-gray-100">
+            <div className="border border-neutral-200 rounded-lg divide-y divide-neutral-100">
               {[
                 { icon: Truck,     label: 'Free Delivery',  sub: 'On orders above ₹499' },
                 { icon: RotateCcw, label: 'Easy Returns',   sub: '7-day return policy' },
                 { icon: Shield,    label: 'Secure Payment', sub: '100% protected' },
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} className="flex items-center gap-3 px-3 py-2.5">
-                  <Icon size={18} className="text-slate-500 flex-shrink-0" />
+                  <Icon size={18} className="text-neutral-500 flex-shrink-0" />
                   <div className="text-sm">
-                    <span className="font-semibold text-slate-800">{label}</span>
-                    <span className="text-gray-500 ml-1.5">{sub}</span>
+                    <span className="font-semibold text-neutral-800">{label}</span>
+                    <span className="text-neutral-500 ml-1.5">{sub}</span>
                   </div>
                 </div>
               ))}
@@ -406,16 +406,16 @@ export default function ProductDetailClient({ product, reviews }: Props) {
 
         {/* Other sellers */}
         {otherSellers.length > 0 && (
-          <div className="mt-8 pt-6 border-t border-gray-200 max-w-3xl">
-            <h2 className="text-base font-bold text-slate-900 mb-3">
+          <div className="mt-8 pt-6 border-t border-neutral-200 max-w-3xl">
+            <h2 className="font-display tracking-tight text-base text-neutral-900 mb-3">
               Other sellers offering this product
             </h2>
-            <div className="divide-y divide-gray-100 border border-gray-200 rounded-lg overflow-hidden">
+            <div className="divide-y divide-neutral-100 border border-neutral-200 rounded-lg overflow-hidden">
               {otherSellers.map((seller) => {
                 const sellerPrice = seller.discountPrice ?? seller.price;
                 return (
-                  <div key={seller.id} className="flex items-center gap-4 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
-                    <Link href={`/products/${seller.id}${seller.vendorId ? `?v=${encodeURIComponent(seller.vendorId)}` : ''}`} className="w-12 h-12 border border-gray-200 rounded flex items-center justify-center flex-shrink-0 overflow-hidden bg-white">
+                  <div key={seller.id} className="flex items-center gap-4 px-4 py-3 bg-white hover:bg-neutral-50 transition-colors">
+                    <Link href={`/products/${seller.id}${seller.vendorId ? `?v=${encodeURIComponent(seller.vendorId)}` : ''}`} className="w-12 h-12 border border-neutral-200 rounded flex items-center justify-center flex-shrink-0 overflow-hidden bg-white">
                       <img
                         src={getImageUrl(seller.primaryImageUrl ?? null)}
                         alt={seller.name}
@@ -424,15 +424,15 @@ export default function ProductDetailClient({ product, reviews }: Props) {
                       />
                     </Link>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-800">
+                      <p className="text-sm font-semibold text-neutral-800">
                         ₹{Math.floor(sellerPrice).toLocaleString('en-IN')}
                       </p>
                       {seller.discountPrice && (
-                        <p className="text-[11px] text-gray-400 line-through">
+                        <p className="text-[11px] text-neutral-400 line-through">
                           ₹{Math.floor(seller.price).toLocaleString('en-IN')}
                         </p>
                       )}
-                      <Link href={`/products/${seller.id}${seller.vendorId ? `?v=${encodeURIComponent(seller.vendorId)}` : ''}`} className="text-[11px] text-[#0066c0] hover:underline mt-0.5 block">
+                      <Link href={`/products/${seller.id}${seller.vendorId ? `?v=${encodeURIComponent(seller.vendorId)}` : ''}`} className="text-[11px] text-neutral-900 underline underline-offset-2 hover:text-neutral-600 mt-0.5 block">
                         View this offer →
                       </Link>
                     </div>
@@ -444,7 +444,7 @@ export default function ProductDetailClient({ product, reviews }: Props) {
                           setCart(r.data?.data ?? r.data);
                         } catch { /* ignore */ }
                       }}
-                      className="flex-shrink-0 px-4 py-1.5 bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FFA41C] rounded-full text-xs font-semibold text-slate-900 transition-colors"
+                      className="flex-shrink-0 px-4 py-1.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-900 rounded-full text-xs font-medium text-white transition-colors"
                     >
                       Add to Cart
                     </button>
@@ -457,44 +457,44 @@ export default function ProductDetailClient({ product, reviews }: Props) {
 
         {/* About this item */}
         {product.description && (
-          <div className="mt-10 pt-8 border-t border-gray-200 max-w-3xl">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">About this item</h2>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{product.description}</p>
+          <div className="mt-10 pt-8 border-t border-neutral-200 max-w-3xl">
+            <h2 className="font-display tracking-tight text-xl text-neutral-900 mb-4">About this item</h2>
+            <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">{product.description}</p>
           </div>
         )}
 
         {/* Reviews */}
-        <div className="mt-10 pt-8 border-t border-gray-200 max-w-3xl mb-10">
-          <h2 className="text-xl font-bold text-slate-900 mb-6">Customer Reviews</h2>
+        <div className="mt-10 pt-8 border-t border-neutral-200 max-w-3xl mb-10">
+          <h2 className="font-display tracking-tight text-xl text-neutral-900 mb-6">Customer Reviews</h2>
           {reviews.length > 0 ? (
             <div className="space-y-6">
               {reviews.map((r) => (
-                <div key={r.id} className="pb-6 border-b border-gray-100 last:border-0">
+                <div key={r.id} className="pb-6 border-b border-neutral-100 last:border-0">
                   <div className="flex items-center gap-2 mb-1">
                     <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                      <span className="text-amber-700 font-bold text-sm">{r.userName?.[0]?.toUpperCase()}</span>
+                      <span className="text-amber-700 font-semibold text-sm">{r.userName?.[0]?.toUpperCase()}</span>
                     </div>
-                    <span className="text-sm font-semibold text-slate-800">{r.userName}</span>
+                    <span className="text-sm font-semibold text-neutral-800">{r.userName}</span>
                   </div>
                   <div className="flex items-center gap-1 mb-2">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}
                         size={13}
-                        fill={i < r.rating ? '#FFA41C' : '#e5e7eb'}
-                        className={i < r.rating ? 'text-[#FFA41C]' : 'text-gray-200'}
+                        fill={i < r.rating ? '#171717' : '#e5e5e5'}
+                        className={i < r.rating ? 'text-neutral-900' : 'text-neutral-200'}
                       />
                     ))}
-                    <span className="text-xs text-gray-400 ml-1.5">
+                    <span className="text-xs text-neutral-400 ml-1.5">
                       {new Date(r.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-700">{r.comment}</p>
+                  <p className="text-sm text-neutral-700">{r.comment}</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No reviews yet. Be the first to review this product!</p>
+            <p className="text-sm text-neutral-500">No reviews yet. Be the first to review this product!</p>
           )}
         </div>
 

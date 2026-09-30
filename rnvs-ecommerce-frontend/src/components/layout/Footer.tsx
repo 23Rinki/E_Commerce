@@ -1,106 +1,115 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { ArrowRight, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+
+const COLUMNS: { title: string; links: [string, string][] }[] = [
+  {
+    title: 'Shop',
+    links: [
+      ['All Products', '/products'],
+      ['Your Cart', '/cart'],
+      ['Wishlist', '/account/wishlist'],
+      ['Sell on RNVS', '/sell'],
+    ],
+  },
+  {
+    title: 'Help',
+    links: [
+      ['Your Account', '/account'],
+      ['Track an Order', '/account/orders'],
+      ['Saved Addresses', '/account/addresses'],
+      ['Terms & Privacy', '/terms'],
+    ],
+  },
+];
+
+const SOCIALS = [
+  { Icon: Instagram, label: 'Instagram' },
+  { Icon: Facebook,  label: 'Facebook' },
+  { Icon: Twitter,   label: 'Twitter' },
+  { Icon: Youtube,   label: 'YouTube' },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-gray-300">
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-white border-t border-neutral-100">
+      <div className="max-w-7xl mx-auto px-4 py-14 lg:py-20">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Brand */}
-          <div>
-            <div className="mb-4">
-              <div className="inline-flex flex-col items-center bg-white/10 border border-white/15 rounded-xl px-4 py-2">
-                <span className="text-white font-black text-lg tracking-widest leading-none">RNVS</span>
-                <span className="text-white/60 text-[8px] font-semibold tracking-[0.2em] uppercase leading-none mt-0.5">Inovative AI</span>
-              </div>
-            </div>
-            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
-              Your one-stop destination for quality products. Powered by RNVS Inovative AI LLP.
+          <div className="col-span-2 lg:col-span-5">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-neutral-900 grid place-items-center text-white font-display text-sm">R</div>
+              <div className="font-display text-xl tracking-tight text-neutral-900">RNVS CommerceX</div>
+            </Link>
+            <p className="mt-4 text-sm text-neutral-500 leading-relaxed max-w-sm">
+              Quality products from trusted vendors, at prices you&apos;ll love. Powered by RNVS Inovative AI LLP.
             </p>
-            <div className="flex gap-3">
-              {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (
-                <a key={i} href="#" className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition-colors">
-                  <Icon size={15} />
-                </a>
-              ))}
+            <Link
+              href="/products"
+              className="mt-6 inline-flex items-center rounded-full bg-neutral-900 text-white hover:bg-neutral-800 h-11 px-6 text-sm font-medium transition-colors"
+            >
+              Start shopping <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </div>
+
+          {/* Link columns */}
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="lg:col-span-2">
+              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">{col.title}</div>
+              <ul className="mt-5 space-y-3">
+                {col.links.map(([label, href]) => (
+                  <li key={label}>
+                    <Link href={href} className="text-sm text-neutral-700 hover:text-neutral-950 transition-colors">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          {/* Quick links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
-            <ul className="space-y-2.5">
-              {[
-                ['Home', '/'],
-                ['All Products', '/'],
-                ['My Orders', '/account/orders'],
-                ['Wishlist', '/account/wishlist'],
-                ['Cart', '/cart'],
-              ].map(([label, href]) => (
-                <li key={label}>
-                  <Link href={href} className="text-sm text-gray-400 hover:text-orange-400 transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Customer service */}
-          <div>
-            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Customer Service</h3>
-            <ul className="space-y-2.5">
-              {[
-                ['Help Center', '#'],
-                ['Track Order', '/account/orders'],
-                ['Returns & Refunds', '#'],
-                ['Shipping Policy', '#'],
-                ['Privacy Policy', '#'],
-              ].map(([label, href]) => (
-                <li key={label}>
-                  <Link href={href} className="text-sm text-gray-400 hover:text-orange-400 transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          ))}
 
           {/* Contact */}
-          <div>
-            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Contact Us</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2.5">
-                <MapPin size={15} className="text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-gray-400">Bengaluru, Karnataka, India</span>
+          <div className="col-span-2 lg:col-span-3">
+            <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">Contact</div>
+            <ul className="mt-5 space-y-3 text-sm text-neutral-700">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-4 w-4 mt-0.5 text-neutral-400 flex-shrink-0" />
+                Bengaluru, Karnataka, India
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone size={15} className="text-orange-400 flex-shrink-0" />
-                <span className="text-sm text-gray-400">+91 1234567890</span>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-neutral-400 flex-shrink-0" />
+                +91 1234567890
               </li>
-              <li className="flex items-center gap-2.5">
-                <Mail size={15} className="text-orange-400 flex-shrink-0" />
-                <span className="text-sm text-gray-400">support@rnvsecommerce.com</span>
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 text-neutral-400 flex-shrink-0" />
+                support@rnvsecommerce.com
               </li>
             </ul>
-            <div className="mt-4 p-3 bg-slate-800 rounded-lg">
-              <p className="text-xs text-gray-400">Payment methods accepted:</p>
-              <div className="flex gap-2 mt-2 flex-wrap">
-                {['Stripe', 'PayPal', 'COD'].map((m) => (
-                  <span key={m} className="text-[10px] bg-slate-700 text-gray-300 px-2 py-1 rounded font-medium">{m}</span>
-                ))}
-              </div>
+            <div className="mt-6 flex gap-2">
+              {SOCIALS.map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="h-10 w-10 grid place-items-center rounded-full border border-neutral-200 text-neutral-700 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-colors"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-gray-500">© 2026 RNVS Inovative AI LLP. All rights reserved.</p>
-          <p className="text-xs text-gray-500">Made with ❤️ in India</p>
+      <div className="border-t border-neutral-100">
+        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-neutral-500">© {new Date().getFullYear()} RNVS Inovative AI LLP. All rights reserved.</p>
+          <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-neutral-500">
+            <span>Secure payments</span>
+            {['UPI', 'Cards', 'COD'].map((m) => (
+              <span key={m} className="px-2.5 py-1 rounded-full border border-neutral-200 text-neutral-700 normal-case tracking-normal">{m}</span>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

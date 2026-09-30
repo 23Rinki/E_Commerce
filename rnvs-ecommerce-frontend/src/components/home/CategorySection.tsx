@@ -52,7 +52,7 @@ export default function CategorySection({ categories }: Props) {
   if (!categories.length) return null;
 
   return (
-    <div className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="bg-white border-b border-neutral-200 shadow-sm">
       <div className="max-w-7xl mx-auto">
         <div className="flex overflow-x-auto scrollbar-hide">
           {categories.map((cat) => {
@@ -61,7 +61,7 @@ export default function CategorySection({ categories }: Props) {
               <Link
                 key={cat.id}
                 href={`/products?categoryId=${cat.id}`}
-                className="flex flex-col items-center gap-1.5 px-4 py-3 flex-shrink-0 group hover:bg-gray-50 transition-colors border-b-2 border-transparent hover:border-orange-400"
+                className="flex flex-col items-center gap-1.5 px-4 py-3 flex-shrink-0 group hover:bg-neutral-50 transition-colors border-b-2 border-transparent hover:border-neutral-900"
               >
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
@@ -69,7 +69,7 @@ export default function CategorySection({ categories }: Props) {
                 >
                   <Icon size={17} style={{ color }} strokeWidth={1.8} />
                 </div>
-                <span className="text-[11px] text-gray-600 group-hover:text-orange-500 font-medium whitespace-nowrap leading-tight text-center transition-colors">
+                <span className="text-[11px] text-neutral-600 group-hover:text-neutral-950 font-medium whitespace-nowrap leading-tight text-center transition-colors">
                   {cat.name}
                 </span>
               </Link>
